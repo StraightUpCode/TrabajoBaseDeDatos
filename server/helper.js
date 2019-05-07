@@ -1,5 +1,3 @@
-
-
 class QueryMaker {
   constructor() {
     this.query = ''
