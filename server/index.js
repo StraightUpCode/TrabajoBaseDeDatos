@@ -4,6 +4,7 @@ const app = express()
 
 // Global Middleware
 app.use(express.urlencoded())
-app.use(mainRouter)
+app.use("/api", mainRouter)
 // Servidor Escuchar
 app.listen(3000)
+
