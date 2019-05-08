@@ -59,7 +59,13 @@ router.post("/trabajador/form", async (req, res) => {
   body.idCargo = Number.parseInt(body.idCargo)
   body.salario = Number.parseFloat(body.salario) || 0
   body.salarioPorHora = body.salarioPorHora == "true"
+  body.idDiaPago = Number.parseInt(body.idDiaPago)
+  delete body.submit
   console.log(body)
+  const [rows] = await db.query(
+    queryMaker.insert("Trabajador", body)
+      .make())
+  console.log(rows)
   res.redirect("/agregarTrabajador")
 })
 
@@ -98,5 +104,16 @@ router.get("/cargo", async (req, res) => {
 
 })
 
-
+// Dia de Pago
+router.get("/diasDePago", async (req, res) => {
+  try {
+    const leQuery = queryMaker.select("*")
+      .from("DiaDePago")
+      .make()
+    const [rows] = await db.query(leQuery)
+    res.send(rows)
+  } catch (e) {
+    res.send(e)
+  }
+})
 module.exports = router
