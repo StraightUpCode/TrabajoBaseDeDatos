@@ -38,6 +38,11 @@ class QueryMaker {
     this.query += `Order by ${atributo} `
   }
 
+  innerJoin(tablaAUnir, atributo, igualdad, atributo2) {
+    this.query += `inner join ${tablaAUnir} on ${atributo} ${igualdad} ${atributo2} `
+    return this
+  }
+
   make() {
     let finalQuery = this.query + ";"
     this.query = ''
