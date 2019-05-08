@@ -1,10 +1,10 @@
 const express = require('express')
-const mainRouter = require('./routes.js')
+const apiRouter = require('./ApiRouter.js')
 const app = express()
 
 // Global Middleware
 app.use(express.urlencoded({ extetended: true }))
-app.use("/api", mainRouter)
+app.use("/api", apiRouter)
 // Servidor Escuchar
 app.listen(3000)
 
