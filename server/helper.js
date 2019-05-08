@@ -4,38 +4,38 @@ class QueryMaker {
   }
 
   select(...atributos) {
-    this.query += `Select ${atributos}`
+    this.query += `Select ${atributos} `
     return this
   }
 
   from(table) {
-    this.query += `From ${table}`
+    this.query += `From ${table} `
     return this
   }
 
   greaterThan(atributo, valor) {
-    this.query += `Where ${atributo} >= ${valor}`
+    this.query += `Where ${atributo} >= ${valor} `
     return this
   }
   lessThan(atributo, valor) {
-    this.query += `Where ${atributo} <= ${valor}`
+    this.query += `Where ${atributo} <= ${valor} `
     return this
   }
   equals(atributo, valor) {
-    this.query += `Where ${atributo} = ${valor}`
+    this.query += `Where ${atributo} = ${valor} `
     return this
   }
   not(atributo, valor) {
-    this.query += `Where not ${atributo} = ${valor}`
+    this.query += `Where not ${atributo} = ${valor} `
     return this
   }
 
   and(atributo, igualdad, valor) {
-    this.query += `And ${atributo} ${igualdad} ${valor}`
+    this.query += `And ${atributo} ${igualdad} ${valor} `
   }
 
   orderBy(atributo) {
-    this.query += `Order by ${atributo}`
+    this.query += `Order by ${atributo} `
   }
 
   make() {
