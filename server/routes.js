@@ -2,7 +2,7 @@
 const express = require('express')
 const router = express.Router()
 const bodyparser = require('body-parser')
-router.use(bodyparser())
+router.use(bodyparser.json())
 // Mysql
 const mysql = require("mysql2/promise")
 const db = mysql.createPool({
@@ -25,8 +25,11 @@ router.get("/trabajador/:id", async (req, res) => {
 
   try {
     const id = req.params.id
+
     const [rows] = await db.query(queryMaker.select("*")
-      .from("Trabajador").make())
+      .from("Trabajador")
+      .equals("idTrabajador", id).make())
+
     // Es igual a 
     /*const [rows] = await db.query(`Select * from Trabajador where idTrabajador = ${id}`)*/
     res.send(rows)
@@ -42,10 +45,10 @@ router.post("/trabajador", async (req, res) => {
     const [rows] = await db.query(
       queryMaker.insert("Trabajador", content)
         .make())
-    console.log(rows)
+    res.send("Todo OK, todo Correcto")
   }
   catch (e) {
-    console.log(e)
+    res.send(e)
   }
 
 })
