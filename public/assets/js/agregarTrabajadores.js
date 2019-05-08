@@ -14,6 +14,21 @@
       }
     })
 
+  fetch("/api/diasDepago")
+    .then(res => res.json())
+    .then(diasDePago => {
+      const formaDiaPago = document.getElementById("fechaPagos")
+      console.log(diasDePago)
+      for (let diaDePago of diasDePago) {
+        console.log(diaDePago)
+        console.log(diaDePago.idDia_de_Pago)
+        const option = document.createElement('option')
+        option.value = diaDePago.idDia_de_Pago
+        option.appendChild(document.createTextNode(diaDePago.diaPago))
+        formaDiaPago.appendChild(option)
+      }
+    })
+
   /* const formulario = document.getElementById("formularioTrabajador")
    formulario.addEventListener("submit", e => {
  
