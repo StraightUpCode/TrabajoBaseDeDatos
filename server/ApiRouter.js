@@ -56,7 +56,27 @@ router.post("/trabajador", async (req, res) => {
 // TODO: UPDATE TRABAJADOR
 // "ELIMINAR TRABAJADO"
 //
+// Venta
 
+router.get("/vendedor", async (req, res) => {
+  let leQuery = queryMaker.select("*")
+    .from("Vendedor")
+    .innerJoin("Trabajador", "Vendedor.idTrabajador", "=", "Trabajador.idTrabajador")
+    .make()
+
+  console.log(leQuery)
+  try {
+
+
+
+    const [rows] = await db.query(leQuery)
+    console.log(rows)
+    res.send(rows)
+  } catch (e) {
+    res.send(e)
+  }
+
+})
 
 //Cargo
 
