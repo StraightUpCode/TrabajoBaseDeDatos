@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Formulario de Trabajador</title>
+    <link rel="stylesheet" href="assets/css/maquillajeINT.css">
+    <style type="text/css">
+        body {
+            font-family: Arial, Helvetica, sans-serif
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <h1 id="nombreEmpresa">Empresa X</h1>
+        <h2>Nuevo Ingreso</h2>
+    </header>
+    <section>
+        <!--Inicio de formulario usando FORM-->
+        <form action="/informacion-recibida" method="GET" autocomplete="off">
+            <div>
+                <label>Nombres:</label>
+                <input type="text" name="nombreTrabajador" placeholder='Ingrese los nombres' maxlength="24">
+                </tr>
+            </div>
+            <div>
+                <label>Apellidos:</label>
+                <input type="text" name="apellidoTrabajador" placeholder='Ingrese los apellidos' maxlength="24">
+            </div>
+            <div>
+                <label>Cedula:</label>
+                <input type="text" name="cedula" placeholder="Ingrese el numero de cedula" maxlength="14">
+            </div>
+            <div>
+                <label id="sexo">Sexo: </label>
+                <div id="femas">
+                    <input type="radio" name="Sexo" id="f">F
+                    <input type="radio" name="Sexo" id="m">M
+                </div>
+
+            </div>
+            <div>
+                <label>telefono:</label>
+                <input type="tel" name="telefono" placeholder="Numero de telefono " maxlength="8">
+            </div>
+            <div>
+                <label>Fecha de ingreso:</label>
+                <input type="date" name="fechaIngreso">
+            </div>
+            <div>
+                <label>Cargo:</label>
+                <select id="cargos" name="cargo">
+                </select>
+            </div>
+            <div>
+                <label>Pago:</label>
+                <select name="fORMAPAGO">
+                    <option value="15">Quincenal</option>
+                    <option value="30">Mensual</option>
+                    <option value="hora">Hora</option>
+                </select>
+            </div>
+            <div>
+                <label>Salario Base:</label>
+                <input type="number" name="Salario" placeholder="Cantidad" max="1000000">
+            </div>
+            <br>
+            <div>
+                <textarea name="observaciones" id="obsTrabajador" cols="10" rows="5"
+                    placeholder='informacion adicional'></textarea>
+            </div>
+
+            <input type="submit" name='submit' value='Ingresar'>
+    </section>
+
+    </form>
+
+    <footer>
+
+    </footer>
+    <script src="assets/js/agregarTrabajadores.js"> </script>
+
+</body>
+
+</html>
