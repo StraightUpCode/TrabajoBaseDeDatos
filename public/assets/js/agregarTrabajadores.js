@@ -14,4 +14,16 @@
       }
     })
 
+  /* const formulario = document.getElementById("formularioTrabajador")
+   formulario.addEventListener("submit", e => {
+ 
+     e.preventDefault()
+     for (let element of e.target.children) {
+       console.log(element.children)
+     }
+   })
+   */
+
 })()
+
+
