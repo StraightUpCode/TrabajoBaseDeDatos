@@ -12,10 +12,10 @@ const db = mysql.createPool({
   database: 'SISTEMA_NOMINA'
 })
 // QueryMaker
-const QueryMaker = require("./helper")
+const QueryMaker = require("./QueryMaker")
 const queryMaker = new QueryMaker()
 
-router.get("/", (req, res) => res.send('Hellou Warudo'))
+router.get("/", (req, res) => res.send('Bienvenido al API , Documentacion en Construccion'))
 // Trabajadores
 router.get("/trabajador", async (req, res) => {
   const [rows] = await db.query("Select * from Trabajador")
