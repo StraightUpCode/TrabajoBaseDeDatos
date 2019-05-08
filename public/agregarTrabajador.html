@@ -19,15 +19,15 @@
     </header>
     <section>
         <!--Inicio de formulario usando FORM-->
-        <form action="/informacion-recibida" method="GET" autocomplete="off">
+        <form id="formularioTrabajador" method="POST" action="/api/trabajador/form">
             <div>
                 <label>Nombres:</label>
-                <input type="text" name="nombreTrabajador" placeholder='Ingrese los nombres' maxlength="24">
+                <input type="text" name="nombre" placeholder='Ingrese los nombres' maxlength="24">
                 </tr>
             </div>
             <div>
                 <label>Apellidos:</label>
-                <input type="text" name="apellidoTrabajador" placeholder='Ingrese los apellidos' maxlength="24">
+                <input type="text" name="apellido" placeholder='Ingrese los apellidos' maxlength="24">
             </div>
             <div>
                 <label>Cedula:</label>
@@ -41,23 +41,24 @@
                 </div>
 
             </div>-->
+            <!--
             <div>
                 <label>Telefono:</label>
                 <input type="tel" name="telefono" placeholder="Numero de telefono " maxlength="8">
-            </div>
+            </div>-->
             <div>
                 <label>Fecha de ingreso:</label>
                 <input type="date" name="fechaIngreso">
             </div>
             <div>
                 <label>Cargo:</label>
-                <select id="cargos" name="cargo">
+                <select id="cargos" name="idCargo">
                 </select>
             </div>
             <div>
                 <label>Pago:</label>
-                <select name="formaPago">
-                    <option value="30">Mensual</option>
+                <select name="salarioPorHora">
+                    <option value="false">Mensual</option>
                     <option value="true">Hora</option>
                 </select>
             </div>
@@ -66,10 +67,10 @@
                 <input type="number" name="salario" placeholder="Salario" max="1000000">
             </div>
             <br>
-            <div>
+            <!--  <div>
                 <textarea name="observaciones" id="obsTrabajador" cols="10" rows="5"
                     placeholder='informacion adicional'></textarea>
-            </div>
+            </div>-->
 
             <input type="submit" name='submit' value='Ingresar'>
     </section>
