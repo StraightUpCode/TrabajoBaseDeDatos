@@ -53,6 +53,16 @@ router.post("/trabajador", async (req, res) => {
 
 })
 
+router.post("/trabajador/form", async (req, res) => {
+  const body = req.body
+  console.log(body)
+  body.idCargo = Number.parseInt(body.idCargo)
+  body.salario = Number.parseFloat(body.salario) || 0
+  body.salarioPorHora = body.salarioPorHora == "true"
+  console.log(body)
+  res.redirect("/agregarTrabajador")
+})
+
 // TODO: UPDATE TRABAJADOR
 // "ELIMINAR TRABAJADO"
 //
@@ -63,12 +73,7 @@ router.get("/vendedor", async (req, res) => {
     .from("Vendedor")
     .innerJoin("Trabajador", "Vendedor.idTrabajador", "=", "Trabajador.idTrabajador")
     .make()
-
-  console.log(leQuery)
   try {
-
-
-
     const [rows] = await db.query(leQuery)
     console.log(rows)
     res.send(rows)
@@ -85,7 +90,6 @@ router.get("/cargo", async (req, res) => {
     const leQuery = queryMaker.select("*")
       .from("Cargo")
       .make()
-    console.log(leQuery)
     const [rows] = await db.query(leQuery)
     res.send(rows)
   } catch (e) {
@@ -93,5 +97,6 @@ router.get("/cargo", async (req, res) => {
   }
 
 })
+
 
 module.exports = router
