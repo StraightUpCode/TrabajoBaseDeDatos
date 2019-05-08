@@ -56,4 +56,22 @@ router.post("/trabajador", async (req, res) => {
 // TODO: UPDATE TRABAJADOR
 // "ELIMINAR TRABAJADO"
 //
+
+
+//Cargo
+
+router.get("/cargo", async (req, res) => {
+  try {
+    const leQuery = queryMaker.select("*")
+      .from("Cargo")
+      .make()
+    console.log(leQuery)
+    const [rows] = await db.query(leQuery)
+    res.send(rows)
+  } catch (e) {
+    res.send(e)
+  }
+
+})
+
 module.exports = router
