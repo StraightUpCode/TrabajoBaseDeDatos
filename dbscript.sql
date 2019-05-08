@@ -200,3 +200,5 @@ ALTER TABLE Aguinaldo
 ALTER TABLE IngresoNoFijoVendedor
 	ADD CONSTRAINT FK_INF_Vendedor FOREIGN KEY (idIngresoNoFijo) REFERENCES IngresoNoFijo(idIngresoNoFijo);
 
+Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador");
+Insert into DiaDePago(diaPago) values(15), (30)
