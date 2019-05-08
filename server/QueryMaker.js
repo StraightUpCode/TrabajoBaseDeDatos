@@ -39,7 +39,9 @@ class QueryMaker {
   }
 
   make() {
-    return this.query
+    let finalQuery = this.query + ";"
+    this.query = ''
+    return finalQuery
   }
 
   insert(tabla, objeto) {
