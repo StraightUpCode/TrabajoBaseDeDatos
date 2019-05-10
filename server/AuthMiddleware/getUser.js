@@ -2,15 +2,14 @@ const db = require('../dbConnection')
 const QueryMaker = require('../QueryMaker')
 const queryMaker = new QueryMaker();
 
-const getUser = (user, password) => {
-  const [rows] = await db.query(queryMaker.select("*")
-    .from("Users")
+const getUser = async (user, password) => {
+  const userQuery = queryMaker.select("*")
+    .from("User")
     .equals("username", `"${user}"`)
     .and("password", "=", `"${password}"`)
-    .make())
-
-  return rows
-
+    .make()
+  const [rows] = await db.query(userQuery)
+  return rows[0]
 }
 
 

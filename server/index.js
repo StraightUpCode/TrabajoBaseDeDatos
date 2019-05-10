@@ -8,9 +8,6 @@ const authRouter = require('./AuthMiddleware/authRouter')
 app.use(express.urlencoded({ extetended: true }))
 app.use(sessions)
 app.use(authRouter)
-app.use("/checkSession", (req, res) => {
-  console.log(req.session)
-})
 app.use("/api", apiRouter)
 app.use(staticRouter)
 // Servidor Escuchar
