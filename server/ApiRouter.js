@@ -3,19 +3,13 @@ const express = require('express')
 const router = express.Router()
 const bodyparser = require('body-parser')
 router.use(bodyparser.json())
-// Mysql
-const mysql = require("mysql2/promise")
-const db = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '37292636',
-  database: 'SISTEMA_NOMINA'
-})
+// Connection MySQL
+const db = require('./dbConnection')
 // QueryMaker
 const QueryMaker = require("./QueryMaker")
 const queryMaker = new QueryMaker()
-
 router.get("/", (req, res) => res.send('Bienvenido al API , Documentacion en Construccion'))
+
 // Trabajadores
 router.get("/trabajador", async (req, res) => {
   const [rows] = await db.query("Select * from Trabajador")
@@ -61,7 +55,6 @@ router.post("/trabajador/form", async (req, res) => {
   body.salarioPorHora = body.salarioPorHora == "true"
   body.idDiaPago = Number.parseInt(body.idDiaPago)
   delete body.submit
-  console.log(body)
   const [rows] = await db.query(
     queryMaker.insert("Trabajador", body)
       .make())
