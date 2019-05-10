@@ -13,7 +13,6 @@
         formaCargo.appendChild(option)
       }
     })
-
   fetch("/api/diasDepago")
     .then(res => res.json())
     .then(diasDePago => {
