@@ -32,10 +32,12 @@ class QueryMaker {
 
   and(atributo, igualdad, valor) {
     this.query += `And ${atributo} ${igualdad} ${valor} `
+    return this
   }
 
   orderBy(atributo) {
     this.query += `Order by ${atributo} `
+    return this
   }
 
   innerJoin(tablaAUnir, atributo, igualdad, atributo2) {
