@@ -5,5 +5,5 @@ const db = require('../dbConnection')
 module.exports = new MySQLStore({
   clearExpired: true,
   createDatabaseTable: true,
-  checkExpirationInterval: 100000,
+  checkExpirationInterval: 10000,
 }, db)

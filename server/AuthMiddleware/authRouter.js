@@ -6,11 +6,12 @@ router.use(bodyparser.json())
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body
+    console.log(req.body)
     const user = await getUser(username, password)
-    console.log(user.username)
+    console.log("DB: " + user)
     console.log({ username, password })
     if (username === user.username && password === user.password) {
-      req.session.user = user
+      req.session.rol = user.rol
       req.session.save()
     }
     res.redirect("/")

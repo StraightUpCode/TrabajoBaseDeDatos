@@ -9,6 +9,7 @@ const getUser = async (user, password) => {
     .and("password", "=", `"${password}"`)
     .make()
   const [rows] = await db.query(userQuery)
+  console.log(rows)
   return rows[0]
 }
 

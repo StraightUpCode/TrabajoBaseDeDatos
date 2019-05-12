@@ -1,0 +1,76 @@
+<header>
+  <h1 id="nombreEmpresa">Empresa X</h1>
+  <h2>Nuevo Ingreso</h2>
+</header>
+<section>
+  <!--Inicio de formulario usando FORM-->
+  <form id="formularioTrabajador" method="POST" action="/api/trabajador/form">
+    <div>
+      <label>Nombres:</label>
+      <input type="text" name="nombre" placeholder='Ingrese los nombres' maxlength="24">
+      </tr>
+    </div>
+    <div>
+      <label>Apellidos:</label>
+      <input type="text" name="apellido" placeholder='Ingrese los apellidos' maxlength="24">
+    </div>
+    <div>
+      <label>Cedula:</label>
+      <input type="text" name="cedula" placeholder="Ingrese el numero de cedula" maxlength="14">
+    </div>
+    <!--   <div>
+                    <label id="sexo">Sexo: </label>
+                    <div id="femas">
+                        <input type="radio" name="Sexo" id="f">F
+                        <input type="radio" name="Sexo" id="m">M
+                    </div>
+    
+                </div>-->
+    <!--
+                <div>
+                    <label>Telefono:</label>
+                    <input type="tel" name="telefono" placeholder="Numero de telefono " maxlength="8">
+                </div>-->
+    <div>
+      <label>Fecha de ingreso:</label>
+      <input type="date" name="fechaDeContratacion">
+    </div>
+    <div>
+      <label>Cargo:</label>
+      <select id="cargos" name="idCargo">
+        {{#each cargo}}
+        <option value="{{idCargo}}">{{nombre}}</option>
+        {{/each }}
+      </select>
+    </div>
+    <div>
+      <label>Pago:</label>
+      <select name="salarioPorHora">
+        <option value="false">Mensual</option>
+        <option value="true">Hora</option>
+      </select>
+    </div>
+    <div>
+      <label>Salario Base:</label>
+      <input type="number" name="salario" placeholder="Salario" max="1000000">
+    </div>
+    <div>
+      <label>Fecha Pago:</label>
+      <select id="fechaPagos" name="idDiaPago">
+      </select>
+    </div>
+    <br>
+    <!--  <div>
+                    <textarea name="observaciones" id="obsTrabajador" cols="10" rows="5"
+                        placeholder='informacion adicional'></textarea>
+                </div>-->
+
+    <input type="submit" name='submit' value='Ingresar'>
+</section>
+
+</form>
+
+<footer>
+
+</footer>
+<script src="./assets/js/agregarTrabajadores.js"> </script>
