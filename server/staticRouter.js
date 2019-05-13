@@ -3,23 +3,25 @@ const path = require('path')
 const db = require('./dbConnection')
 const queryMaker = require('./testrandom')
 const router = express.Router()
+const checkAuthMiddleware = require('./AuthMiddleware/checkAuth')
+const commonQuerys = require('./DatabaseCommonQuerys/DatabaseCommonQuerys')
 
 router.use(express.static(path.join(__dirname, '../public')))
+router.use(checkAuthMiddleware)
 router.get('/', async (req, res) => {
   //res.sendFile(path.join(__dirname, '../public/index.html'))
-  const [rows] = await db.query(
-    queryMaker.select('*')
-      .from('Cargo')
-      .make())
-  console.log(rows)
+  console.log("Esperando")
   res.render('intro', {
     admin: req.session.rol == 'admin',
-    cargo: rows
+    cargo: await commonQuerys.getCargos()
   })
+
+
 })
 
 router.get('/agregarTrabajador', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/agregarTrabajador.html'))
+  res.send("hay sesion")
+  //res.sendFile(path.join(__dirname, '../public/agregarTrabajador.html'))
 })
 /*
 router.get('/', (req, res) => {
