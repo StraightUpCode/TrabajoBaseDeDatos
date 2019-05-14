@@ -145,6 +145,14 @@ pagaDeComision numeric(7,2),
 CONSTRAINT PK_ingresoNoFijoVendedor primary key (idIngresoNoFijoVendedor)
 )ENGINE INNODB;
 
+CREATE TABLE IF NOT EXISTS User (
+    idUser int auto_increment,
+    username varchar(50) not null,
+    password varchar(50) not null,
+    rol varchar(50) not null
+    CONSTRAINT PK_User PRIMARY Key (idUser)
+)
+
 /* Llave Foranea en la tabla Vendedor*/
 Alter Table Vendedor
 	ADD Constraint  FK_Vendedor_Trabajador FOREIGN KEY (idTrabajador) REFERENCES Trabajador(idTrabajador) ;
@@ -202,3 +210,4 @@ ALTER TABLE IngresoNoFijoVendedor
 
 Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador");
 Insert into DiaDePago(diaPago) values(15), (30)
+Insert into User(username, password , rol) values ("root", "admin" , "admin";)

@@ -8,7 +8,12 @@ const db = require('./dbConnection')
 // QueryMaker
 const QueryMaker = require("./QueryMaker")
 const queryMaker = new QueryMaker()
+
+const commonQuerys = require('./DatabaseCommonQuerys/DatabaseCommonQuerys')
+
+//Router
 router.get("/", (req, res) => res.send('Bienvenido al API , Documentacion en Construccion'))
+
 
 // Trabajadores
 router.get("/trabajador", async (req, res) => {
@@ -86,11 +91,8 @@ router.get("/vendedor", async (req, res) => {
 
 router.get("/cargo", async (req, res) => {
   try {
-    const leQuery = queryMaker.select("*")
-      .from("Cargo")
-      .make()
-    const [rows] = await db.query(leQuery)
-    res.send(rows)
+
+    res.send(await commonQuerys.getCargos())
   } catch (e) {
     res.send(e)
   }
@@ -100,11 +102,8 @@ router.get("/cargo", async (req, res) => {
 // Dia de Pago
 router.get("/diasDePago", async (req, res) => {
   try {
-    const leQuery = queryMaker.select("*")
-      .from("DiaDePago")
-      .make()
-    const [rows] = await db.query(leQuery)
-    res.send(rows)
+
+    res.send(await commonQuerys.getDiasPago())
   } catch (e) {
     res.send(e)
   }

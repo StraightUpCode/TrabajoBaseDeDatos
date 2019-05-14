@@ -13,7 +13,8 @@ router.get('/', async (req, res) => {
   console.log("Esperando")
   res.render('intro', {
     admin: req.session.rol == 'admin',
-    cargo: await commonQuerys.getCargos()
+    cargo: await commonQuerys.getCargos(),
+    diaPago: await commonQuerys.getDiasPago()
   })
 
 
