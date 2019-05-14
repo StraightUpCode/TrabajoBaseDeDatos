@@ -57,6 +57,9 @@
     <div>
       <label>Fecha Pago:</label>
       <select id="fechaPagos" name="idDiaPago">
+        {{#each diaPago}}
+        <option value="{{idDia_de_Pago}}">{{diaPago}}</option>
+        {{/each }}
       </select>
     </div>
     <br>
