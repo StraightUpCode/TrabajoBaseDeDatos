@@ -1,30 +1,34 @@
 (() => {
-  /* const formaCargo = document.getElementById("cargos")
-   console.log(formaCargo)
-   fetch("/api/cargo")
-     .then(res => res.json())
-     .then(cargos => {
-       console.log(cargos)
-       for (let cargo of cargos) {
-         console.log(cargo)
-         const option = document.createElement('option')
-         option.value = cargo.idCargo
-         option.appendChild(document.createTextNode(cargo.nombre))
-         formaCargo.appendChild(option)
-       }
-     })*/
+  const formulario = document.getElementById("formularioTrabajador")
+  formulario.addEventListener("submit", e => {
 
-
-  /* const formulario = document.getElementById("formularioTrabajador")
-   formulario.addEventListener("submit", e => {
- 
-     e.preventDefault()
-     for (let element of e.target.children) {
-       console.log(element.children)
-     }
-   })
-   */
-
+    e.preventDefault()
+    const request = {}
+    for (let field of formulario.elements) {
+      let val
+      if (field.nodeName == "SELECT") {
+        val = field.options[field.selectedIndex].value
+      } else {
+        val = field.value
+      }
+      request[field.name] = val
+    }
+    console.log(request)
+    request.idCargo = Number.parseInt(request.idCargo)
+    request.idDiaPago = Number.parseInt(request.idDiaPago)
+    request.salario = Number.parseFloat(request.salario)
+    request.salarioPorHora = request.salario == "true"
+    fetch("/api/trabajador", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(request)
+    })
+      .then(res => res.json())
+      .then(result => console.log(result))
+      .catch(e => console.error(e))
+  })
 })()
 
 
