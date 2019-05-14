@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS ayLMAO ; 
-USE ayLMAO; 
+CREATE DATABASE IF NOT EXISTS sistema_nomina ; 
+USE sistema_nomina; 
 CREATE TABLE IF NOT EXISTS Empresa (
 	ruc varchar(50) not null,
     nombreEmpresa varchar(50) not null,
