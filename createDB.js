@@ -10,5 +10,6 @@ const db_name = ""
 // Script para crear base de datos
 db.query(fs.readFileSync('./dbscript.sql', 'utf-8'), (err, results, field) => {
   console.log(err)
+  console.log(results)
 })
 
