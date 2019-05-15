@@ -25,4 +25,11 @@ router.get("/login", async (req, res) => {
   res.sendFile(path.join(__dirname + '/../../public/login.html'))
 })
 
+router.get("/logout", async (req, res) => {
+  if (req.session) {
+    req.session.destroy()
+  }
+  res.send("Session Cerrada")
+})
+
 module.exports = router
