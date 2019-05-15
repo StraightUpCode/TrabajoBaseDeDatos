@@ -25,13 +25,29 @@ class QueryMaker {
     this.query += `Where ${atributo} = ${valor} `
     return this
   }
+  where(atributo) {
+    this.query += `Where ${atributo} `
+    return this
+  }
+  starts(string) {
+    this.query += `LIKE '${string}%' `
+    return this
+  }
+  includes(string) {
+    this.query += `Like '%${string}%' `
+    return this
+  }
+  ends(string) {
+    this.query += `Like '%${string}' `
+    return this
+  }
   not(atributo, valor) {
     this.query += `Where not ${atributo} = ${valor} `
     return this
   }
 
-  and(atributo, igualdad, valor) {
-    this.query += `And ${atributo} ${igualdad} ${valor} `
+  and() {
+    this.query += `And `
     return this
   }
 
