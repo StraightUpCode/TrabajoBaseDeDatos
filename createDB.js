@@ -3,7 +3,8 @@ const fs = require('fs')
 const db = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: '37292636',
+  password: '1102',
+  port: 3306,
   multipleStatements: true
 })
 const db_name = ""
