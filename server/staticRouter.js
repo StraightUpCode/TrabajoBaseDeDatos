@@ -10,17 +10,19 @@ router.use(express.static(path.join(__dirname, '../public')))
 router.use(checkAuthMiddleware)
 router.get('/', async (req, res) => {
   //res.sendFile(path.join(__dirname, '../public/index.html'))
-
-
+  res.redirect("/agregarTrabajador")
 
 })
 
-router.get('/agregarTrabajador', (req, res) => {
-  res.render('agregarTrabajador', {
+router.get('/agregarTrabajador', async (req, res) => {
+
+  console.log("Esperando")
+  res.render('intro', {
     admin: req.session.rol == 'admin',
     cargo: await commonQuerys.getCargos(),
     diaPago: await commonQuerys.getDiasPago()
   })
+
 })
 /*
 router.get('/', (req, res) => {
