@@ -18,6 +18,8 @@
     request.idDiaPago = Number.parseInt(request.idDiaPago)
     request.salario = Number.parseFloat(request.salario)
     request.salarioPorHora = request.salario == "true"
+    delete request.submit
+
     fetch("/api/trabajador", {
       method: 'POST',
       headers: {
@@ -26,7 +28,7 @@
       body: JSON.stringify(request)
     })
       .then(res => res.json())
-      .then(result => console.log(result))
+      .then(result => formulario.reset())
       .catch(e => console.error(e))
   })
 })()
