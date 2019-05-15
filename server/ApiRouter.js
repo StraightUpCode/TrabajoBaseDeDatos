@@ -17,8 +17,13 @@ router.get("/", (req, res) => res.send('Bienvenido al API , Documentacion en Con
 
 // Trabajadores
 router.get("/trabajador", async (req, res) => {
-  const [rows] = await db.query("Select * from Trabajador")
-  res.send(rows)
+  if (req.query && req.query.name) {
+    console.log(req.query.name)
+    res.send(await commonQuerys.getTrabajadorByName(req.query.name))
+  } else {
+    const [rows] = await db.query("Select * from Trabajador")
+    res.send(rows)
+  }
 })
 router.get("/trabajador/:id", async (req, res) => {
 
@@ -40,11 +45,13 @@ router.get("/trabajador/:id", async (req, res) => {
 
 router.post("/trabajador", async (req, res) => {
   const content = req.body
+  console.log(req)
   try {
+    console.log(content)
     const [rows] = await db.query(
       queryMaker.insert("Trabajador", content)
         .make())
-    res.send("Todo OK, todo Correcto")
+    res.send({ result: "Todo Ok Todo Correcto" })
   }
   catch (e) {
     res.send(e)
