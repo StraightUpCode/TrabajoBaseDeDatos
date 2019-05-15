@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS sistema_nomina ; 
-USE sistema_nomina; 
+CREATE DATABASE IF NOT EXISTS SISTEMA_NOMINA ; 
+USE SISTEMA_NOMINA; 
 CREATE TABLE IF NOT EXISTS Empresa (
 	ruc varchar(50) not null,
     nombreEmpresa varchar(50) not null,
@@ -149,9 +149,9 @@ CREATE TABLE IF NOT EXISTS User (
     idUser int auto_increment,
     username varchar(50) not null,
     password varchar(50) not null,
-    rol varchar(50) not null
+    rol varchar(50) not null,
     CONSTRAINT PK_User PRIMARY Key (idUser)
-)
+)ENGINE INNODB; 
 
 /* Llave Foranea en la tabla Vendedor*/
 Alter Table Vendedor
@@ -209,5 +209,5 @@ ALTER TABLE IngresoNoFijoVendedor
 	ADD CONSTRAINT FK_INF_Vendedor FOREIGN KEY (idIngresoNoFijo) REFERENCES IngresoNoFijo(idIngresoNoFijo);
 
 Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador");
-Insert into DiaDePago(diaPago) values(15), (30)
-Insert into User(username, password , rol) values ("root", "admin" , "admin";)
+Insert into DiaDePago(diaPago) values(15), (30) ;
+Insert into User(username, password , rol) values ("root", "admin" , "admin");

@@ -10,6 +10,12 @@ router.use(express.static(path.join(__dirname, '../public')))
 router.use(checkAuthMiddleware)
 router.get('/', async (req, res) => {
   //res.sendFile(path.join(__dirname, '../public/index.html'))
+  res.redirect("/agregarTrabajador")
+
+})
+
+router.get('/agregarTrabajador', async (req, res) => {
+
   console.log("Esperando")
   res.render('intro', {
     admin: req.session.rol == 'admin',
@@ -17,12 +23,6 @@ router.get('/', async (req, res) => {
     diaPago: await commonQuerys.getDiasPago()
   })
 
-
-})
-
-router.get('/agregarTrabajador', (req, res) => {
-  res.send("hay sesion")
-  //res.sendFile(path.join(__dirname, '../public/agregarTrabajador.html'))
 })
 /*
 router.get('/', (req, res) => {
