@@ -6,8 +6,9 @@ const getUser = async (user, password) => {
   const userQuery = queryMaker.select("*")
     .from("User")
     .equals("username", `"${user}"`)
-    .and("password", "=", `"${password}"`)
+    .andEquals("password", `"${password}"`)
     .make()
+  console.log(userQuery)
   const [rows] = await db.query(userQuery)
   console.log(rows)
   return rows[0]
