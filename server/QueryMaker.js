@@ -46,8 +46,8 @@ class QueryMaker {
     return this
   }
 
-  and() {
-    this.query += `And `
+  andEquals(atributo, valor) {
+    this.query += `And ${atributo} = ${valor} `
     return this
   }
 
