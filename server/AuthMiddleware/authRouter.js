@@ -13,8 +13,9 @@ router.post("/login", async (req, res) => {
     if (username === user.username && password === user.password) {
       req.session.rol = user.rol
       req.session.save()
-    }
+      
     res.redirect("/")
+    }
   } catch (e) {
     console.log(e)
   }
