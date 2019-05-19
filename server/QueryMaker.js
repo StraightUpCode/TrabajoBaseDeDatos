@@ -56,8 +56,12 @@ class QueryMaker {
     return this
   }
 
-  innerJoin(tablaAUnir, atributo, igualdad, atributo2) {
-    this.query += `inner join ${tablaAUnir} on ${atributo} ${igualdad} ${atributo2} `
+  innerJoin(tablaAUnir) {
+    this.query += `inner join ${tablaAUnir} `
+    return this
+  }
+  onEquals(atributo, atributo2) {
+    this.query += `on ${atributo} = ${atributo2} `
     return this
   }
 
