@@ -17,9 +17,41 @@ router.get("/", (req, res) => res.send('Bienvenido al API , Documentacion en Con
 
 // Trabajadores
 router.get("/trabajador", async (req, res) => {
-  if (req.query && req.query.name) {
-    console.log(req.query.name)
-    res.send(await commonQuerys.getTrabajadorByName(req.query.name))
+  if (req.query) {
+    if (req.query.name) {
+      res.send(await commonQuerys.getTrabajadorByName(req.query.name))
+    }
+    if (req.query.horario == 'true') {
+      const [rows] = await db.query(
+        queryMaker.select('Trabajador.idTrabajador', 'Trabajador.nombre', 'Horario.horaEntrada', 'Horario.horaSalida')
+          .from('Trabajador_Horario')
+          .innerJoin('Trabajador')
+          .onEquals('Trabajador.idTrabajador', 'Trabajador_Horario.idTrabajador')
+          .innerJoin('Horario')
+          .onEquals('Horario.idHorario', 'Trabajador_Horario.idHorario')
+          .make()
+      )
+
+      // TODO Convertir a FUncion propia
+      const data = []
+      let prev
+      for (const row of rows) {
+        console.log(row)
+        let curr = {}
+        const { idTrabajador, nombre, horaEntrada, horaSalida } = row
+        const horario = { horaEntrada, horaSalida }
+        curr = { idTrabajador, nombre, horario }
+        if (prev && prev.idTrabajador == curr.idTrabajador) {
+          const { horario } = prev
+          prev.horario = [horario, curr.horario]
+        } else {
+          data.push(curr)
+        }
+        prev = curr
+
+      }
+      console.log(data[0])
+    }
   } else {
     const [rows] = await db.query("Select * from Trabajador")
     res.send(rows)
@@ -82,7 +114,8 @@ router.post("/trabajador/form", async (req, res) => {
 router.get("/vendedor", async (req, res) => {
   let leQuery = queryMaker.select("*")
     .from("Vendedor")
-    .innerJoin("Trabajador", "Vendedor.idTrabajador", "=", "Trabajador.idTrabajador")
+    .innerJoin("Trabajador")
+    .onEquals("Trabajador.idTrabajador", "Vendedor.idTrabajador")
     .make()
   try {
     const [rows] = await db.query(leQuery)
