@@ -23,7 +23,7 @@ router.get("/trabajador", async (req, res) => {
     }
     if (req.query.horario == 'true') {
       const [rows] = await db.query(
-        queryMaker.select('Trabajador.idTrabajador', 'Trabajador.nombre', 'Horario.horaEntrada', 'Horario.horaSalida')
+        queryMaker.select('Trabajador.idTrabajador', 'Trabajador.nombre', 'Trabajador.apellido', 'Horario.horaEntrada', 'Horario.horaSalida')
           .from('Trabajador_Horario')
           .innerJoin('Trabajador')
           .onEquals('Trabajador.idTrabajador', 'Trabajador_Horario.idTrabajador')
@@ -38,9 +38,9 @@ router.get("/trabajador", async (req, res) => {
       for (const row of rows) {
         console.log(row)
         let curr = {}
-        const { idTrabajador, nombre, horaEntrada, horaSalida } = row
+        const { idTrabajador, nombre, apellido, horaEntrada, horaSalida } = row
         const horario = { horaEntrada, horaSalida }
-        curr = { idTrabajador, nombre, horario }
+        curr = { idTrabajador, nombre, apellido, horario }
         if (prev && prev.idTrabajador == curr.idTrabajador) {
           const { horario } = prev
           prev.horario = [horario, curr.horario]
@@ -50,7 +50,8 @@ router.get("/trabajador", async (req, res) => {
         prev = curr
 
       }
-      console.log(data[0])
+      console.log(...data)
+      res.send(data)
     }
   } else {
     const [rows] = await db.query("Select * from Trabajador")
