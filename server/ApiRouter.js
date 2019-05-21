@@ -36,7 +36,7 @@ router.get("/trabajador", async (req, res) => {
       const data = []
       let prev
       for (const row of rows) {
-        console.log(row)
+
         let curr = {}
         const { idTrabajador, nombre, horaEntrada, horaSalida } = row
         const horario = { horaEntrada, horaSalida }
@@ -50,7 +50,9 @@ router.get("/trabajador", async (req, res) => {
         prev = curr
 
       }
-      console.log(data[0])
+      console.log(data)
+      res.send(data)
+
     }
   } else {
     const [rows] = await db.query("Select * from Trabajador")
