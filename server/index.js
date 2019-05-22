@@ -5,6 +5,7 @@ require('dotenv').config()
 const express = require('express')
 const exphdb = require('express-handlebars')
 const path = require('path')
+const cors = require('cors')
 
 // local files
 const apiRouter = require('./ApiRouter.js')
@@ -24,7 +25,7 @@ console.log(app.settings)
 app.set('view engine', '.hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(sessions)
-
+app.use(cors())
 // Routers
 app.use("/api", apiRouter)
 app.use(authRouter)

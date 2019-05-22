@@ -17,7 +17,7 @@
     request.idCargo = Number.parseInt(request.idCargo)
     request.idDiaPago = Number.parseInt(request.idDiaPago)
     request.salario = Number.parseFloat(request.salario)
-    request.salarioPorHora = request.salario == "true"
+    request.salarioPorHora = request.salarioPorHora == "true"
     delete request.submit
 
     fetch("/api/trabajador", {
