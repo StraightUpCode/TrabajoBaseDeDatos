@@ -9,5 +9,4 @@ const checkAuth = async (req, res) => {
   }
 
 }
-
 module.exports = checkAuth
