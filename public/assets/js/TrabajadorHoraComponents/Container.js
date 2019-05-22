@@ -1,35 +1,9 @@
 import { Component, h } from 'preact'
 import linkState from 'linkstate'
+import ElementoTrabajador from './ElementoTrabajador';
 
 
-const elementoTrabajador = ({ trabajador }) => {
-  const { horario } = trabajador
-  console.log("Elemeento Trabajador")
-  return (
-    <div>
-      <div class="header">
-        <span>{trabajador.nombre} {trabajador.apellido}</span>
-        <button > Mostrar Horario </button>
-      </div>
-      <div class="horarios" >
-        <table>
-          <thead>
-            <th> Hora Entrada
-            </th>
-            <th> Hora Salida
-            </th>
-          </thead>
-          <tbody>
-            {horario.map(el => <tr>
-              <td>{el.horaEntrada}</td>
-              <td>{el.horaSalida}</td>
-            </tr>)}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )
-}
+
 
 
 class Container extends Component {
@@ -92,17 +66,17 @@ class Container extends Component {
     this.setState({ idTrabajador: e.target.value, nombreTrabajador: e.target.label })
   }
   render(props, { nombreTrabajador, busquedaTrabajadores, listaTrabajadores }) {
-    console.log(busquedaTrabajadores)
-    console.log(listaTrabajadores)
+
     return (
-      <div>
+      <div >
 
         <input placeholder="Buscar" value={nombreTrabajador} onInput={linkState(this, 'nombreTrabajador')} ></input>
         {busquedaTrabajadores.map(el =>
           <option value={el.idTrabajador} onClick={this.getTrabajadorId.bind(this)}> {`${el.nombre} ${el.apellido}`}</option>)}
         <div>
           <h2> Trabajadores </h2>
-          {listaTrabajadores.map(el => elementoTrabajador({ trabajador: el }))}
+          {listaTrabajadores.map(el => <ElementoTrabajador trabajador={el} />)
+          }
         </div>
 
 
@@ -111,7 +85,6 @@ class Container extends Component {
   }
 }
 
-//const ElementoBuscar = ({ linkValue, clickHandler })
 
 
 export default Container
