@@ -6,4 +6,4 @@ module.exports = {
   getCargos,
   getDiasPago,
   ...querysTrabajador
-}
+} ha fuck
