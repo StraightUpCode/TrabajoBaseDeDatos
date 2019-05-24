@@ -13,13 +13,16 @@
       }
       request[field.name] = val
     }
-    console.log(request)
     request.idCargo = Number.parseInt(request.idCargo)
     request.idDiaPago = Number.parseInt(request.idDiaPago)
     request.salario = Number.parseFloat(request.salario)
     request.salarioPorHora = request.salarioPorHora == "true"
     delete request.submit
 
+    console.log(request)
+
+    
+    /*
     fetch("/api/trabajador", {
       method: 'POST',
       headers: {
@@ -30,7 +33,7 @@
       .then(res => res.json())
       .then(result => formulario.reset())
       .catch(e => console.error(e))
+      */
   })
-})()
 
-
+})() 
