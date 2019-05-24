@@ -1,13 +1,15 @@
 import { Component, h } from "preact";
-
+import FormularioTrabajador from './FormularioTrabajador'
 
 class ElementoTrabajador extends Component {
   constructor() {
     super()
     this.state = {
-      showHorario: false
+      showHorario: false,
+      showPopUpTrabajador: false
     }
     this.mostrarHorario = this.mostrarHorario.bind(this)
+    this.mostrarTrabajadorEditable = this.mostrarTrabajadorEditable.bind(this)
   }
   componentDidMount() {
     console.log("Elemento Trabajador")
@@ -18,15 +20,22 @@ class ElementoTrabajador extends Component {
     )
   }
 
-  render({ trabajador: { nombre, apellido, horario } }, { showHorario }) {
+  mostrarTrabajadorEditable() {
+    this.setState(prevState =>
+      ({ showPopUpTrabajador: !prevState.showPopUpTrabajador })
+    )
+  }
+
+  render({ trabajador: { idTrabajador, nombre, apellido, horario } },
+    { showHorario, showPopUpTrabajador }) {
     console.log(nombre)
     return (
       <div>
         <div class="header">
           <span>{nombre} {apellido}</span>
-          <button onClick={this.mostrarHorario}> Mostrar Horario </button>
           <div>
-            Editar
+            <div onClick={this.mostrarHorario}>Mostrar Horario</div>
+            <div onClick={this.mostrarTrabajadorEditable} >Editar</div>
           </div>
         </div>
         {
@@ -46,6 +55,13 @@ class ElementoTrabajador extends Component {
                   </tr>)}
                 </tbody>
               </table>
+            </div>
+          ) : null
+        }
+        {
+          showPopUpTrabajador ? (
+            <div>
+              <FormularioTrabajador idTrabajador={idTrabajador} />
             </div>
           ) : null
         }
