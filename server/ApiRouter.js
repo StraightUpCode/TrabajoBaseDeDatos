@@ -22,6 +22,7 @@ router.get("/trabajador", async (req, res) => {
       res.send(await commonQuerys.getTrabajadorByName(req.query.name))
     }
     if (req.query.horario == 'true') {
+      console.lod("Query con Horario")
       const [rows] = await db.query(
         queryMaker.select('Trabajador.idTrabajador', 'Trabajador.nombre', 'Trabajador.apellido', 'Horario.horaEntrada', 'Horario.horaSalida')
           .from('Trabajador_Horario')
@@ -55,14 +56,19 @@ router.get("/trabajador", async (req, res) => {
       res.send(data)
 
     }
-  } else {
-    const [rows] = await db.query("Select * from Trabajador")
-    res.send(rows)
+
+    if (Object.keys(req.query).length === 0) {
+      const [rows] = await db.query("Select * from Trabajador")
+      res.send(rows)
+    }
+    res.send("Ay LMAO")
+
   }
 })
 router.get("/trabajador/:id", async (req, res) => {
 
   try {
+    console.log("Con Id")
     const id = req.params.id
 
     const [rows] = await db.query(queryMaker.select("*")
@@ -151,4 +157,5 @@ router.get("/diasDePago", async (req, res) => {
     res.send(e)
   }
 })
+
 module.exports = router
