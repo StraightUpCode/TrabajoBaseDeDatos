@@ -6,6 +6,7 @@ class FormularioTrabajador extends Component {
     this.state = {
       cargos: [],
       diasDePago: [],
+      frecuenciaDePago: [],
       infoTrabajador: {
 
       }
@@ -17,10 +18,14 @@ class FormularioTrabajador extends Component {
       .then(res => res.json())
       .then(data => this.setState({ infoTrabajador: data[0] }))
       .catch(e => console.error(e))
-    fetch(`http://localhost:3000/api/cargos`)
+
+    fetch(`http://localhost:3000/api/cargo`)
       .then(res => res.json())
-      .then(data => this.setState({ cargos: data }))
+      .then(data => {
+        this.setState({ cargos: data })
+      })
       .catch(e => console.error(e))
+
     fetch(`http://localhost:3000/api/diasDePago`)
       .then(res => res.json())
       .then(data => this.setState({ diasDePago: data }))
@@ -29,21 +34,8 @@ class FormularioTrabajador extends Component {
   }
 
 
-  render(props, { cargos, diasDePago, infoTrabajador }) {
+  render(props, { cargos, diasDePago, frecuenciaDePago, infoTrabajador }) {
 
-    console.log(infoTrabajador)
-    /*
-    apellido: "Sanchez"
-cedula: "1234D"
-fechaDeContratacion: "2019-05-17T06:00:00.000Z"
-frecuenciaDePago: null
-idCargo: 1
-idDiaPago: 1
-idTrabajador: 1
-nombre: "Roberto"
-salario: "12340.00"
-salarioPorHora: 0
-    */
     return (
       <form>
         <input type="text" name="nombre" value={infoTrabajador.nombre}></input>
@@ -64,10 +56,18 @@ salarioPorHora: 0
         </select>
 
         <label>Salario Base:</label>
-        <input type="number" name="salario" placeholder="Salario" max="1000000"></input>
+        <input type="number" value={infoTrabajador.salario} name="salario" placeholder="Salario" max="1000000"></input>
 
         <label>Fecha Pago:</label>
         <select id="fechaPagos" name="idDiaPago">
+          {diasDePago.map(e => e.idCargo == infoTrabajador.idTrabajador ?
+            <option selected="selected" value={e.idDia_de_Pago}>{e.diaPago}</option> : <option value={e.idDia_de_Pago}> {e.diaPago}</option>)}
+        </select>
+        <label>
+          Frecuencia de Pago
+        </label>
+        <select id="frecuenciaDePagos" name="idFrecuenciaDePago">
+          {frecuenciaDePago.map(el => <option value={el.idFrecuenciaDePag}>{el.nombre}</option>)}
         </select>
       </form>
     )
