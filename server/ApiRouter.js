@@ -61,7 +61,6 @@ router.get("/trabajador", async (req, res) => {
       const [rows] = await db.query("Select * from Trabajador")
       res.send(rows)
     }
-    res.send("Ay LMAO")
 
   }
 })
