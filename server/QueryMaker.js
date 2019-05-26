@@ -55,6 +55,10 @@ class QueryMaker {
     this.query += `Order by ${atributo} `
     return this
   }
+  leftJoin(tablaAUnir) {
+    this.query += `left join ${tablaAUnir} `
+    return this
+  }
 
   innerJoin(tablaAUnir) {
     this.query += `inner join ${tablaAUnir} `
