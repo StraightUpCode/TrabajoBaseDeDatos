@@ -208,6 +208,14 @@ ALTER TABLE Aguinaldo
 ALTER TABLE IngresoNoFijoVendedor
 	ADD CONSTRAINT FK_INF_Vendedor FOREIGN KEY (idIngresoNoFijo) REFERENCES IngresoNoFijo(idIngresoNoFijo);
 
+Insert into User(username, password , rol) values ("root", "admin" , "admin");
+/* Mock Data */ 
+Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) 
+values("Roberto","Sanchez",1,"320810991004k",2500.25,FALSE,"2019-05-02",1,1);
+Insert into FrecuenciaDePago(nombre) values ("Mensual") , ("Quincenal");
 Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador");
 Insert into DiaDePago(diaPago) values(15), (30) ;
-Insert into User(username, password , rol) values ("root", "admin" , "admin");
+Insert into Horario(horaEntrada, horaSalida) values('7:00','12:00'), ('1:00','5:00');
+insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2);
+
+/*  End Mock Data  */
