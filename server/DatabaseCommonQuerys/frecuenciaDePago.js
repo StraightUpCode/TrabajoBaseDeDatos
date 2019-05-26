@@ -8,5 +8,4 @@ const getFrecuenciaDePago = resultFactory(
     .make()
 )
 
-console.log(getFrecuenciaDePago())
 module.exports = getFrecuenciaDePago
