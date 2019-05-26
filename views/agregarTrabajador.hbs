@@ -62,6 +62,14 @@
       </select>
     </div>
     <br>
+    <div>
+      <label>Frecuencia de Pago</label>
+      <select id="frecuenciaPago" name="idDiaPago">
+        {{#each frecuenciaDePago}}
+        <option value="{{idFrecuenciaDePago}}">{{nombre}}</option>
+        {{/each}}
+      </select>
+    </div>
     <!--  <div>
                     <textarea name="observaciones" id="obsTrabajador" cols="10" rows="5"
                         placeholder='informacion adicional'></textarea>

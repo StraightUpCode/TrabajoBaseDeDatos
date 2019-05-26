@@ -18,7 +18,8 @@ router.get('/agregarTrabajador', async (req, res) => {
   res.render('agregarTrabajador', {
     admin: req.session.rol == 'admin',
     cargo: await commonQuerys.getCargos(),
-    diaPago: await commonQuerys.getDiasPago()
+    diaPago: await commonQuerys.getDiasPago(),
+    frecuenciaDePago: await commonQuerys.getFrecuenciaDePago()
   })
 
 })
