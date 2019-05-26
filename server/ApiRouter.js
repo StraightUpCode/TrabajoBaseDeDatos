@@ -17,46 +17,45 @@ router.get("/", (req, res) => res.send('Bienvenido al API , Documentacion en Con
 
 // Trabajadores
 router.get("/trabajador", async (req, res) => {
-  if (req.query) {
-    if (req.query.name) {
-      res.send(await commonQuerys.getTrabajadorByName(req.query.name))
-    }
-    if (req.query.horario == 'true') {
-      console.log("Query con Horario")
-      const [rows] = await db.query(
-        queryMaker.select('Trabajador.idTrabajador', 'Trabajador.nombre', 'Trabajador.apellido', 'Horario.horaEntrada', 'Horario.horaSalida')
-          .from('Trabajador')
-          .leftJoin('Trabajador_Horario')
-          .onEquals('Trabajador.idTrabajador', 'Trabajador_Horario.idTrabajador')
-          .leftJoin('Horario')
-          .onEquals('Horario.idHorario', 'Trabajador_Horario.idHorario')
-          .make()
-      )
+  if (req.query.name) {
+    res.send(await commonQuerys.getTrabajadorByName(req.query.name))
+  }
+  if (req.query.horario == 'true') {
+    console.log("Query con Horario")
+    const [rows] = await db.query(
+      queryMaker.select('Trabajador.idTrabajador', 'Trabajador.nombre', 'Trabajador.apellido', 'Horario.horaEntrada', 'Horario.horaSalida')
+        .from('Trabajador')
+        .leftJoin('Trabajador_Horario')
+        .onEquals('Trabajador.idTrabajador', 'Trabajador_Horario.idTrabajador')
+        .leftJoin('Horario')
+        .onEquals('Horario.idHorario', 'Trabajador_Horario.idHorario')
+        .make()
+    )
 
-      // TODO Convertir a FUncion propia
-      const data = []
-      let prev
-      for (const row of rows) {
-        console.log(row)
-        let curr = {}
-        const { idTrabajador, nombre, apellido, horaEntrada, horaSalida } = row
-        const horario = [{ horaEntrada, horaSalida }]
-        curr = { idTrabajador, nombre, apellido, horario }
-        if (prev && prev.idTrabajador == curr.idTrabajador) {
-          const { horario } = prev
-          prev.horario = [...horario, ...curr.horario]
-        } else {
-          console.log(`Current :`)
-          console.log(curr)
-          data.push(curr)
-        }
-        prev = curr
-
+    // TODO Convertir a FUncion propia
+    const data = []
+    let prev
+    for (const row of rows) {
+      console.log(row)
+      let curr = {}
+      const { idTrabajador, nombre, apellido, horaEntrada, horaSalida } = row
+      const horario = [{ horaEntrada, horaSalida }]
+      curr = { idTrabajador, nombre, apellido, horario }
+      if (prev && prev.idTrabajador == curr.idTrabajador) {
+        const { horario } = prev
+        prev.horario = [...horario, ...curr.horario]
+      } else {
+        console.log(`Current :`)
+        console.log(curr)
+        data.push(curr)
       }
-      console.log(...data)
-      res.send(data)
+      prev = curr
+
     }
-  } else {
+    console.log(...data)
+    res.send(data)
+  }
+  if (Object.keys(req.query) == 0) {
     const [rows] = await db.query("Select * from Trabajador")
     res.send(rows)
   }
@@ -159,7 +158,6 @@ router.get("/diasDePago", async (req, res) => {
 router.get("/frecuenciaDePago", async (req, res) => {
 
   try {
-    console.log("api")
     const result = await commonQuerys.getFrecuenciaDePago()
     console.log("Despues del query")
     console.log(await commonQuerys.getFrecuenciaDePago())
