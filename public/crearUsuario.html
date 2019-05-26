@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <title>Ingresar Usuario</title>
+     
+</head>
+<body>
+    <header>
+        <h1 >Empresa X </h1>
+        <H2>AGREGAR UN NUEVO USUARIO</H2>
+    </header>
+    <section>
+        <form id="u" method="POST" >
+        <div>
+            <label for="TYPEOF">Tipo de usuario</label>
+            <select name="cargos" id="typeuser">
+                <option value="RRHH">RRHH</option>
+                <option value="admin">Administrador</option>
+                <option value="temp">Temporal</option>
+                <option value="contador">Contador de horas</option>
+            </select>
+        </div>
+        <div>
+            <label for="username">Nombre de Usuario:</label>
+            <input name="username" type="text" placeholder="Nombre de usuario">
+        </div>
+        <div>
+            <label for="contrasena">Cree una contrase&ntilde;a:</label>
+            <input name="contrasena" type="password" placeholder="contrase&ntilde;a">
+        </div>
+        <div>
+            <input type="submit" onclick="mensaje()">
+        </div>
+        
+        </form>
+    </section>
+    <script src="./assets/js/ingresarUsuario.js"></script>
+</body>
+</html>
