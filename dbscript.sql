@@ -226,4 +226,8 @@ Insert into DiaDePago(diaPago) values(15), (30) ;
 Insert into Horario(horaEntrada, horaSalida) values('7:00','12:00'), ('1:00','5:00');
 insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2);
 
+<<<<<<< HEAD
 /*  End Mock Data  */
+=======
+/*  End Mock Data  */
+>>>>>>> adc90e940ec9b7a85995a32288798156fe1d6e2f

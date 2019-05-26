@@ -8,4 +8,8 @@ module.exports = {
   getDiasPago,
   ...querysTrabajador,
   getFrecuenciaDePago
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> adc90e940ec9b7a85995a32288798156fe1d6e2f

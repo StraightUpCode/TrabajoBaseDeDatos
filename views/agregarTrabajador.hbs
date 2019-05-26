@@ -45,15 +45,14 @@
     </div>
     <div>
       <label>Pago:</label>
-      <select name="salarioPorHora">
-        <option value="false">Mensual</option>
-        <option value="true">Hora</option>
+      <select name="frecuenciaDePago">
+        <option value="Mensual">Mensual</option>
+        <option value="Quincenal">Quincenal</option>
       </select>
     </div>
-    <div>
-      <label>Salario Base:</label>
-      <input type="number" name="salario" placeholder="Salario" max="1000000">
-    </div>
+    <label>Salario Base:</label>
+    <input type="number" name="salario" placeholder="Salario" max="1000000">
+    <input type="radio" name="salarioPorHora" value="true">Salario por Hora</input> </div>
     <div>
       <label>Fecha Pago:</label>
       <select id="fechaPagos" name="idDiaPago">
