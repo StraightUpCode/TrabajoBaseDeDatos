@@ -31,6 +31,14 @@ class FormularioTrabajador extends Component {
       .then(data => this.setState({ diasDePago: data }))
       .catch(e => console.error(e))
 
+    fetch(`http://localhost:3000/api/frecuenciaDePago`)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          frecuenciaDePago: data
+        })
+      })
+      .catch(e => console.log(e))
   }
 
 
@@ -67,7 +75,7 @@ class FormularioTrabajador extends Component {
           Frecuencia de Pago
         </label>
         <select id="frecuenciaDePagos" name="idFrecuenciaDePago">
-          {frecuenciaDePago.map(el => <option value={el.idFrecuenciaDePag}>{el.nombre}</option>)}
+          {frecuenciaDePago.map(el => el.idFrecuenciaDePago == infoTrabajador.idFrecuenciaDePago ? <option selected="selected" value={el.idFrecuenciaDePago} > {el.nombre}</option> : <option value={el.idFrecuenciaDePago}>{el.nombre}</option>)}
         </select>
       </form>
     )
