@@ -22,13 +22,13 @@ router.get("/trabajador", async (req, res) => {
       res.send(await commonQuerys.getTrabajadorByName(req.query.name))
     }
     if (req.query.horario == 'true') {
-      console.lod("Query con Horario")
+      console.log("Query con Horario")
       const [rows] = await db.query(
         queryMaker.select('Trabajador.idTrabajador', 'Trabajador.nombre', 'Trabajador.apellido', 'Horario.horaEntrada', 'Horario.horaSalida')
-          .from('Trabajador_Horario')
-          .innerJoin('Trabajador')
+          .from('Trabajador')
+          .leftJoin('Trabajador_Horario')
           .onEquals('Trabajador.idTrabajador', 'Trabajador_Horario.idTrabajador')
-          .innerJoin('Horario')
+          .leftJoin('Horario')
           .onEquals('Horario.idHorario', 'Trabajador_Horario.idHorario')
           .make()
       )
@@ -40,12 +40,14 @@ router.get("/trabajador", async (req, res) => {
 
         let curr = {}
         const { idTrabajador, nombre, apellido, horaEntrada, horaSalida } = row
-        const horario = { horaEntrada, horaSalida }
+        const horario = [{ horaEntrada, horaSalida }]
         curr = { idTrabajador, nombre, apellido, horario }
         if (prev && prev.idTrabajador == curr.idTrabajador) {
           const { horario } = prev
-          prev.horario = [horario, curr.horario]
+          prev.horario = [...horario, ...curr.horario]
         } else {
+          console.log(`Current :`)
+          console.log(curr)
           data.push(curr)
         }
         prev = curr
@@ -157,4 +159,19 @@ router.get("/diasDePago", async (req, res) => {
   }
 })
 
+
+//Frecuencia de Pago
+
+router.get("/frecuenciaDePago", async (req, res) => {
+
+  try {
+    console.log("api")
+    const result = await commonQuerys.getFrecuenciaDePago()
+    console.log("Despues del query")
+    console.log(await commonQuerys.getFrecuenciaDePago())
+    res.send(result)
+  } catch (e) {
+    res.send(e)
+  }
+})
 module.exports = router
