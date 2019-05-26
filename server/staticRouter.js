@@ -3,11 +3,9 @@ const path = require('path')
 const db = require('./dbConnection')
 const queryMaker = require('./testrandom')
 const router = express.Router()
-const checkAuthMiddleware = require('./AuthMiddleware/checkAuth')
 const commonQuerys = require('./DatabaseCommonQuerys/DatabaseCommonQuerys')
 
 router.use(express.static(path.join(__dirname, '../public')))
-router.use(checkAuthMiddleware)
 router.get('/', async (req, res) => {
   //res.sendFile(path.join(__dirname, '../public/index.html'))
   res.redirect("/agregarTrabajador")
