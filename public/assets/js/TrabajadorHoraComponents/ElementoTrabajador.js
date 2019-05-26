@@ -26,13 +26,15 @@ class ElementoTrabajador extends Component {
     )
   }
 
+
+
   render({ trabajador: { idTrabajador, nombre, apellido, horario } },
     { showHorario, showPopUpTrabajador }) {
     console.log(nombre)
     return (
       <div>
         <div class="header">
-          <span>{nombre} {apellido}</span>
+          <div >{nombre} {apellido}</div>
           <div>
             <div onClick={this.mostrarHorario}>Mostrar Horario</div>
             <div onClick={this.mostrarTrabajadorEditable} >Editar</div>
