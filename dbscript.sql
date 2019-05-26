@@ -1,11 +1,18 @@
 CREATE DATABASE IF NOT EXISTS SISTEMA_NOMINA ; 
 USE SISTEMA_NOMINA; 
+
 CREATE TABLE IF NOT EXISTS Empresa (
 	ruc varchar(50) not null,
     nombreEmpresa varchar(50) not null,
     direccionEmpresa varchar(50) not null,
     telefono varchar(14) not null
 ) ENGINE INNODB;
+
+CREATE TABLE IF NOT EXISTS FrecuenciaDePago (
+	idFrecuenciaDePago int auto_increment not null,
+    nombre varchar(25) not null,
+    CONSTRAINT PK_FrecuenciaDePago Primary Key (idFrecuenciaDePago)
+)ENGINE INNODB; 
 
 CREATE TABLE IF NOT EXISTS Trabajador (
 	idTrabajador int auto_increment not null,
@@ -17,6 +24,7 @@ CREATE TABLE IF NOT EXISTS Trabajador (
     salarioPorHora bool not null,
     fechaDeContratacion date not null,
     idDiaPago int not null, /* FK de Dia de Pago */ 
+    idFrecuenciaDePago int not null, /* FK Frecuencia de Pago */
     CONSTRAINT PK_Trabajador PRIMARY KEY (idTrabajador)
 ) ENGINE INNODB ;
 
@@ -33,6 +41,7 @@ CREATE TABLE IF NOT EXISTS Horas_Trabajador (
     mes int not null, 
     horasTrabajadas numeric(4,1) not null,
     horasExtras numeric(4,1) not null,
+    
     CONSTRAINT PK_Hora_Trabajador PRIMARY KEY (idHoraTrabajador)
 )ENGINE INNODB; 
 CREATE TABLE IF NOT EXISTS MarcadoHorario (
@@ -65,9 +74,9 @@ nombre varchar(25) not null,
 constraint PK_Cargo primary key (idCargo)
 )ENGINE INNODB;
 CREATE TABLE IF NOT EXISTS DiaDePago (
-idDia_de_Pago int not null auto_increment,
+idDiaDePago int not null auto_increment,
 diaPago int not null,
-constraint PK_Dia_de_pago primary key ( idDia_de_Pago)
+constraint PK_Dia_de_pago primary key ( idDiaDePago)
 )ENGINE INNODB;
 CREATE TABLE IF NOT EXISTS Prestamo (
 idPrestamo int not null auto_increment,
@@ -161,10 +170,9 @@ ALTER TABLE Horas_Trabajador
 	ADD CONSTRAINT FK_HT_Trabajadro FOREIGN KEY (idTrabajador) REFERENCES Trabajador(idTrabajador);
 /* Llaves Foraneas en la Tabla Trabajador */
 Alter Table Trabajador
-	ADD CONSTRAINT FK_Trabajador_Cargo FOREIGN Key (idCargo) REFERENCES Cargo(idCargo);
-
-Alter Table Trabajador
-	ADD CONSTRAINT FK_Trabajador_DiaDePago FOREIGN Key (idDiaPago) REFERENCES DiaDePago(idDia_De_Pago);
+	ADD CONSTRAINT FK_Trabajador_Cargo FOREIGN Key (idCargo) REFERENCES Cargo(idCargo),
+    ADD CONSTRAINT FK_Trabajador_FrecuenciaDePago FOREIGN KEY (idFrecuenciaDePago) REFERENCES FrecuenciaDePago(idFrecuenciaDePago),
+    	ADD CONSTRAINT FK_Trabajador_DiaDePago FOREIGN Key (idDiaPago) REFERENCES DiaDePago(idDiaDePago);
 
 /* Llaves Foreaneas MarcadoHorario*/ 
 Alter Table MarcadoHorario
@@ -210,12 +218,13 @@ ALTER TABLE IngresoNoFijoVendedor
 
 Insert into User(username, password , rol) values ("root", "admin" , "admin");
 /* Mock Data */ 
-Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) 
-values("Roberto","Sanchez",1,"320810991004k",2500.25,FALSE,"2019-05-02",1,1);
 Insert into FrecuenciaDePago(nombre) values ("Mensual") , ("Quincenal");
 Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador");
 Insert into DiaDePago(diaPago) values(15), (30) ;
 Insert into Horario(horaEntrada, horaSalida) values('7:00','12:00'), ('1:00','5:00');
+Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) 
+values("Roberto","Sanchez",1,"320810991004k",2500.25,FALSE,"2019-05-02",1,1);
 insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2);
+
 
 /*  End Mock Data  */
