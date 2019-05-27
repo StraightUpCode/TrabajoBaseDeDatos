@@ -166,4 +166,17 @@ router.get("/frecuenciaDePago", async (req, res) => {
     res.send(e)
   }
 })
+
+// User
+router.post("/user/create", async (req, res) => {
+
+  try {
+    console.log("User Create")
+    const infoUser = req.body
+    res.send(await commonQuerys.insertUser(infoUser))
+  } catch (e) {
+    res.send(e)
+  }
+})
+
 module.exports = router
