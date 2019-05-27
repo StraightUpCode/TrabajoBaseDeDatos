@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS Empresa (
     telefono varchar(14) not null
 ) ENGINE INNODB;
 
+
 CREATE TABLE IF NOT EXISTS FrecuenciaDePago (
 	idFrecuenciaDePago int auto_increment not null,
     nombre varchar(25) not null,
@@ -158,9 +159,18 @@ CREATE TABLE IF NOT EXISTS User (
     idUser int auto_increment,
     username varchar(50) not null,
     password varchar(50) not null,
-    rol varchar(50) not null,
+    idRol  int not null,
     CONSTRAINT PK_User PRIMARY Key (idUser)
 )ENGINE INNODB; 
+
+CREATE TABLE IF NOT EXISTS Rol (
+    idRol int auto_increment,
+    nombre varchar(50) not null,
+    CONSTRAINT PK_Rol PRIMARY KEY (idRol)
+)ENGINE INNODB;
+/* Llabe Foranea Usuario */
+Alter Table User 
+    ADD CONSTRAINT FK_User_Rol FOREIGN KEY (idRol) REFERENCES Rol(idRol);
 
 /* Llave Foranea en la tabla Vendedor*/
 Alter Table Vendedor
@@ -216,7 +226,8 @@ ALTER TABLE Aguinaldo
 ALTER TABLE IngresoNoFijoVendedor
 	ADD CONSTRAINT FK_INF_Vendedor FOREIGN KEY (idIngresoNoFijo) REFERENCES IngresoNoFijo(idIngresoNoFijo);
 
-Insert into User(username, password , rol) values ("root", "admin" , "admin");
+Insert into Rol (nombre) values("admin");
+Insert into User(username, password , idRol) values ("root", "admin" , 1);
 /* Mock Data */ 
 Insert into FrecuenciaDePago(nombre) values ("Mensual") , ("Quincenal");
 Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador");
