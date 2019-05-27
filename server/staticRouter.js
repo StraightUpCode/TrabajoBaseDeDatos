@@ -24,6 +24,11 @@ router.get('/agregarTrabajador', async (req, res) => {
   })
 
 })
+router.get('/trabajadorHoras', async (req, res) => {
+  res.render('trabajadorHoras', {
+    admin: req.session.rol == 'admin'
+  })
+})
 /*
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'))
