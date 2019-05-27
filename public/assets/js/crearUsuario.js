@@ -1,18 +1,36 @@
-    const formulario= document.getElementById("u");
-    formulario.addEventListener("submit",e=>{
-        e.preventDefault();
-        const request = {};
-        for(let campo of formulario.elements)
-            {
-                if(campo.name)
-                {let val;
-                console.log(campo.name);
-                if (campo.nodeName == "SELECT") 
-                {val = campo.options[campo.selectedIndex].value;
-                } else 
-                {val = campo.value}
-                request[campo.name] = val;}
+const formulario = document.getElementById("u");
+formulario.addEventListener("submit", e => {
+    e.preventDefault();
+    const request = {};
+    for (let campo of formulario.elements) {
+        // Obtener los valores del formulario
+        /*
+        idRol , 
+        username,
+        password
+        */
+        if (campo.name) {
+            let val;
+            console.log(campo.name);
+            if (campo.nodeName == "SELECT") {
+                val = campo.options[campo.selectedIndex].value; // si es select
+            } else {
+                val = campo.value // Si es input 
             }
-        console.log(request);
+            request[campo.name] = val;
+        }
+    }
+    console.log("ay lmao")
+    request.idRol = Number.parseInt(request.idRol) || 1 // idRol es un int
 
-     })
+    fetch("api/user/create", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(request)
+    })
+        .then(res => console.log(res))
+        .catch()
+
+})
