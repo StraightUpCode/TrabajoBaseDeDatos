@@ -63,6 +63,7 @@ router.get("/trabajador", async (req, res) => {
 router.get("/trabajador/:id", async (req, res) => {
 
   try {
+    console.log("Con Id")
     const id = req.params.id
 
     const [rows] = await db.query(queryMaker.select("*")
