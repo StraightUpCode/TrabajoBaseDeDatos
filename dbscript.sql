@@ -8,7 +8,10 @@ CREATE TABLE IF NOT EXISTS Empresa (
     telefono varchar(14) not null
 ) ENGINE INNODB;
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> ccaaec2d3efd4a9210efaee9b24a439efcf0e83e
 CREATE TABLE IF NOT EXISTS FrecuenciaDePago (
 	idFrecuenciaDePago int auto_increment not null,
     nombre varchar(25) not null,
@@ -233,6 +236,8 @@ Insert into FrecuenciaDePago(nombre) values ("Mensual") , ("Quincenal");
 Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador");
 Insert into DiaDePago(diaPago) values(15), (30) ;
 Insert into Horario(horaEntrada, horaSalida) values('7:00','12:00'), ('1:00','5:00');
+insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2);
 Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) 
 values("Roberto","Sanchez",1,"320810991004k",2500.25,FALSE,"2019-05-02",1,1);
 insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2);
+/*  End Mock Data  */
