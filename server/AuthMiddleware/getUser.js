@@ -3,15 +3,16 @@ const QueryMaker = require('../QueryMaker')
 const queryMaker = new QueryMaker();
 
 const getUser = async (user, password) => {
-  const userQuery = queryMaker.select("*")
+  const userQuery = queryMaker.select("User.username", "User.password", "Rol.nombre AS rol")
     .from("User")
+    .innerJoin("Rol")
+    .onEquals("User.idRol", "Rol.idRol")
     .equals("username", `"${user}"`)
     .andEquals("password", `"${password}"`)
     .make()
-  console.log(userQuery)
   const [rows] = await db.query(userQuery)
-  console.log(rows)
   return rows[0]
+
 }
 
 

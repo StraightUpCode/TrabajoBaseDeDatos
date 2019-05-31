@@ -8,6 +8,10 @@ CREATE TABLE IF NOT EXISTS Empresa (
     telefono varchar(14) not null
 ) ENGINE INNODB;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ccaaec2d3efd4a9210efaee9b24a439efcf0e83e
 CREATE TABLE IF NOT EXISTS FrecuenciaDePago (
 	idFrecuenciaDePago int auto_increment not null,
     nombre varchar(25) not null,
@@ -158,9 +162,18 @@ CREATE TABLE IF NOT EXISTS User (
     idUser int auto_increment,
     username varchar(50) not null,
     password varchar(50) not null,
-    rol varchar(50) not null,
+    idRol  int not null,
     CONSTRAINT PK_User PRIMARY Key (idUser)
 )ENGINE INNODB; 
+
+CREATE TABLE IF NOT EXISTS Rol (
+    idRol int auto_increment,
+    nombre varchar(50) not null,
+    CONSTRAINT PK_Rol PRIMARY KEY (idRol)
+)ENGINE INNODB;
+/* Llabe Foranea Usuario */
+Alter Table User 
+    ADD CONSTRAINT FK_User_Rol FOREIGN KEY (idRol) REFERENCES Rol(idRol);
 
 /* Llave Foranea en la tabla Vendedor*/
 Alter Table Vendedor
@@ -216,18 +229,15 @@ ALTER TABLE Aguinaldo
 ALTER TABLE IngresoNoFijoVendedor
 	ADD CONSTRAINT FK_INF_Vendedor FOREIGN KEY (idIngresoNoFijo) REFERENCES IngresoNoFijo(idIngresoNoFijo);
 
-Insert into User(username, password , rol) values ("root", "admin" , "admin");
+Insert into Rol (nombre) values("admin");
+Insert into User(username, password , idRol) values ("root", "admin" , 1);
 /* Mock Data */ 
-Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) 
-values("Roberto","Sanchez",1,"320810991004k",2500.25,FALSE,"2019-05-02",1,1);
 Insert into FrecuenciaDePago(nombre) values ("Mensual") , ("Quincenal");
 Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador");
 Insert into DiaDePago(diaPago) values(15), (30) ;
 Insert into Horario(horaEntrada, horaSalida) values('7:00','12:00'), ('1:00','5:00');
 insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2);
-
-<<<<<<< HEAD
+Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) 
+values("Roberto","Sanchez",1,"320810991004k",2500.25,FALSE,"2019-05-02",1,1);
+insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2);
 /*  End Mock Data  */
-=======
-/*  End Mock Data  */
->>>>>>> adc90e940ec9b7a85995a32288798156fe1d6e2f

@@ -7,8 +7,6 @@ const exphdb = require('express-handlebars')
 const path = require('path')
 const cors = require('cors')
 const checkAuthMiddleware = require('./AuthMiddleware/checkAuth')
-
-
 // local files
 const apiRouter = require('./ApiRouter.js')
 const staticRouter = require("./staticRouter.js")
@@ -29,10 +27,12 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(sessions)
 app.use(cors())
-app.use("/api", apiRouter)
+
 // Routers
+
+app.use("/api", apiRouter)
 app.use(authRouter)
-app.use(checkAuthMiddleware)
+//app.use(checkAuthMiddleware)
 app.use(staticRouter)
 // Servidor Escuchar
 app.listen(3000)
