@@ -56,8 +56,17 @@ router.get("/trabajador", async (req, res) => {
     res.send(data)
   }
   if (Object.keys(req.query) == 0) {
-    const [rows] = await db.query("Select * from Trabajador")
+    const [rows] = await db.query("Select * from Trabajador where not BorradoLogico= true")
     res.send(rows)
+  }
+})
+router.get("/trabajador/delete/:id", async (req,res)=>
+{
+  try {
+    db.query(`update Trabajador set BorradoLogico = true where idTrabajador=${req.params.id}`);
+  }
+  catch(e){
+    res.send(e);
   }
 })
 router.get("/trabajador/:id", async (req, res) => {
