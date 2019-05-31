@@ -11,7 +11,7 @@ router.post("/login", async (req, res) => {
     console.log("DB: " + user)
     console.log({ username, password })
     if (username === user.username && password === user.password) {
-
+      console.log(user.rol)
       req.session.rol = user.rol
       console.log(req.session)
       req.session.save()
