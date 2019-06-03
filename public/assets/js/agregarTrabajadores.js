@@ -7,13 +7,17 @@
     for (let field of formulario.elements) {
       let val
       if (field.nodeName == "SELECT") {
+        console.log(field.options
+        )
         val = field.options[field.selectedIndex].value
       } else {
+        console.log(field)
         val = field.value
       }
       request[field.name] = val
     }
     request.idCargo = Number.parseInt(request.idCargo)
+    console.log(request.idDiaPago)
     request.idDiaPago = Number.parseInt(request.idDiaPago)
     request.salario = Number.parseFloat(request.salario)
     request.salarioPorHora = request.salarioPorHora == "true"
@@ -21,9 +25,9 @@
 
     console.log(request)
 
-    
-    /*
-    fetch("/api/trabajador", {
+
+
+    fetch("http://localhost:3000/api/trabajador", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -33,7 +37,7 @@
       .then(res => res.json())
       .then(result => formulario.reset())
       .catch(e => console.error(e))
-      */
+
   })
 
 })() 
