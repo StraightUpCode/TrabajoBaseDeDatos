@@ -1,7 +1,4 @@
 import { render, h } from 'preact'
-
-const rootElement = document.querySelector('#id')
-const helloFromReact = (props) => {
-
-}
-render(helloFromReact(), rootElement);
+import Contenedor from './ComponenteNomina/ContenedorNomina'
+const rootElement = document.querySelector('#root')
+render(<Contenedor />, rootElement);
