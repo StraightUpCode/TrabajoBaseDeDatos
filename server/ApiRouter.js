@@ -60,12 +60,20 @@ router.get("/trabajador", async (req, res) => {
     res.send(rows)
   }
 })
-router.get("/trabajador/delete/:id", async (req,res)=>
-{
+router.post("/trabajador/periodo", async (req, res) => {
+  try {
+    const { inicioPeriodo, finPeriodo } = req.body
+    res.send(await commonQuerys.getTrabajadorByPeriodo(inicioPeriodo, finPeriodo))
+  }
+  catch (e) {
+    console.log(e)
+  }
+})
+router.get("/trabajador/delete/:id", async (req, res) => {
   try {
     db.query(`update Trabajador set BorradoLogico = true where idTrabajador=${req.params.id}`);
   }
-  catch(e){
+  catch (e) {
     res.send(e);
   }
 })
@@ -90,12 +98,13 @@ router.get("/trabajador/:id", async (req, res) => {
 
 router.post("/trabajador", async (req, res) => {
   const content = req.body
-  console.log(req)
+  console.log("Trabajador")
   try {
-    console.log(content)
+    console.log("Insertando")
     const [rows] = await db.query(
       queryMaker.insert("Trabajador", content)
         .make())
+    console.log(rows.insertId)
     res.send({ result: "Todo Ok Todo Correcto" })
   }
   catch (e) {
@@ -168,9 +177,9 @@ router.get("/diasDePago", async (req, res) => {
 router.get("/frecuenciaDePago", async (req, res) => {
 
   try {
+    console.log("Hello")
     const result = await commonQuerys.getFrecuenciaDePago()
     console.log("Despues del query")
-    console.log(await commonQuerys.getFrecuenciaDePago())
     res.send(result)
   } catch (e) {
     res.send(e)
@@ -184,6 +193,15 @@ router.post("/user/create", async (req, res) => {
     console.log("User Create")
     const infoUser = req.body
     res.send(await commonQuerys.insertUser(infoUser))
+  } catch (e) {
+    res.send(e)
+  }
+})
+// Periodo de Pago
+router.post("/periodoPago/create", async (req, res) => {
+  const periodo = req.body
+  try {
+    const [rows] = await commonQuerys.inserPeriodo(periodo)
   } catch (e) {
     res.send(e)
   }
