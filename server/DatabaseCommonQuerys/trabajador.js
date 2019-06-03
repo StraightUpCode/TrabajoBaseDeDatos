@@ -29,17 +29,29 @@ const getTrabajadorByName = async (name) => {
     .where('nombre')
     .includes(name)
     .make()
-  console.log(leQuery)
   const [rows] = await db.query(
     leQuery
   )
 
   return rows
 }
+const getTrabajadorByPeriodo = async (inicio, fin) => {
+  const [rows] = await db.query(
+    queryMaker.select("*")
+      .from("Trabajador")
+      .innerJoin("DiaDePago")
+      .onEquals("Trabajador.idDiaDePago", "DiaDePago.idDiaDePago")
+      .where("DiaDePago.diaDePago")
+      .between(inicio, fin)
+      .make()
+  )
 
+  return rows
+}
 
 module.exports = {
   getTrabajador,
   getTrabajadorById,
-  getTrabajadorByName
+  getTrabajadorByName,
+  getTrabajadorByPeriodo
 }
