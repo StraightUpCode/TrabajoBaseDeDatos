@@ -25,6 +25,9 @@ class QueryMaker {
     this.query += `Where ${atributo} = ${valor} `
     return this
   }
+  between(inicio, fin) {
+    this.query += `BETWEEN ${inicio} AND ${fin}`
+  }
   where(atributo) {
     this.query += `Where ${atributo} `
     return this
@@ -78,8 +81,6 @@ class QueryMaker {
   insert(tabla, objeto) {
     const atributos = Object.keys(objeto).join()
     const values = Object.values(objeto).map(el => typeof el == "string" ? `"${el}"` : el).join()
-    console.log(atributos)
-    console.log(values)
     this.query += `Insert into ${tabla} (${atributos}) values(${values})`
     return this
   }
