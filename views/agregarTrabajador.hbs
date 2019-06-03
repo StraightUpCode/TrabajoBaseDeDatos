@@ -43,13 +43,6 @@
         {{/each }}
       </select>
     </div>
-    <div>
-      <label>Pago:</label>
-      <select name="frecuenciaDePago">
-        <option value="Mensual">Mensual</option>
-        <option value="Quincenal">Quincenal</option>
-      </select>
-    </div>
     <label>Salario Base:</label>
     <input type="number" name="salario" placeholder="Salario" max="1000000">
     <input type="radio" name="salarioPorHora" value="true">Salario por Hora</input> </div>
@@ -57,16 +50,16 @@
       <label>Fecha Pago:</label>
       <select id="fechaPagos" name="idDiaPago">
         {{#each diaPago}}
-        <option value="{{idDia_de_Pago}}">{{diaPago}}</option>
+        <option value="{{idDiaDePago}}">{{diaPago}}</option>
         {{/each }}
       </select>
     </div>
     <div>
       <label>Frecuencia de Pago</label>
-      <select id="frecuenciaPago" name="idDiaPago">
+      <select id="frecuenciaPago" name="idFrecuenciaDePago">
         {{#each frecuenciaDePago}}
         <option value="{{idFrecuenciaDePago}}">{{nombre}}</option>
-        <<<<<<< HEAD {{/eacj}}======={{/each}}>>>>>>> ccaaec2d3efd4a9210efaee9b24a439efcf0e83e
+        {{/each}}
       </select>
     </div>
     <!--  <div>
