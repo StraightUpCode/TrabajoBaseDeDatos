@@ -5,7 +5,6 @@ const queryMaker = require('./testrandom')
 const router = express.Router()
 const commonQuerys = require('./DatabaseCommonQuerys/DatabaseCommonQuerys')
 
-console.log(commonQuerys)
 router.use(express.static(path.join(__dirname, '../public')))
 
 router.use(require('./AuthMiddleware/checkAuth'))
