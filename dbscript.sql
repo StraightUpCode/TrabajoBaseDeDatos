@@ -8,10 +8,6 @@ CREATE TABLE IF NOT EXISTS Empresa (
     telefono varchar(14) not null
 ) ENGINE INNODB;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> ccaaec2d3efd4a9210efaee9b24a439efcf0e83e
 CREATE TABLE IF NOT EXISTS FrecuenciaDePago (
 	idFrecuenciaDePago int auto_increment not null,
     nombre varchar(25) not null,
@@ -110,7 +106,7 @@ idNomina int not null auto_increment,
 idTrabajador int not null ,
 idPeriodoPago int not null,
 fechaDeEmision date not null,
-salarioPagado numeric(5,2), 
+salarioPagado numeric(7,2), 
 CONSTRAINT PK_Nomina primary key (idNomina)
 )ENGINE INNODB;
 
