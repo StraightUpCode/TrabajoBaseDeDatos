@@ -60,15 +60,7 @@ router.get("/trabajador", async (req, res) => {
     res.send(rows)
   }
 })
-router.post("/trabajador/periodo", async (req, res) => {
-  try {
-    const { inicioPeriodo, finPeriodo } = req.body
-    res.send(await commonQuerys.getTrabajadorByPeriodo(inicioPeriodo, finPeriodo))
-  }
-  catch (e) {
-    console.log(e)
-  }
-})
+
 router.get("/trabajador/delete/:id", async (req, res) => {
   try {
     db.query(`update Trabajador set BorradoLogico = true where idTrabajador=${req.params.id}`);
@@ -201,9 +193,33 @@ router.post("/user/create", async (req, res) => {
 router.post("/periodoPago/create", async (req, res) => {
   const periodo = req.body
   try {
-    const [rows] = await commonQuerys.inserPeriodo(periodo)
+    console.log(periodo)
+    const id = await commonQuerys.inserPeriodo(periodo)
+    console.log(id)
+    res.send({ idPeriodoPago: id })
   } catch (e) {
     res.send(e)
+  }
+})
+
+// Proceso Nomina
+router.post("/crearNomina/trabajadores", async (req, res) => {
+  try {
+    console.log("Nomina")
+    console.log(req.body)
+    res.send(await commonQuerys.getTrabajadorByPeriodoYFrecuenciaDePago(req.body))
+  }
+  catch (e) {
+    console.log(e)
+  }
+})
+
+router.post("/nomina/create", async (req, res) => {
+  try {
+    console.log("Ruta Nomina Crear")
+    res.send({ idNomina: await commonQuerys.createNomina(req.body) })
+  } catch (e) {
+    console.log(e)
   }
 })
 
