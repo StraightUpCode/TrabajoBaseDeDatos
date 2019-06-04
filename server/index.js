@@ -21,7 +21,6 @@ app.engine('.hbs', exphdb({
   defaultLayout: 'main',
 }))
 //app.use(express.static(path.join(__dirname + '../public')))
-console.log(app.settings)
 app.set('view engine', '.hbs')
 app.use(express.urlencoded({ extended: true }))
 
