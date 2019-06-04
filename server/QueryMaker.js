@@ -26,7 +26,8 @@ class QueryMaker {
     return this
   }
   between(inicio, fin) {
-    this.query += `BETWEEN ${inicio} AND ${fin}`
+    this.query += `BETWEEN ${inicio} AND ${fin} `
+    return this
   }
   where(atributo) {
     this.query += `Where ${atributo} `
@@ -60,6 +61,10 @@ class QueryMaker {
   }
   leftJoin(tablaAUnir) {
     this.query += `left join ${tablaAUnir} `
+    return this
+  }
+  rightJoin(tablaAUnir) {
+    this.query += `right join ${tablaAUnir} `
     return this
   }
 
