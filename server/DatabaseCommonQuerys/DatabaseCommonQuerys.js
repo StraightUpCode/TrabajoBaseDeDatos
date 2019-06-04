@@ -5,6 +5,7 @@ const getFrecuenciaDePago = require('./frecuenciaDePago')
 const user = require('./user')
 const rol = require('./rol')
 const periodo = require('./periodo')
+const nomina = require('./nomina')
 module.exports = {
   getCargos,
   getDiasPago,
@@ -12,5 +13,6 @@ module.exports = {
   getFrecuenciaDePago,
   ...user,
   ...rol,
-  ...periodo
+  ...periodo,
+  ...nomina,
 }

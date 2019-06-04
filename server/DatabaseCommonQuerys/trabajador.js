@@ -35,17 +35,26 @@ const getTrabajadorByName = async (name) => {
 
   return rows
 }
-const getTrabajadorByPeriodo = async (inicio, fin) => {
+const getTrabajadorByPeriodoYFrecuenciaDePago = async ({ frecuenciaDePago, inicio, fin }) => {
+  const leQuery = queryMaker.select("Trabajador.idTrabajador", "Trabajador.nombre", "Trabajador.apellido", "Cargo.nombre as cargo", "DiaDePago.diaPago", "FrecuenciaDePago.nombre as frecuenciaDePago", "Trabajador.salario", "Trabajador.salarioPorHora", "Vendedor.porcentajeComision")
+    .from("Trabajador")
+    .leftJoin("Vendedor")
+    .onEquals("Trabajador.idTrabajador", "Vendedor.idTrabajador")
+    .innerJoin("Cargo")
+    .onEquals("Trabajador.idCargo", "Cargo.idCargo")
+    .innerJoin("DiaDePago")
+    .onEquals("Trabajador.idDiaPago", "DiaDePago.idDiaDePago")
+    .innerJoin("FrecuenciaDePago")
+    .onEquals("Trabajador.idFrecuenciaDePago", "FrecuenciaDePago.idFrecuenciaDePago")
+    .where("DiaDePago.diaPago")
+    .between(inicio, fin)
+    .andEquals("FrecuenciaDePago.nombre", `"${frecuenciaDePago}"`)
+    .make()
+  console.log(leQuery)
   const [rows] = await db.query(
-    queryMaker.select("*")
-      .from("Trabajador")
-      .innerJoin("DiaDePago")
-      .onEquals("Trabajador.idDiaDePago", "DiaDePago.idDiaDePago")
-      .where("DiaDePago.diaDePago")
-      .between(inicio, fin)
-      .make()
+    leQuery
   )
-
+  console.log(rows)
   return rows
 }
 
@@ -53,5 +62,5 @@ module.exports = {
   getTrabajador,
   getTrabajadorById,
   getTrabajadorByName,
-  getTrabajadorByPeriodo
+  getTrabajadorByPeriodoYFrecuenciaDePago
 }

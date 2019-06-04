@@ -2,10 +2,6 @@ import { Component, h } from 'preact'
 import linkState from 'linkstate'
 import ElementoTrabajador from './ElementoTrabajador';
 
-
-
-
-
 class Container extends Component {
 
   constructor() {
