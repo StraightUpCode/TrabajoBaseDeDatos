@@ -1,0 +1,14 @@
+<table>
+<tr >
+	<th> dia del mes<th/> 
+	<th colspan="2">opciones</th>
+</tr>
+{{#each diaPago}}
+<tr data-id-Dia-De-Pago={{idDiaDePago}} >
+    <td> {{diaPago}}<td/> 
+	<td> <button>Editar</button></td>
+	<td> <button>Eliminar</button></td>
+</tr>
+{{/each }}
+
+</table>

@@ -14,7 +14,12 @@ router.get('/', async (req, res) => {
   res.redirect("/agregarTrabajador")
 
 })
-
+router.get("/diaPago", async (req, res) => {
+  res.render("diaDePago", {   
+    admin: req.session.rol == 'admin',
+    diaPago:await commonQuerys.getDiasPago()
+  })
+  })
 router.get('/agregarTrabajador', async (req, res) => {
   res.render('agregarTrabajador', {
     admin: req.session.rol == 'admin',
