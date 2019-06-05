@@ -58,9 +58,24 @@ const getTrabajadorByPeriodoYFrecuenciaDePago = async ({ frecuenciaDePago, inici
   return rows
 }
 
+getTrabajadorHorario = async id => {
+  const [rows] = await db.query(
+    queryMaker.select('Horario.horaEntrada', 'Horario.horaSalida')
+      .from('Trabajador')
+      .innerJoin('Trabajador_Horario')
+      .onEquals('Trabajador.idTrabajador', 'Trabajador_Horario.idTrabajador')
+      .innerJoin('Horario')
+      .onEquals('Trabajador_Horario.idHorario', 'Horario.idHorario')
+      .equals('Trabajador.idTrabajador', id)
+      .make()
+  )
+  return rows
+}
+
 module.exports = {
   getTrabajador,
   getTrabajadorById,
   getTrabajadorByName,
-  getTrabajadorByPeriodoYFrecuenciaDePago
+  getTrabajadorByPeriodoYFrecuenciaDePago,
+  getTrabajadorHorario
 }

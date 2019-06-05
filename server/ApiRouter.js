@@ -74,19 +74,29 @@ router.get("/trabajador/:id", async (req, res) => {
   try {
     console.log("Con Id")
     const id = req.params.id
+    console.log(req.query)
 
-    const [rows] = await db.query(queryMaker.select("*")
-      .from("Trabajador")
-      .equals("idTrabajador", id).make())
 
     // Es igual a 
     /*const [rows] = await db.query(`Select * from Trabajador where idTrabajador = ${id}`)*/
-    res.send(rows)
+
+    if (req.query.nomina) {
+      res.send(await commonQuerys.getTrabajadorHorario(id))
+
+    } else {
+      const [rows] = await db.query(queryMaker.select("*")
+        .from("Trabajador")
+        .equals("idTrabajador", id).make())
+      res.send(rows)
+
+    }
+
 
   } catch (e) {
     console.log(e)
   }
 })
+
 
 router.post("/trabajador", async (req, res) => {
   const content = req.body
@@ -220,6 +230,24 @@ router.post("/nomina/create", async (req, res) => {
     res.send({ idNomina: await commonQuerys.createNomina(req.body) })
   } catch (e) {
     console.log(e)
+  }
+})
+
+router.post("/nomina/ingresosNoFijos", async (req, res) => {
+  try {
+    const idIngresoNoFijo = await commonQuerys.crearIngresoNoFijo(req.body)
+    console.log(idIngresoNoFijo)
+    res.send({ idIngresoNoFijo })
+  } catch (e) {
+    res.send(e)
+  }
+
+})
+router.post("/nomina/ingresosNoFijos/vendedor", async (req, res) => {
+  try {
+    res.send({ idIngresosNoFijoVendedor: await commonQuerys.crearIngresoNoFijoVendedor(req.body) })
+  } catch (e) {
+    res.send(e)
   }
 })
 
