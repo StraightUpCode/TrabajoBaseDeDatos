@@ -34,12 +34,6 @@ const crearIngresoNoFijoVendedor = async (IngresosNoFijoVendedor) => {
     throw e
   }
 }
-module.exports = {
-  createNomina,
-  crearIngresoNoFijo,
-  crearIngresoNoFijoVendedor,
-  getDatosTrabajador
-}
 const getDatosTrabajador = async () => {
   console.log()
   try {
@@ -50,16 +44,21 @@ const getDatosTrabajador = async () => {
       "IngresoNoFijo.viatico","IngresoNoFijo.incentivo","pagoHorasExtras",
       "(IngresoNoFijo.Viatico+IngresoNoFijo.incentivo+pagoHorasExtras) as totalIngresos",
       "Deduccion.IR","Deduccion.inss","(Deduccion.IR + Deduccion.inss) as totalDeducciones",
-      "(Trabajador.salario+totalIngresos-totalDeducciones) as totalSalario".from( "Trabajador")
+      "(Trabajador.salario+totalIngresos-totalDeducciones) as totalSalario").from( "Trabajador")
       .innerJoin("Cargo").onEquals(" Trabajador.idCargo", "Cargo.idCargo")
       .leftJoin(" Vendedor").onEquals("Trabajador.idTrabajador"," Vendedor.idTrabajador")
       .innerJoin("Nomina").onEquals("Trabajador.idTrabajador" ,"Nomina.idTrabajador")
-      .innerJoin("Periodo").onEqual("Nomina.idPeriodo","Periodo.idPeriodo")
+      .innerJoin("PeriodoPago").onEquals("Nomina.idPeriodoPago","Periodo.idPeriodoPago")
       .leftJoin("Nomina.idNomina","IngresoNoFijo.idNomina")
-      .leftJoin("Trabajador.idTrabajador ","Horas_Trabajador.idTrabajador").make()
-    )
+      .onEquals("Trabajador.idTrabajador ","Horas_Trabajador.idTrabajador").make())
     return rows
   } catch (e) {
     throw e
   }
+}
+module.exports = {
+  createNomina,
+  crearIngresoNoFijo,
+  crearIngresoNoFijoVendedor,
+  getDatosTrabajador
 }
