@@ -75,14 +75,10 @@ const crearDeduccion = async (
     console.log("Crear Deduccion")
     const salarioAcumulado = await getSalarioAcumulado(idTrabajador)
     salarioAcumulado.salarioAcumulado = Number.parseFloat(salarioAcumulado.salarioAcumulado)
-    console.log(salarioAcumulado)
     if (frecuenciaDePago == 'Quincenal') {
       salarioAcumulado.meses = salarioAcumulado.meses / 2
     }
     const IR = calcIR(salario - inss, salarioAcumulado)
-    console.log(IR)
-    console.log(idNomina)
-    console.log(inss)
     const [rows] = await db.query(
       queryMaker.insert('Deduccion', { idNomina, inss, IR })
         .make()
@@ -96,8 +92,15 @@ const crearDeduccion = async (
   }
 
 }
-const crearDeduccionNoFija = async () => {
-
+const crearDeduccionNoFija = async (deduccionNoFija) => {
+  try {
+    const [rows] = await db.query(
+      queryMaker.insert('DeduccionNoFija', deduccionNoFija)
+    )
+    return rows.insertId
+  } catch (e) {
+    throw e
+  }
 }
 
 module.exports = {

@@ -12,6 +12,7 @@ class TrabajadorNomina extends Component {
       mes: new Date().getMonth(),
       paso: 0,
       idNomina: 0,
+      idDeduccion: 0,
       calIngresoNoFijo: {
         horasExtra: 0,
         valorVentas: 0
@@ -54,6 +55,7 @@ class TrabajadorNomina extends Component {
             horasExtra,
             valorVentas
           }
+
         }), () => console.log(this.state))
       })
       .catch(e => console.log(e))
@@ -166,10 +168,29 @@ class TrabajadorNomina extends Component {
       body: JSON.stringify(requestBody)
     })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => this.setState({
+        paso: ++prevState.paso,
+        idDeduccion: data.idDeduccion
+      }))
 
   }
   generarDeduccionesNoFijas({ deduccionHorasRetraso }) {
+    const { idDeduccion } = this.state
+    fetch("http://localhost:3000/api/nomina/deduccionNoFija", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        idDeduccion,
+        deduccionHorasRetraso
+      }).then(res => res.json())
+        .then(data => console.log(data.idDedducionNoFijo))
+        .catch(e => console.log(e))
+    })
+  }
+
+  generarDeduccionesPrestamos() {
 
   }
 
