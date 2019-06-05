@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS SISTEMA_NOMINA ; 
+ CREATE DATABASE IF NOT EXISTS SISTEMA_NOMINA ; 
 USE SISTEMA_NOMINA; 
 
 CREATE TABLE IF NOT EXISTS Empresa (
@@ -84,6 +84,7 @@ idTrabajador int not null,
 fechaInicial date not null,
 cuota int not null,
 monto int not null,
+cancelado boolean,
 constraint PK_Prestamo primary key(idPrestamo)
 )ENGINE INNODB;
 CREATE TABLE IF NOT EXISTS PagoPrestamo (
@@ -172,6 +173,7 @@ CREATE TABLE IF NOT EXISTS SalarioAcumulado_IR (
     idSalarioAcumulado int auto_increment,
     idTrabajador int not null,
     salarioAcumulado numeric(16,2),
+    meses int ,
     CONSTRAINT PK_SalarioAcumulador PRIMARY KEY (idSalarioAcumulado)
 )ENGINE INNODB;
 Alter Table SalarioAcumulado_IR
@@ -242,7 +244,7 @@ CREATE TRIGGER salarioAcumulado
 AFTER INSERT ON Trabajador 
 FOR EACH ROW 
 BEGIN 
-	INSERT INTO SalarioAcumulado_IR(idTrabajador , salarioAcumulado) values(new.idTrabajador , 0);
+	INSERT INTO SalarioAcumulado_IR(idTrabajador , salarioAcumulado) values(new.idTrabajador , 0, 0);
 END$$ 
 
 USE SISTEMA_NOMINA;
@@ -260,12 +262,16 @@ END$$
 
 
 /* Mock Data */ 
+
 Insert into FrecuenciaDePago(nombre) values ("Mensual") , ("Quincenal");
+
 Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador");
+
 Insert into DiaDePago(diaPago) values(15), (30) ;
+
 Insert into Horario(horaEntrada, horaSalida) values('7:00','12:00'), ('1:00','5:00');
-insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2);
-Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) 
-values("Rodney","Sanchez",1,"35987lmao",2500.25,FALSE,"2019-05-02",1,1);
+
+Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) values("Rodney","Sanchez",1,"35987lmao",2500.25,FALSE,"2019-05-02",1,1);
+
 insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2);
 /*  End Mock Data  */
