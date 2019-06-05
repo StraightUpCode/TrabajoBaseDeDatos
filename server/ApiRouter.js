@@ -251,4 +251,14 @@ router.post("/nomina/ingresosNoFijos/vendedor", async (req, res) => {
   }
 })
 
+router.post("/nomina/deduccion", async (req, res) => {
+  try {
+    console.log(req.body)
+    res.send({ idDeduccion: await commonQuerys.crearDeduccion(req.body) })
+  } catch (e) {
+    res.send(e)
+  }
+})
+
+
 module.exports = router

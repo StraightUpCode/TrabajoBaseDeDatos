@@ -84,6 +84,7 @@ class QueryMaker {
   }
 
   insert(tabla, objeto) {
+    console.log(objeto)
     const atributos = Object.keys(objeto).join()
     const values = Object.values(objeto).map(el => typeof el == "string" ? `"${el}"` : el).join()
     this.query += `Insert into ${tabla} (${atributos}) values(${values})`

@@ -2,6 +2,7 @@ import { Component, h } from 'preact'
 import linkState from 'linkstate'
 import NominaTrabajador from './NominaTrabajador';
 import IngresosNoFijo from './ingresosNoFijos';
+import DeduccionNoFija from './Deduccion';
 
 class TrabajadorNomina extends Component {
   constructor() {
@@ -107,6 +108,8 @@ class TrabajadorNomina extends Component {
             console.log(porcentajeComision)
             if (porcentajeComision) {
               this.generarIngresosNoFijosVendedor(data)
+            } else {
+              this.generarDeducciones()
             }
             return;
           })
@@ -122,12 +125,51 @@ class TrabajadorNomina extends Component {
     console.log("IngresosNoFijoVendedor")
     console.log(porcentajeComision)
     console.log(valorVentas)
+
     fetch("http://localhost:3000/api//nomina/ingresosNoFijos/vendedor", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify({
+        idIngresoNoFijo,
+        pagaDeComision: valorVentas * (porcentajeComision / 100)
+      })
+    }).then(res => res.json())
+      .then(data => {
+        if (data.idIngresoNoFijo) this.generarDeducciones()
+      })
+
+  }
+  generarDeducciones() {
+    let { salario, idTrabajador, frecuenciaDePago } = this.props.trabajador
+    const { idNomina } = this.state
+    salario = Number.parseFloat(salario)
+    let value = (salario * 0.625).toFixed(2)
+    const inss = Number.parseFloat(value)
+    const requestBody = {
+      inss,
+      salario,
+      idTrabajador,
+      idNomina,
+      frecuenciaDePago
+    }
+    console.log(requestBody)
+    console.log(`Salario ${typeof salario} , idTrabajador ${typeof idTrabajador}
+     frecuenciaDePago ${typeof frecuenciaDePago}`)
+    fetch("http://localhost:3000/api/nomina/deduccion", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      // { idNomina, inss, idTrabajador, salario, frecuenciaDePago }
+      body: JSON.stringify(requestBody)
     })
+      .then(res => res.json())
+      .then(data => console.log(data))
+
+  }
+  generarDeduccionesNoFijas({ deduccionHorasRetraso }) {
 
   }
 
@@ -140,9 +182,12 @@ class TrabajadorNomina extends Component {
         break;
       case 1: {
         pasoActual = <IngresosNoFijo crearIngresosNoFijos={this.generarIngresosNoFijos} porcentajeComision={porcentajeComision} />
-      }
-      default:
         break;
+      }
+      case 2: {
+        pasoActual = <DeduccionNoFija crearDeduccionNoFija={this.generarDeduccionesNoFijas} />
+      }
+
     }
     return (
       <div>

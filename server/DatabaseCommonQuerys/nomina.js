@@ -34,8 +34,76 @@ const crearIngresoNoFijoVendedor = async (IngresosNoFijoVendedor) => {
     throw e
   }
 }
+const getSalarioAcumulado = async (id) => {
+  try {
+    console.log("get Salario")
+    const [rows] = await db.query(
+      queryMaker.select('salarioAcumulado', 'meses')
+        .from('SalarioAcumulado_IR')
+        .equals('idTrabajador', id)
+        .make()
+    )
+    console.log(rows[0])
+    return rows[0]
+  } catch (e) {
+    throw e
+  }
+}
+
+const calcIR = (salarioActual, { salarioAcumulado, meses }) => {
+  const salarioAnual = (salarioAcumulado + (salarioActual * (12 - meses))) / 12
+  // Rango salarial	Impuesto base % aplicable	Sobre exceso de
+  // C$0.01 a C8, 333.33	—	0 %	—
+  // 8, 333, 34 a 16, 666.66	—	15 % C$8, 333.33
+  // 16, 666, 67 a 29, 166.66	C$1, 250.00	20 % 16, 666.66
+  // 29, 666.67 a 41, 666.66	3, 750.00	25 % 29, 166.66
+  // 41, 666.67 o más	6, 875.00	30 % 41, 666.66
+
+  if (salarioAnual > 41666.66) return salarioAnual * .30
+  if (salarioAnual > 29166.66) return salarioAnual * .25
+  if (salarioAnual > 16666.66) return salarioAnual * .20
+  if (salarioAnual > 8333.33) return salarioAnual * .15
+  return 0.0
+
+
+}
+
+const crearDeduccion = async (
+  { idNomina, inss, idTrabajador, salario, frecuenciaDePago }
+) => {
+  try {
+    console.log("Crear Deduccion")
+    const salarioAcumulado = await getSalarioAcumulado(idTrabajador)
+    salarioAcumulado.salarioAcumulado = Number.parseFloat(salarioAcumulado.salarioAcumulado)
+    console.log(salarioAcumulado)
+    if (frecuenciaDePago == 'Quincenal') {
+      salarioAcumulado.meses = salarioAcumulado.meses / 2
+    }
+    const IR = calcIR(salario - inss, salarioAcumulado)
+    console.log(IR)
+    console.log(idNomina)
+    console.log(inss)
+    const [rows] = await db.query(
+      queryMaker.insert('Deduccion', { idNomina, inss, IR })
+        .make()
+    )
+    console.log(rows)
+
+    return rows.insertId
+
+  } catch (e) {
+    throw e
+  }
+
+}
+const crearDeduccionNoFija = async () => {
+
+}
+
 module.exports = {
   createNomina,
   crearIngresoNoFijo,
-  crearIngresoNoFijoVendedor
+  crearIngresoNoFijoVendedor,
+  crearDeduccion,
+  crearDeduccionNoFija
 }
