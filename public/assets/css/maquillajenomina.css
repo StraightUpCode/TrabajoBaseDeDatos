@@ -1,0 +1,12 @@
+#name{
+    text-align: center;
+  }
+  #period{
+    text-align: center;
+  }
+  #general{
+      text-align: left;
+       }
+  #devengado, #deducido, #total {
+    text-align:right;
+  }
