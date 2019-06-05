@@ -38,20 +38,22 @@ const getDatosTrabajador = async () => {
   console.log()
   try {
     const [rows] = await db.query(
-      queryMaker.select("Trabajador.nombre", "Trabajador.apellidos",
+      queryMaker.select("Trabajador.nombre", "Trabajador.apellido",
       "Trabajador.cedula", "Cargo.nombre AS cargo", "Trabajador.salario" ,
       "Vendedor.porcentajeComision","Horas_Trabajador.horasExtras", 
-      "IngresoNoFijo.viatico","IngresoNoFijo.incentivo","pagoHorasExtras",
-      "(IngresoNoFijo.Viatico+IngresoNoFijo.incentivo+pagoHorasExtras) as totalIngresos",
+      "ingresonofijo.viatico","ingresonofijo.incentivo","pagoHorasExtras",
+      "(ingresonofijo.Viatico+ingresonofijo.incentivo+pagoHorasExtras) as totalIngresos",
       "Deduccion.IR","Deduccion.inss","(Deduccion.IR + Deduccion.inss) as totalDeducciones",
       "(Trabajador.salario+totalIngresos-totalDeducciones) as totalSalario").from( "Trabajador")
       .innerJoin("Cargo").onEquals(" Trabajador.idCargo", "Cargo.idCargo")
       .leftJoin(" Vendedor").onEquals("Trabajador.idTrabajador"," Vendedor.idTrabajador")
       .innerJoin("Nomina").onEquals("Trabajador.idTrabajador" ,"Nomina.idTrabajador")
       .innerJoin("PeriodoPago").onEquals("Nomina.idPeriodoPago","Periodo.idPeriodoPago")
-      .leftJoin("Nomina.idNomina","IngresoNoFijo.idNomina")
+      .leftJoin("ingresonofijo").onEquals("Nomina.idNomina", "ingresonofijo.idNomina")
+      .innerJoin("Horas_Trabajador")
       .onEquals("Trabajador.idTrabajador ","Horas_Trabajador.idTrabajador").make())
     return rows
+
   } catch (e) {
     throw e
   }
