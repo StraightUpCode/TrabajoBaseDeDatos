@@ -167,6 +167,15 @@ CREATE TABLE IF NOT EXISTS Rol (
     nombre varchar(50) not null,
     CONSTRAINT PK_Rol PRIMARY KEY (idRol)
 )ENGINE INNODB;
+
+CREATE TABLE IF NOT EXISTS SalarioAcumulado_IR (
+    idSalarioAcumulado int auto_increment,
+    idTrabajador int not null,
+    salarioAcumulado numeric(16,2),
+    CONSTRAINT PK_SalarioAcumulador PRIMARY KEY (idSalarioAcumulado)
+)ENGINE INNODB;
+Alter Table SalarioAcumulado_IR
+    ADD Constraint FK_SalarioAcumulador_Trabajador FOREIGN KEY (idTrabajador) REFERENCES Trabajador(idTrabajador);
 /* Llabe Foranea Usuario */
 Alter Table User 
     ADD CONSTRAINT FK_User_Rol FOREIGN KEY (idRol) REFERENCES Rol(idRol);
@@ -227,6 +236,29 @@ ALTER TABLE IngresoNoFijoVendedor
 
 Insert into Rol (nombre) values("admin");
 Insert into User(username, password , idRol) values ("root", "admin" , 1);
+/* Triggers  */
+DELIMITER $$
+CREATE TRIGGER salarioAcumulado 
+AFTER INSERT ON Trabajador 
+FOR EACH ROW 
+BEGIN 
+	INSERT INTO SalarioAcumulado_IR(idTrabajador , salarioAcumulado) values(new.idTrabajador , 0);
+END$$ 
+
+USE SISTEMA_NOMINA;
+
+
+DELIMITER $$
+CREATE TRIGGER sumarSalarioAcumulado 
+BEFORE UPDATE ON SalarioAcumulado_IR  
+FOR EACH ROW 
+BEGIN 
+	IF new.salarioAcumulado > 0 THEN SET new.salarioAcumulado = old.salarioAcumulado + new.salarioAcumulado;
+    SET new.meses = old.meses + 1 ;
+    END IF;
+END$$ 
+
+
 /* Mock Data */ 
 Insert into FrecuenciaDePago(nombre) values ("Mensual") , ("Quincenal");
 Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador");
@@ -234,6 +266,6 @@ Insert into DiaDePago(diaPago) values(15), (30) ;
 Insert into Horario(horaEntrada, horaSalida) values('7:00','12:00'), ('1:00','5:00');
 insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2);
 Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) 
-values("Roberto","Sanchez",1,"320810991004k",2500.25,FALSE,"2019-05-02",1,1);
+values("Rodney","Sanchez",1,"35987lmao",2500.25,FALSE,"2019-05-02",1,1);
 insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2);
 /*  End Mock Data  */
