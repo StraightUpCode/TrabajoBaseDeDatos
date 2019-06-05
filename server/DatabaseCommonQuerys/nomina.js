@@ -37,5 +37,29 @@ const crearIngresoNoFijoVendedor = async (IngresosNoFijoVendedor) => {
 module.exports = {
   createNomina,
   crearIngresoNoFijo,
-  crearIngresoNoFijoVendedor
+  crearIngresoNoFijoVendedor,
+  getDatosTrabajador
+}
+const getDatosTrabajador = async () => {
+  console.log()
+  try {
+    const [rows] = await db.query(
+      queryMaker.select("Trabajador.nombre", "Trabajador.apellidos",
+      "Trabajador.cedula", "Cargo.nombre AS cargo", "Trabajador.salario" ,
+      "Vendedor.porcentajeComision","Horas_Trabajador.horasExtras", 
+      "IngresoNoFijo.viatico","IngresoNoFijo.incentivo","pagoHorasExtras",
+      "(IngresoNoFijo.Viatico+IngresoNoFijo.incentivo+pagoHorasExtras) as totalIngresos",
+      "Deduccion.IR","Deduccion.inss","(Deduccion.IR + Deduccion.inss) as totalDeducciones",
+      "(Trabajador.salario+totalIngresos-totalDeducciones) as totalSalario".from( "Trabajador")
+      .innerJoin("Cargo").onEquals(" Trabajador.idCargo", "Cargo.idCargo")
+      .leftJoin(" Vendedor").onEquals("Trabajador.idTrabajador"," Vendedor.idTrabajador")
+      .innerJoin("Nomina").onEquals("Trabajador.idTrabajador" ,"Nomina.idTrabajador")
+      .innerJoin("Periodo").onEqual("Nomina.idPeriodo","Periodo.idPeriodo")
+      .leftJoin("Nomina.idNomina","IngresoNoFijo.idNomina")
+      .leftJoin("Trabajador.idTrabajador ","Horas_Trabajador.idTrabajador").make()
+    )
+    return rows
+  } catch (e) {
+    throw e
+  }
 }

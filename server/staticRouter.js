@@ -20,6 +20,11 @@ router.get("/diaPago", async (req, res) => {
     diaPago:await commonQuerys.getDiasPago()
   })
   })
+router.get('/vistaNomina') async(req, res) => {
+  res.render('vistaNomina', {
+    dato : await commonQuerys.getDatosTrabajador() 
+    });
+}
 router.get('/agregarTrabajador', async (req, res) => {
   res.render('agregarTrabajador', {
     admin: req.session.rol == 'admin',
