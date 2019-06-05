@@ -262,6 +262,7 @@ router.post("/nomina/deduccion", async (req, res) => {
 
 router.post("/nomina/deduccionNoFija", async (req, res) => {
   try {
+    console.log(req.body)
     res.send({ idDeduccionNoFija: await commonQuerys.crearDeduccionNoFija(req.body) })
   } catch (e) {
     res.send(e)
@@ -271,7 +272,8 @@ router.post("/nomina/deduccionNoFija", async (req, res) => {
 
 router.post("/prestamo/trabajador/:id", async (req, res) => {
   try {
-
+    const id = req.params.id
+    res.send(await commonQuerys.checkTrabajadorTienePrestamo(id))
   } catch (e) {
     res.send(e)
   }

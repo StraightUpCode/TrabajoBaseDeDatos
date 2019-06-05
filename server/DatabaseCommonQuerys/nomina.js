@@ -96,6 +96,7 @@ const crearDeduccionNoFija = async (deduccionNoFija) => {
   try {
     const [rows] = await db.query(
       queryMaker.insert('DeduccionNoFija', deduccionNoFija)
+        .make()
     )
     return rows.insertId
   } catch (e) {

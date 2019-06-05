@@ -23,6 +23,7 @@ class ComponenteNomina extends Component {
     this.setFrecuenciaDePago = this.setFrecuenciaDePago.bind(this)
     this.setPeriodoPago = this.setPeriodoPago.bind(this)
     this.queryTrabajadores = this.queryTrabajadores.bind(this)
+    this.avanzarTrabajador = this.avanzarTrabajador.bind(this)
   }
   avanzarPaso() {
     this.setState((prevState) => ({
@@ -30,9 +31,9 @@ class ComponenteNomina extends Component {
     }))
   }
   avanzarTrabajador() {
-    this.setState((prevState) => ++prevState.indiceTrabajadorActual, () => {
-      if (this.state.indiceTrabajadorActual >= listaTrabajadores.length) this.avanzarPaso()
-    })
+    this.setState((prevState) => ({ indiceTrabajadorActual: ++prevState.indiceTrabajadorActual }), () => {
+      if (this.state.indiceTrabajadorActual >= this.state.listaTrabajadores.length) this.avanzarPaso()
+    }, () => console.log(this.state))
   }
 
   setFrecuenciaDePago(frecuenciaDePago) {
@@ -87,6 +88,8 @@ class ComponenteNomina extends Component {
       }
     }
 
+    console.log(listaTrabajadores)
+    console.log(listaTrabajadores[indiceTrabajadorActual])
     return (
       <section >
         {pasoActual}

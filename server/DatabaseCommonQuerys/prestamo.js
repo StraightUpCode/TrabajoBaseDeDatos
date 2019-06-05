@@ -7,9 +7,16 @@ const checkTrabajadorTienePrestamo = async (id) => {
       queryMaker.select('Prestamos.idTrabajador')
         .from('Prestamo')
         .equals('Prestamos.idPrestamo', id)
+        .make()
     )
+
+    return rows
   } catch (e) {
     throw e
   }
 
+}
+
+module.exports = {
+  checkTrabajadorTienePrestamo
 }

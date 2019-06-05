@@ -21,6 +21,8 @@ class TrabajadorNomina extends Component {
     this.crearNominaTrabajador = this.crearNominaTrabajador.bind(this)
     this.getHorasJornadaTrabajador = this.getHorasJornadaTrabajador.bind(this)
     this.generarIngresosNoFijos = this.generarIngresosNoFijos.bind(this)
+    this.generarDeducciones = this.generarDeducciones.bind(this)
+    this.generarDeduccionesNoFijas = this.generarDeduccionesNoFijas.bind(this)
   }
 
 
@@ -168,10 +170,10 @@ class TrabajadorNomina extends Component {
       body: JSON.stringify(requestBody)
     })
       .then(res => res.json())
-      .then(data => this.setState({
+      .then(data => this.setState((prevState) => ({
         paso: ++prevState.paso,
         idDeduccion: data.idDeduccion
-      }))
+      })))
 
   }
   generarDeduccionesNoFijas({ deduccionHorasRetraso }) {
@@ -184,14 +186,36 @@ class TrabajadorNomina extends Component {
       body: JSON.stringify({
         idDeduccion,
         deduccionHorasRetraso
-      }).then(res => res.json())
-        .then(data => console.log(data.idDedducionNoFijo))
-        .catch(e => console.log(e))
-    })
+      })
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data.idDeduccionNoFijo)
+        this.setState({
+          paso: 0,
+          idDeduccion: 0,
+          idNomina: 0,
+          calIngresoNoFijo: {
+            horasExtra: 0,
+            valorVentas: 0
+          }
+
+        })
+        this.props.next()
+      })
+      .catch(e => console.log(e))
+
   }
 
   generarDeduccionesPrestamos() {
+    const { idTrabajador } = this.props.trabajador
+    fetch(`http://localhost:3000/api/prestamo/trabajador/${idTrabajador}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.length > 0) {
+          /*Todo */
 
+        }
+      })
   }
 
   render({ trabajador, next }, { paso }) {

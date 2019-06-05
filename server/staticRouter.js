@@ -15,15 +15,15 @@ router.get('/', async (req, res) => {
 
 })
 router.get("/diaPago", async (req, res) => {
-  res.render("diaDePago", {   
+  res.render("diaDePago", {
     admin: req.session.rol == 'admin',
-    diaPago:await commonQuerys.getDiasPago()
+    diaPago: await commonQuerys.getDiasPago()
   })
-  })
+})
 router.get('/vistaNomina', async (req, res) => {
   res.render('vistaNomina', {
-    dato : await commonQuerys.getDatosTrabajador() 
-    })
+    dato: await commonQuerys.getDatosTrabajador()
+  })
 })
 router.get('/agregarTrabajador', async (req, res) => {
   res.render('agregarTrabajador', {
@@ -61,6 +61,14 @@ router.get('/crearHorario', async (req, res) => {
 
   })
 })
+
+router.get('/crearNomina', async (req, res) => {
+  res.render('crearNomina', {
+    admin: req.session.rol == 'admin',
+
+  })
+})
+
 /*
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'))
