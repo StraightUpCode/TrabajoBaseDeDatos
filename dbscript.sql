@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS IngresoNoFijo(
 idIngresoNoFijo int not null auto_increment,
 idNomina int not null ,
 viatico numeric(7,2) not null,
-incetivo numeric(7,2) not null,
+incentivo numeric(7,2) not null,
 pagoHorasExtras numeric(7,2) not null,
 CONSTRAINT PK_IngresoNoFijo primary key (idIngresoNoFijo)
 )ENGINE INNODB;
