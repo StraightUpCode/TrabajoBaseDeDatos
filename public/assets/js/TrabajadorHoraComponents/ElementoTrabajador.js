@@ -56,7 +56,7 @@ class ElementoTrabajador extends Component {
         }
         {
           showPopUpTrabajador &&
-          <FormularioTrabajador idTrabajador={idTrabajador} />
+          <FormularioTrabajador idTrabajador={idTrabajador} actualizar={this.props.reload} />
         }
       </div>
     )

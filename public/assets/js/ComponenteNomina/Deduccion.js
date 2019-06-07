@@ -16,7 +16,7 @@ class DeduccionNoFija extends Component {
     return (
       <div>
         <label for="deduccionHorasRetraso">Deduccion Horas Retraso</label>
-        <input type="number" name="deduccionHorasRetraso" placeholder="Deduccion Horas Retraso" onChange={
+        <input type="number" step="any" name="deduccionHorasRetraso" placeholder="Deduccion Horas Retraso" onChange={
           linkState(this, 'deduccionHorasRetraso')
         }></input>
         <button onClick={this.handleSubmit}></button>

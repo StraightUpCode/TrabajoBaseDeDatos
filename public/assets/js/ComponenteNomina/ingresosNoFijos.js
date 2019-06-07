@@ -26,9 +26,9 @@ class IngresosNoFijos extends Component {
     return (
       <div>
         <label for="viatico">Viatico</label>
-        <input name="viatico" type="number" placeholder="Viatico" onChange={linkState(this, 'viatico')} />
+        <input name="viatico" type="number" step="any" placeholder="Viatico" onChange={linkState(this, 'viatico')} />
         <label for="incentivo">Incentivo</label>
-        <input name="incentivo" type="number" placeholder="Incentivo" onChange={linkState(this, 'incentivo')} />
+        <input name="incentivo" type="number" step="any" placeholder="Incentivo" onChange={linkState(this, 'incentivo')} />
         <button onClick={this.handleClick} > Siguiente</button>
       </div>
     )

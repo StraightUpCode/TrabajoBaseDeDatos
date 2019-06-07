@@ -54,6 +54,10 @@ class QueryMaker {
     this.query += `And ${atributo} = ${valor} `
     return this
   }
+  andNotEquals(atributo, valor) {
+    this.query += `And not ${atributo} = ${valor} `
+    return this
+  }
 
   orderBy(atributo) {
     this.query += `Order by ${atributo} `
@@ -88,6 +92,15 @@ class QueryMaker {
     const atributos = Object.keys(objeto).join()
     const values = Object.values(objeto).map(el => typeof el == "string" ? `"${el}"` : el).join()
     this.query += `Insert into ${tabla} (${atributos}) values(${values})`
+    return this
+  }
+
+  update(tabla, objeto, atributoClave, id) {
+    this.query += `Update ${tabla} SET`
+    for (const key in objeto) {
+      this.query += typeof objeto[key] == 'string' ? ` ${key}="${objeto[key]}" ` : ` ${key}=${objeto[key]} `
+    }
+    this.query += ` where ${atributoClave} = ${id} `
     return this
   }
 }

@@ -62,13 +62,46 @@ router.get("/trabajador", async (req, res) => {
   }
 })
 
+router.post("/trabajador/:id/asignarHorario", async (req, res) => {
+  try {
+    const idTrabajador_Horario = await commonQuerys.asignarHorario(req.body)
+    if (idTrabajador_Horario) res.send(await commonQuerys.getTrabajadorHorario(req.body.idTrabajador))
 
+  } catch (e) {
+    res.send(e)
+  }
+
+})
+router.post("/trabajador/update", async (req, res) => {
+  try {
+    console.log("Update")
+    const {changedValues , idTrabajador} = req.body
+    const rows = await commonQuerys.updateTrabajador(changedValues, idTrabajador)
+
+    res.send({ idTrabajador: rows })
+
+  } catch (e) {
+    res.send(e)
+  }
+
+})
+
+
+router.get("/trabajador/:id/delete", async (req, res) => {
+  try {
+    console.log(req.params.id)
+    db.query(`update Trabajador set BorradoLogico = true where idTrabajador=${req.params.id}`);
+    res.send({ idBorrado: req.params.id })
+  }
+  catch (e) {
+    res.send(e);
+  }
+})
 router.get("/trabajador/:id", async (req, res) => {
 
   try {
     console.log("Con Id")
     const id = req.params.id
-    console.log(req.query)
 
 
     // Es igual a 
@@ -88,26 +121,7 @@ router.get("/trabajador/:id", async (req, res) => {
     console.log(e)
   }
 })
-router.post("/trabajador/:id/asignarHorario", async (req, res) => {
-  try {
-    const idTrabajador_Horario = await commonQuerys.asignarHorario(req.body)
-    if (idTrabajador_Horario) res.send(await commonQuerys.getTrabajadorHorario(req.body.idTrabajador))
 
-  } catch (e) {
-    res.send(e)
-  }
-
-})
-router.get("/trabajador/:id/delete", async (req, res) => {
-  try {
-    console.log(req.params.id)
-    db.query(`update Trabajador set BorradoLogico = true where idTrabajador=${req.params.id}`);
-    res.send({ idBorrado: req.params.id })
-  }
-  catch (e) {
-    res.send(e);
-  }
-})
 
 
 router.post("/trabajador", async (req, res) => {
