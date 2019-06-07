@@ -11,8 +11,9 @@ router.use(require('./AuthMiddleware/checkAuth'))
 router.get('/', async (req, res) => {
   console.log("Vengo del redirect")
   //res.sendFile(path.join(__dirname, '../public/index.html'))
-  res.redirect("/agregarTrabajador")
-
+  res.render('principal', {
+    admin: req.session.rol == 'admin'
+  })
 })
 router.get("/diaPago", async (req, res) => {
   res.render("diaDePago", {
@@ -92,9 +93,6 @@ router.get('/', (req, res) => {
 })
 */
 
-router.get('/demo', (req, res) => {
-  res.render('demo');
-})
 
 module.exports = router
 

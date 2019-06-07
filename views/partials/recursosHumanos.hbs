@@ -1,32 +1,35 @@
-<head>
-  <title>Recursos Humanos</title>
-</head>
-<div>
-  <ul>
-    <li>
-      <ul>
-        Administrar Trabajador
-        <li>
-          <a href="/agregarTrabajador">Agregar Trabajador</a>
-        </li>
-        <li><a href="/trabajadores">Lista de trabajadores</a>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <ul>
-        Administrar Nomina
-        <li>
-          <a href="/crearNomina">Crear Nomina</a>
-        </li>
-        <li><a href="/verNominas">Ver Nominas</a></li>
-      </ul>
-    </li>
-    <li>
-      <ul>Administrar Usuario
-        <li><a href="/Contrasena">Cambiar contrasena</a></li>
-      </ul>
-    </li>
-    <li><a href="/logout">Cerrar sesion</a></li>
-  </ul>
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <a class="navbar-brand" href="#">Empresa X</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown">Trabajadores</a>
+            <div class="dropdown-menu">
+              <a class="nav-link dropdown-item" href="/agregarTrabajador">Agregar usuario</a>
+              <a class="nav-link dropdown-item" href="/trabajadores">Ver Trabajadores</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/Marilu.html">Cargo</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown">Nomina</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/crearNomina">Crear</a>
+              <a class="dropdown-item" href="/vistaNomina">Ver</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Cerrar Sesion</a>
+          </li>
+        </ul>
+      </div>
+  </nav>
+</div>
 </div>
