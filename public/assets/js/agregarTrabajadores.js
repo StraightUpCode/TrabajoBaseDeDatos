@@ -18,9 +18,11 @@
     }
     request.idCargo = Number.parseInt(request.idCargo)
     console.log(request.idDiaPago)
+    console.log(request)
     request.idDiaPago = Number.parseInt(request.idDiaPago)
     request.salario = Number.parseFloat(request.salario)
     request.salarioPorHora = request.salarioPorHora == "true"
+    request.idFrecuenciaDePago = Number.parseFloat(request.idFrecuenciaDePago)
     delete request.submit
 
     console.log(request)

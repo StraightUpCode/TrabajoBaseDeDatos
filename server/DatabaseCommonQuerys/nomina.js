@@ -106,21 +106,26 @@ const crearDeduccionNoFija = async (deduccionNoFija) => {
 const getDatosTrabajador = async () => {
   console.log()
   try {
+    const leQuery = queryMaker.select("Trabajador.nombre", "Trabajador.apellido",
+      "Trabajador.cedula", "Cargo.nombre AS cargo", "Trabajador.salario",
+      "Vendedor.porcentajeComision", "Horas_Trabajador.horasExtras",
+      "IngresoNoFijo.viatico", "IngresoNoFijo.incentivo", "IngresoNoFijo.pagoHorasExtras",
+      "IngresoNoFijo.viatico + IngresoNoFijo.incentivo + IngresoNoFijo.pagoHorasExtras AS totalIngresos",
+      "Deduccion.IR", "Deduccion.inss", "(Deduccion.IR + Deduccion.inss) as totalDeducciones")
+      .from("Trabajador")
+      .innerJoin("Cargo").onEquals(" Trabajador.idCargo", "Cargo.idCargo")
+      .leftJoin(" Vendedor").onEquals("Trabajador.idTrabajador", " Vendedor.idTrabajador")
+      .leftJoin("Nomina").onEquals("Trabajador.idTrabajador", "Nomina.idTrabajador")
+      .leftJoin("Deduccion").onEquals("Nomina.idNomina", "Deduccion.idNomina")
+      .leftJoin("PeriodoPago").onEquals("Nomina.idPeriodoPago", "Periodo.idPeriodoPago")
+      .leftJoin("IngresoNoFijo").onEquals("Nomina.idNomina", "IngresoNoFijo.idNomina")
+      .leftJoin("IngresoNoFijoVendedor").onEquals("IngresoNoFijo.idIngresoNoFijo", "IngresoNoFijoVendedor.idIngresoNoFijo")
+      .leftJoin("Horas_Trabajador")
+      .onEquals("Trabajador.idTrabajador ", "Horas_Trabajador.idTrabajador").make()
+    console.log(leQuery)
     const [rows] = await db.query(
-      queryMaker.select("Trabajador.nombre", "Trabajador.apellido",
-        "Trabajador.cedula", "Cargo.nombre AS cargo", "Trabajador.salario",
-        "Vendedor.porcentajeComision", "Horas_Trabajador.horasExtras",
-        "ingresonofijo.viatico", "ingresonofijo.incentivo", "pagoHorasExtras",
-        "(ingresonofijo.Viatico+ingresonofijo.incentivo+pagoHorasExtras) as totalIngresos",
-        "Deduccion.IR", "Deduccion.inss", "(Deduccion.IR + Deduccion.inss) as totalDeducciones",
-        "(Trabajador.salario+totalIngresos-totalDeducciones) as totalSalario").from("Trabajador")
-        .innerJoin("Cargo").onEquals(" Trabajador.idCargo", "Cargo.idCargo")
-        .leftJoin(" Vendedor").onEquals("Trabajador.idTrabajador", " Vendedor.idTrabajador")
-        .innerJoin("Nomina").onEquals("Trabajador.idTrabajador", "Nomina.idTrabajador")
-        .innerJoin("PeriodoPago").onEquals("Nomina.idPeriodoPago", "Periodo.idPeriodoPago")
-        .leftJoin("ingresonofijo").onEquals("Nomina.idNomina", "ingresonofijo.idNomina")
-        .innerJoin("Horas_Trabajador")
-        .onEquals("Trabajador.idTrabajador ", "Horas_Trabajador.idTrabajador").make())
+      leQuery
+    )
     return rows
 
   } catch (e) {

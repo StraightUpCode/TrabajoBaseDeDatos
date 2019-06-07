@@ -1,5 +1,6 @@
 import { Component, h } from "preact";
 import FormularioTrabajador from './FormularioTrabajador'
+import Horarios from "./Horarios";
 
 class ElementoTrabajador extends Component {
   constructor() {
@@ -30,42 +31,22 @@ class ElementoTrabajador extends Component {
 
   render({ trabajador: { idTrabajador, nombre, apellido, horario } },
     { showHorario, showPopUpTrabajador }) {
-    console.log(nombre)
+
     return (
       <div>
         <div class="header">
-          <div >{nombre} {apellido}</div>
+          <h2 >{nombre} {apellido}</h2>
           <div>
             <div onClick={this.mostrarHorario}>Mostrar Horario</div>
             <div onClick={this.mostrarTrabajadorEditable} >Editar</div>
           </div>
         </div>
         {
-          showHorario ? (
-            <div class="horarios" >
-              <table>
-                <thead>
-                  <th> Hora Entrada
-            </th>
-                  <th> Hora Salida
-            </th>
-                </thead>
-                <tbody>
-                  {horario.map(el => <tr>
-                    <td>{el.horaEntrada}</td>
-                    <td>{el.horaSalida}</td>
-                  </tr>)}
-                </tbody>
-              </table>
-            </div>
-          ) : null
+          showHorario && <Horarios horario={horario} />
         }
         {
-          showPopUpTrabajador ? (
-            <div>
-              <FormularioTrabajador idTrabajador={idTrabajador} />
-            </div>
-          ) : null
+          showPopUpTrabajador &&
+          <FormularioTrabajador idTrabajador={idTrabajador} />
         }
       </div>
     )

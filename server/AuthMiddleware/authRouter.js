@@ -16,6 +16,8 @@ router.post("/login", async (req, res) => {
       console.log(req.session)
       req.session.save()
       res.redirect("/")
+    } else {
+      res.send({ message: "Usuario o Contraseña Equivocado" })
     }
 
   } catch (e) {
@@ -25,7 +27,7 @@ router.post("/login", async (req, res) => {
 })
 
 router.get("/login", async (req, res) => {
-  res.sendFile(path.join(__dirname + '/../../public/login.html'))
+  res.render('login', { layout: 'loginLayout' })
 })
 
 router.get("/logout", async (req, res) => {

@@ -46,9 +46,7 @@ router.get('/crearUsuario', async (req, res) => {
     Rol: await commonQuerys.getRoles()
   })
 })
-router.get("/eliminarTrabajador", async (req, res) => {
-  res.send("pendiente", {});
-})
+
 router.get('/crearPrestamo', async (req, res) => {
   res.render('crearPrestamo', {
     admin: req.session.rol == 'admin',
@@ -59,6 +57,12 @@ router.get('/crearHorario', async (req, res) => {
   res.render('crearHorarios', {
     admin: req.session.rol == 'admin',
 
+  })
+})
+
+router.get('/trabajadores', async (req, res) => {
+  res.render('trabajadorHoras', {
+    admin: req.session.rol == 'admin'
   })
 })
 
