@@ -111,13 +111,14 @@ const getDatosTrabajador = async () => {
       "Vendedor.porcentajeComision", "Horas_Trabajador.horasExtras",
       "IngresoNoFijo.viatico", "IngresoNoFijo.incentivo", "IngresoNoFijo.pagoHorasExtras",
       "IngresoNoFijo.viatico + IngresoNoFijo.incentivo + IngresoNoFijo.pagoHorasExtras AS totalIngresos",
-      "Deduccion.IR", "Deduccion.inss", "(Deduccion.IR + Deduccion.inss) as totalDeducciones")
+      "Deduccion.IR", "Deduccion.inss", "(Deduccion.IR + Deduccion.inss) as totalDeducciones", "PeriodoPago.inicioPeriodo", "PeriodoPago.finPeriodo",
+      "Nomina.fechaDeEmision", "Nomina.salarioPagado")
       .from("Trabajador")
       .innerJoin("Cargo").onEquals(" Trabajador.idCargo", "Cargo.idCargo")
       .leftJoin(" Vendedor").onEquals("Trabajador.idTrabajador", " Vendedor.idTrabajador")
       .leftJoin("Nomina").onEquals("Trabajador.idTrabajador", "Nomina.idTrabajador")
       .leftJoin("Deduccion").onEquals("Nomina.idNomina", "Deduccion.idNomina")
-      .leftJoin("PeriodoPago").onEquals("Nomina.idPeriodoPago", "Periodo.idPeriodoPago")
+      .leftJoin("PeriodoPago").onEquals("Nomina.idPeriodoPago", "PeriodoPago.idPeriodoPago")
       .leftJoin("IngresoNoFijo").onEquals("Nomina.idNomina", "IngresoNoFijo.idNomina")
       .leftJoin("IngresoNoFijoVendedor").onEquals("IngresoNoFijo.idIngresoNoFijo", "IngresoNoFijoVendedor.idIngresoNoFijo")
       .leftJoin("Horas_Trabajador")
@@ -126,6 +127,7 @@ const getDatosTrabajador = async () => {
     const [rows] = await db.query(
       leQuery
     )
+    console.log(rows)
     return rows
 
   } catch (e) {

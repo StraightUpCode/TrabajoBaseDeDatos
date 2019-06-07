@@ -15,7 +15,7 @@ router.post("/login", async (req, res) => {
       req.session.rol = user.rol
       console.log(req.session)
       req.session.save()
-      res.redirect("/")
+      res.send({ ok: true })
     } else {
       res.send({ message: "Usuario o Contraseña Equivocado" })
     }

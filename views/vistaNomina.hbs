@@ -7,36 +7,68 @@
 </header>
 {{#each dato }}
 <div id="period">
-    <h4>Impreso al dia {{fechaDeEmision}}</h4>
-    <h4>Periododo del {{inicioPerido}} al {{finPeriodo}}</h4>
+    <h4>Impreso al dia {{date fechaDeEmision}}</h4>
+    <h4>Periodo del {{date inicioPeriodo}} al {{date finPeriodo}}</h4>
 </div>
 <div id="general">
- <div> <h3>Datos generales del trabajador</h3> </div>  
- <div> <h4>Nombres: {{Nombres}} </h4> </div>
- <div> <h4>Apellidos:{{Apellidos}}</h4> </div>
- <div> <h4>Cedula:{{Cedula}}</h4> </div>
- <div> <h4>Cargo:{{cargo}}</h4> </div>
+    <div>
+        <h3>Datos generales del trabajador</h3>
+    </div>
+    <div>
+        <h4>Nombres: {{nombre}} </h4>
+    </div>
+    <div>
+        <h4>Apellidos:{{apellido}}</h4>
+    </div>
+    <div>
+        <h4>Cedula:{{cedula}}</h4>
+    </div>
+    <div>
+        <h4>Cargo:{{cargo}}</h4>
+    </div>
 </div>
 <div id="monetario">
     <br>
-<div> <h4>Salario base: {{salario}}</h4> </div>
-<br>
- <div> <h3>Ingresos no fijos</h3> </div>
- {{!-- <div> <h4>Comision: {{nameT}}</h4> </div> --}}
- <div> <h4>Horas extras: {{pagoHorasExtras}}</h3> </div> 
- <div> <h4>Viatico:{{viatico}}</h4> </div>
- <div> <h4>Incentivo:{{Incentivo}}</h4></div>
- <br>
- <div id="devengado"> <h4>Saldo total devengado: {{totalIngresos}}</h4> </div>
- <br>
- <div> <h3>Deducciones</h3> </div>
- <div> <h4>IR:{{IR}}</h4> </div>
- <div> <h4>INSS:{{inss}}</h4> </div>
- <br>
- <div id="deducido"> <h4>Saldo total deducido: {{totalDeducciones}}</h4>  </div>
- <br>
- </div>
- <div id="total">
- <div> <h4>Saldo total pagado:{{totalSalario}}</h4> </div>
- </div>
- {{/each Dato}}
+    <div>
+        <h4>Salario base: {{salario}}</h4>
+    </div>
+    <br>
+    <div>
+        <h3>Ingresos no fijos</h3>
+    </div>
+    {{!-- <div> <h4>Comision: {{nameT}}</h4> </div> --}}
+    <div>
+        <h4>Horas extras: {{pagoHorasExtras}}</h3>
+    </div>
+    <div>
+        <h4>Viatico:{{viatico}}</h4>
+    </div>
+    <div>
+        <h4>Incentivo:{{incentivo}}</h4>
+    </div>
+    <br>
+    <div id="devengado">
+        <h4>Saldo total devengado: {{totalIngresos}}</h4>
+    </div>
+    <br>
+    <div>
+        <h3>Deducciones</h3>
+    </div>
+    <div>
+        <h4>IR:{{IR}}</h4>
+    </div>
+    <div>
+        <h4>INSS:{{inss}}</h4>
+    </div>
+    <br>
+    <div id="deducido">
+        <h4>Saldo total deducido: {{totalDeducciones}}</h4>
+    </div>
+    <br>
+</div>
+<div id="total">
+    <div>
+        <h4>Saldo total pagado:{{ sum salarioPagado totalIngresos totalDeducciones}}</h4>
+    </div>
+</div>
+{{/each}}

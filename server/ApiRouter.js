@@ -96,6 +96,16 @@ router.get("/trabajador/:id", async (req, res) => {
     console.log(e)
   }
 })
+router.post("/trabajador/:id/asignarHorario", async (req, res) => {
+  try {
+    const idTrabajador_Horario = await commonQuerys.asignarHorario(req.body)
+    if (idTrabajador_Horario) res.send(await commonQuerys.getTrabajadorHorario(req.body.idTrabajador))
+
+  } catch (e) {
+    res.send(e)
+  }
+
+})
 
 
 router.post("/trabajador", async (req, res) => {
@@ -277,6 +287,12 @@ router.post("/prestamo/trabajador/:id", async (req, res) => {
   } catch (e) {
     res.send(e)
   }
+})
+
+router.get("/horarios", async (req, res) => {
+  const result = await commonQuerys.getHorarios()
+  console.log(result)
+  res.send(result)
 })
 
 

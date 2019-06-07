@@ -16,7 +16,9 @@ formulario.addEventListener('submit', e => {
     body: JSON.stringify(bodyLogin)
   })
     .then(res => res.json())
-    .then(({ message }) => {
+    .then((res) => {
+      if (res.ok) window.location.href = "/"
       console.log(message)
     })
+    .catch(e => console.log(e))
 })

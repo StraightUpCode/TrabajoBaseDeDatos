@@ -42,7 +42,7 @@ class ElementoTrabajador extends Component {
           </div>
         </div>
         {
-          showHorario && <Horarios horario={horario} />
+          showHorario && <Horarios horario={horario} idTrabajador={idTrabajador}/>
         }
         {
           showPopUpTrabajador &&

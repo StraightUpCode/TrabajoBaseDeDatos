@@ -7,6 +7,7 @@ const rol = require('./rol')
 const periodo = require('./periodo')
 const nomina = require('./nomina')
 const prestamo = require('./prestamo')
+const horario = require('./horario')
 module.exports = {
   getCargos,
   getDiasPago,
@@ -16,5 +17,6 @@ module.exports = {
   ...rol,
   ...periodo,
   ...nomina,
-  ...prestamo
+  ...prestamo,
+  ...horario
 }

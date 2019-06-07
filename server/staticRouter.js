@@ -22,7 +22,17 @@ router.get("/diaPago", async (req, res) => {
 })
 router.get('/vistaNomina', async (req, res) => {
   res.render('vistaNomina', {
-    dato: await commonQuerys.getDatosTrabajador()
+    dato: await commonQuerys.getDatosTrabajador(),
+    helpers: {
+      sum: (salario, ingresos, deducciones, ...opciones) => {
+
+        return (Number.parseFloat(salario) + Number.parseFloat(ingresos) - Number.parseFloat(deducciones)).toFixed(2)
+      },
+      date: (fecha) => {
+        const newFecha = new Date(fecha)
+        return newFecha.toISOString().split('T')[0].split('-').reverse().join('/')
+      }
+    }
   })
 })
 router.get('/agregarTrabajador', async (req, res) => {
