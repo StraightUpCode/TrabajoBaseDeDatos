@@ -3,8 +3,11 @@ const queryMaker = require('../testrandom')
 
 const getTrabajador = async () => {
   const [rows] = await db.query(
-    queryMaker.select('*')
+    queryMaker.select('Trabajador.idTrabajador', 'Trabajador.nombre', 'Trabajador.apellido', 'Trabajador.idCargo', 'Trabajador.cedula', 'Trabajador.salario', 'Trabajador.salarioPorHora', 'Trabajador.fechaDeContratacion', 'Trabajador.idDiaPago', 'Trabajador.idFrecuenciaDePago', 'Vendedor.porcentajeComision')
       .from('Trabajador')
+      .leftJoin('Vendedor')
+      .onEquals('Trabajador.idTrabajador', 'Vendedor.idTrabajador')
+      .not('Trabajador.BorradoLogico', '1')
       .make()
   )
 
@@ -13,21 +16,29 @@ const getTrabajador = async () => {
 }
 
 const getTrabajadorById = async (id) => {
+  const queryString = queryMaker.select('Trabajador.idTrabajador', 'Trabajador.nombre', 'Trabajador.apellido', 'Trabajador.idCargo', 'Trabajador.cedula', 'Trabajador.salario', 'Trabajador.salarioPorHora', 'Trabajador.fechaDeContratacion', 'Trabajador.idDiaPago', 'Trabajador.idFrecuenciaDePago', 'Vendedor.porcentajeComision')
+    .from('Trabajador')
+    .leftJoin('Vendedor')
+    .onEquals('Trabajador.idTrabajador', 'Vendedor.idTrabajador')
+    .equals('Trabajador.idTrabajador', id)
+    .not('Trabajador.BorradoLogico', '1')
+    .make()
   const [rows] = await db.query(
-    queryMaker.select('*')
-      .from('Trabajador')
-      .equals('idTrabajador', id)
-      .make()
+    queryString
   )
-
+  console.log(queryString)
+  console.log(rows)
   return rows
 }
 
 const getTrabajadorByName = async (name) => {
-  const leQuery = queryMaker.select('*')
+  const leQuery = queryMaker.select('Trabajador.idTrabajador', 'Trabajador.nombre', 'Trabajador.apellido', 'Trabajador.idCargo', 'Trabajador.cedula', 'Trabajador.salario', 'Trabajador.salarioPorHora', 'Trabajador.fechaDeContratacion', 'Trabajador.idDiaPago', 'Trabajador.idFrecuenciaDePago', 'Vendedor.porcentajeComision')
     .from('Trabajador')
+    .leftJoin('Vendedor')
+    .onEquals('Trabajador.idTrabajador', 'Vendedor.idTrabajador')
     .where('nombre')
     .includes(name)
+    .not('Trabajador.BorradoLogico', '1')
     .make()
   const [rows] = await db.query(
     leQuery
@@ -49,6 +60,7 @@ const getTrabajadorByPeriodoYFrecuenciaDePago = async ({ frecuenciaDePago, inici
     .where("DiaDePago.diaPago")
     .between(inicio, fin)
     .andEquals("FrecuenciaDePago.nombre", `"${frecuenciaDePago}"`)
+    .not('Trabajador.BorradoLogico', '1')
     .make()
   console.log(leQuery)
   const [rows] = await db.query(
@@ -67,6 +79,7 @@ getTrabajadorHorario = async id => {
       .innerJoin('Horario')
       .onEquals('Trabajador_Horario.idHorario', 'Horario.idHorario')
       .equals('Trabajador.idTrabajador', id)
+      .not('Trabajador.BorradoLogico', '1')
       .make()
   )
   return rows

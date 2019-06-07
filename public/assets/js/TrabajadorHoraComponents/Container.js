@@ -13,9 +13,12 @@ class Container extends Component {
       busquedaTrabajadores: [],
       listaTrabajadores: []
     }
-
+    this.loadTrabajadores = this.loadTrabajadores.bind(this)
   }
   componentDidMount() {
+    this.loadTrabajadores()
+  }
+  loadTrabajadores() {
     fetch('http://localhost:3000/api/trabajador?horario=true')
       .then(res => res.json())
       .then(data => {
@@ -25,7 +28,6 @@ class Container extends Component {
       })
       .catch(err => console.error(err))
   }
-
   componentDidUpdate(prevProps, prevState) {
 
     if (prevState.nombreTrabajador.length >= 0 && prevState.nombreTrabajador.length != this.state.nombreTrabajador.length && prevState.queryInProgress == false) {
@@ -71,7 +73,7 @@ class Container extends Component {
           <option value={el.idTrabajador} onClick={this.getTrabajadorId.bind(this)}> {`${el.nombre} ${el.apellido}`}</option>)}
         <div>
           <h2> Trabajadores </h2>
-          {listaTrabajadores.map(el => <ElementoTrabajador trabajador={el} />)
+          {listaTrabajadores.map(el => <ElementoTrabajador trabajador={el} reload={this.loadTrabajadores} />)
           }
         </div>
 

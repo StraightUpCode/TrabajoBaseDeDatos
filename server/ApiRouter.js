@@ -29,6 +29,7 @@ router.get("/trabajador", async (req, res) => {
         .onEquals('Trabajador.idTrabajador', 'Trabajador_Horario.idTrabajador')
         .leftJoin('Horario')
         .onEquals('Horario.idHorario', 'Trabajador_Horario.idHorario')
+        .not('Trabajador.BorradoLogico', '1')
         .make()
     )
 
@@ -61,14 +62,7 @@ router.get("/trabajador", async (req, res) => {
   }
 })
 
-router.get("/trabajador/delete/:id", async (req, res) => {
-  try {
-    db.query(`update Trabajador set BorradoLogico = true where idTrabajador=${req.params.id}`);
-  }
-  catch (e) {
-    res.send(e);
-  }
-})
+
 router.get("/trabajador/:id", async (req, res) => {
 
   try {
@@ -84,9 +78,7 @@ router.get("/trabajador/:id", async (req, res) => {
       res.send(await commonQuerys.getTrabajadorHorario(id))
 
     } else {
-      const [rows] = await db.query(queryMaker.select("*")
-        .from("Trabajador")
-        .equals("idTrabajador", id).make())
+      const [rows] = await commonQuerys.getTrabajadorById(id)
       res.send(rows)
 
     }
@@ -106,6 +98,16 @@ router.post("/trabajador/:id/asignarHorario", async (req, res) => {
   }
 
 })
+router.get("/trabajador/:id/delete", async (req, res) => {
+  try {
+    console.log(req.params.id)
+    db.query(`update Trabajador set BorradoLogico = true where idTrabajador=${req.params.id}`);
+    res.send({ idBorrado: req.params.id })
+  }
+  catch (e) {
+    res.send(e);
+  }
+})
 
 
 router.post("/trabajador", async (req, res) => {
@@ -113,6 +115,7 @@ router.post("/trabajador", async (req, res) => {
   console.log("Trabajador")
   try {
     console.log("Insertando")
+    content.BorradoLogico = 0
     const [rows] = await db.query(
       queryMaker.insert("Trabajador", content)
         .make())

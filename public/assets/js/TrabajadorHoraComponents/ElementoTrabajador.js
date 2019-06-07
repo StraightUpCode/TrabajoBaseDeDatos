@@ -11,6 +11,7 @@ class ElementoTrabajador extends Component {
     }
     this.mostrarHorario = this.mostrarHorario.bind(this)
     this.mostrarTrabajadorEditable = this.mostrarTrabajadorEditable.bind(this)
+    this.eliminarUsuario = this.eliminarUsuario.bind(this)
   }
   componentDidMount() {
     console.log("Elemento Trabajador")
@@ -28,6 +29,13 @@ class ElementoTrabajador extends Component {
   }
 
 
+  eliminarUsuario() {
+    fetch(`http://localhost:3000/api/trabajador/${this.props.trabajador.idTrabajador}/delete`)
+      .then(res => {
+        this.props.reload()
+      })
+  }
+
 
   render({ trabajador: { idTrabajador, nombre, apellido, horario } },
     { showHorario, showPopUpTrabajador }) {
@@ -37,12 +45,14 @@ class ElementoTrabajador extends Component {
         <div class="header">
           <h2 >{nombre} {apellido}</h2>
           <div>
-            <div onClick={this.mostrarHorario}>Mostrar Horario</div>
-            <div onClick={this.mostrarTrabajadorEditable} >Editar</div>
+            <button onClick={this.mostrarHorario}>Mostrar Horario</button>
+            <button onClick={this.mostrarTrabajadorEditable} >Editar</button>
+            <button onClick={this.eliminarUsuario} >Eliminar</button>
+
           </div>
         </div>
         {
-          showHorario && <Horarios horario={horario} idTrabajador={idTrabajador}/>
+          showHorario && <Horarios horario={horario} idTrabajador={idTrabajador} />
         }
         {
           showPopUpTrabajador &&

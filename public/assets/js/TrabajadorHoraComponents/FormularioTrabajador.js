@@ -16,7 +16,10 @@ class FormularioTrabajador extends Component {
   componentDidMount() {
     fetch(`http://localhost:3000/api/trabajador/${this.props.idTrabajador}`)
       .then(res => res.json())
-      .then(data => this.setState({ infoTrabajador: data[0] }))
+      .then(data => {
+        console.log(data)
+        this.setState({ infoTrabajador: data })
+      })
       .catch(e => console.error(e))
 
     fetch(`http://localhost:3000/api/cargo`)
@@ -43,7 +46,8 @@ class FormularioTrabajador extends Component {
 
 
   render(props, { cargos, diasDePago, frecuenciaDePago, infoTrabajador }) {
-
+    console.log(infoTrabajador)
+    console.log(infoTrabajador.porcentajeComision)
     return (
       <form>
         <input type="text" name="nombre" value={infoTrabajador.nombre}></input>
@@ -65,7 +69,14 @@ class FormularioTrabajador extends Component {
 
         <label>Salario Base:</label>
         <input type="number" value={infoTrabajador.salario} name="salario" placeholder="Salario" max="1000000"></input>
-
+        {
+          infoTrabajador.porcentajeComision && (
+            <div>
+              <label>Porcentaje Comision:</label>
+              <input type="number" value={infoTrabajador.porcentajeComision} name="salario" placeholder="Porcentaje Comision" max="100" />
+            </div>
+          )
+        }
         <label>Fecha Pago:</label>
         <select id="fechaPagos" name="idDiaPago">
           {diasDePago.map(e => e.idCargo == infoTrabajador.idTrabajador ?
