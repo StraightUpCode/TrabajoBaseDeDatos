@@ -1,4 +1,6 @@
-body {background-color: lightgray}
+body {background-color: lightpink !important;
+    margin: auto;
+}
 #nombreEmpresa {text-align: center;
     background-color: lightpink; padding: 0.5cm}
 #caja{
@@ -6,10 +8,11 @@ body {background-color: lightgray}
     width: 400px;
     text-align: center;
     margin: 0 auto;
-    padding: 1em;
+    padding: 20pxem;
     border: 2px #CCC;
     border-radius: 1em;
-    text-align: left;
+    text-align: left center;
     }
     footer{ text-align: center}
-    
+    .row , div { text-align: center}
+a{text-align: center}
