@@ -11,9 +11,12 @@ class Container extends Component {
       nombreTrabajador: '',
       idTrabajador: null,
       busquedaTrabajadores: [],
-      listaTrabajadores: []
+      listaTrabajadores: [],
+      trabajadoresFiltrados: []
     }
+    this.clearBusqueda = this.clearBusqueda.bind(this)
     this.loadTrabajadores = this.loadTrabajadores.bind(this)
+    this.filterTrabajadores = this.filterTrabajadores.bind(this)
   }
   componentDidMount() {
     this.loadTrabajadores()
@@ -54,6 +57,7 @@ class Container extends Component {
             busquedaTrabajadores: trabajadores,
             queryInProgress: false
           })
+          this.filterTrabajadores()
         })
         .catch(e => console.log(e))
     }
@@ -63,17 +67,49 @@ class Container extends Component {
   getTrabajadorId(e) {
     this.setState({ idTrabajador: e.target.value, nombreTrabajador: e.target.label })
   }
-  render(props, { nombreTrabajador, busquedaTrabajadores, listaTrabajadores }) {
 
+  filterTrabajadores() {
+    const { idTrabajador, nombreTrabajador, listaTrabajadores } = this.state
+
+    if (idTrabajador) {
+      this.setState((prevState) => {
+        return ({
+          trabajadoresFiltrados: listaTrabajadores.filter(el => el.idTrabajador == idTrabajador)
+        })
+      })
+    } else {
+      this.setState((prevState) => {
+        return ({
+          trabajadoresFiltrados: listaTrabajadores.filter(el => {
+            const bool = el.nombre.includes(nombreTrabajador) || el.apellido.includes(nombreTrabajador)
+            console.log("Incluye el Nombre", bool)
+            return bool
+          })
+        })
+      })
+    }
+
+  }
+
+  clearBusqueda() {
+    this.setState({
+      idTrabajador: null,
+      nombreTrabajador: '',
+      trabajadoresFiltrados: []
+    })
+  }
+  render(props, { nombreTrabajador, busquedaTrabajadores, listaTrabajadores, trabajadoresFiltrados }) {
+    const trabajadores = trabajadoresFiltrados.length > 0 ? trabajadoresFiltrados : listaTrabajadores
     return (
       <div >
 
         <input placeholder="Buscar" value={nombreTrabajador} onInput={linkState(this, 'nombreTrabajador')} ></input>
         {busquedaTrabajadores.map(el =>
           <option value={el.idTrabajador} onClick={this.getTrabajadorId.bind(this)}> {`${el.nombre} ${el.apellido}`}</option>)}
+        <div onClick={this.clearBusqueda}>X</div>
         <div>
           <h2> Trabajadores </h2>
-          {listaTrabajadores.map(el => <ElementoTrabajador trabajador={el} reload={this.loadTrabajadores} />)
+          {trabajadores.map(el => <ElementoTrabajador trabajador={el} reload={this.loadTrabajadores} />)
           }
         </div>
 
