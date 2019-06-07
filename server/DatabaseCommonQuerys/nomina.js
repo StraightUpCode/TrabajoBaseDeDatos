@@ -50,8 +50,12 @@ const getSalarioAcumulado = async (id) => {
   }
 }
 
-const calcIR = (salarioActual, { salarioAcumulado, meses }) => {
-  const salarioAnual = (salarioAcumulado + (salarioActual * (12 - meses))) / 12
+const calcIR = (salarioActual, { salarioAcumulado, meses, frecuenciaDePago }) => {
+  if (frecuenciaDePago == 'Quincenal') salarioActual *= 2
+  const salarioAnual = (salarioAcumulado + (
+    salarioActual * (12 - meses)
+  )
+  ) / 12
   // Rango salarial	Impuesto base % aplicable	Sobre exceso de
   // C$0.01 a C8, 333.33	—	0 %	—
   // 8, 333, 34 a 16, 666.66	—	15 % C$8, 333.33

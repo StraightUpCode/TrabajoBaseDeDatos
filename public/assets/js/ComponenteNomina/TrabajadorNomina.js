@@ -149,7 +149,7 @@ class TrabajadorNomina extends Component {
     let { salario, idTrabajador, frecuenciaDePago } = this.props.trabajador
     const { idNomina } = this.state
     salario = Number.parseFloat(salario)
-    let value = (salario * 0.625).toFixed(2)
+    let value = (salario * 0.0625).toFixed(2)
     const inss = Number.parseFloat(value)
     const requestBody = {
       inss,
