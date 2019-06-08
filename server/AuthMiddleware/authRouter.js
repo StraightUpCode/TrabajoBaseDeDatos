@@ -34,7 +34,7 @@ router.get("/logout", async (req, res) => {
   if (req.session) {
     req.session.destroy()
   }
-  res.send("Session Cerrada")
+  res.redirect("/")
 })
 
 module.exports = router

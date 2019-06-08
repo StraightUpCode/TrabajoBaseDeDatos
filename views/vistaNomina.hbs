@@ -1,74 +1,86 @@
 <head>
     <title>Nomina</title>
 </head>
-<header id="name">
+
+{{#each dato }}
+<header class="display-4" id="name">
     <h1>Empresa x</h1>
     <h2>Nomina</h2>
 </header>
-{{#each dato }}
-<div id="period">
+<div class="container" id="period">
     <h4>Impreso al dia {{date fechaDeEmision}}</h4>
     <h4>Periodo del {{date inicioPeriodo}} al {{date finPeriodo}}</h4>
 </div>
-<div id="general">
-    <div>
-        <h3>Datos generales del trabajador</h3>
+<br>
+<div class="borde">
+    <div id="general" class="container">
+        <div>
+            <h3>Datos generales del trabajador</h3>
+        </div>
+        <div>
+            <h4>Nombres: {{nombre}} </h4>
+        </div>
+        <div>
+            <h4>Apellidos:{{apellido}}</h4>
+        </div>
+        <div>
+            <h4>Cedula:{{cedula}}</h4>
+        </div>
+        <div>
+            <h4>Cargo:{{cargo}}</h4>
+        </div>
     </div>
-    <div>
-        <h4>Nombres: {{nombre}} </h4>
+    <br>
+    <div class="container" id="monetario">
+        <br>
+        <div>
+            <h4>Salario base: {{salario}}</h4>
+        </div>
+        <br>
+        <div>
+            <h3>Ingresos no fijos</h3>
+        </div>
+        {{!-- <div> <h4>Comision: {{nameT}}</h4> </div> --}}
+        <div class="container">
+
+            <div>
+                <h4>Horas extras: {{pagoHorasExtras}}</h3>
+            </div>
+            <div>
+                <h4>Viatico:{{viatico}}</h4>
+            </div>
+            <div>
+                <h4>Incentivo:{{incentivo}}</h4>
+            </div>
+            <br>
+            <div id="devengado">
+                <h4>Saldo total devengado: {{totalIngresos}}</h4>
+            </div>
+        </div>
+        <br>
+        <div>
+            <h3>Deducciones</h3>
+        </div>
+        <div class="container">
+            <div>
+                <h4>IR:{{IR}}</h4>
+            </div>
+            <div>
+                <h4>INSS:{{inss}}</h4>
+            </div>
+            <br>
+            <div id="deducido">
+                <h4>Saldo total deducido: {{totalDeducciones}}</h4>
+            </div>
+        </div>
+        <br>
     </div>
-    <div>
-        <h4>Apellidos:{{apellido}}</h4>
+    <div id="total">
+        <div>
+            <h4>Saldo total pagado:{{ sum salarioPagado totalIngresos totalDeducciones}}</h4>
+        </div>
     </div>
-    <div>
-        <h4>Cedula:{{cedula}}</h4>
-    </div>
-    <div>
-        <h4>Cargo:{{cargo}}</h4>
-    </div>
+    <br>
 </div>
-<div id="monetario">
-    <br>
-    <div>
-        <h4>Salario base: {{salario}}</h4>
-    </div>
-    <br>
-    <div>
-        <h3>Ingresos no fijos</h3>
-    </div>
-    {{!-- <div> <h4>Comision: {{nameT}}</h4> </div> --}}
-    <div>
-        <h4>Horas extras: {{pagoHorasExtras}}</h3>
-    </div>
-    <div>
-        <h4>Viatico:{{viatico}}</h4>
-    </div>
-    <div>
-        <h4>Incentivo:{{incentivo}}</h4>
-    </div>
-    <br>
-    <div id="devengado">
-        <h4>Saldo total devengado: {{totalIngresos}}</h4>
-    </div>
-    <br>
-    <div>
-        <h3>Deducciones</h3>
-    </div>
-    <div>
-        <h4>IR:{{IR}}</h4>
-    </div>
-    <div>
-        <h4>INSS:{{inss}}</h4>
-    </div>
-    <br>
-    <div id="deducido">
-        <h4>Saldo total deducido: {{totalDeducciones}}</h4>
-    </div>
-    <br>
-</div>
-<div id="total">
-    <div>
-        <h4>Saldo total pagado:{{ sum salarioPagado totalIngresos totalDeducciones}}</h4>
-    </div>
-</div>
+
 {{/each}}

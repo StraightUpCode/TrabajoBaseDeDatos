@@ -11,8 +11,57 @@
   <title>{{ title }}</title>
   <link rel="stylesheet" href="/assets/css/maquillajenomina.css">
 </head>
+<style type="text/css">
+  body {
+    background-color: lightgray !important;
+    margin: auto;
+  }
+
+  #nombreEmpresa {
+    text-align: center;
+    background-color: lightpink;
+    padding: 0.5cm
+  }
+
+  .container div {
+    text-align: left !important;
+
+
+  }
+
+  #caja {
+    background-color: lightyellow;
+    width: 400px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 20pxem;
+    border: 2px #CCC;
+    border-radius: 1em;
+    text-align: left center;
+  }
+
+  footer {
+    text-align: center
+  }
+
+  .row,
+  div {
+    text-align: center
+  }
+
+  a {
+    text-align: center
+  }
+
+  body {
+
+
+    font-family: Arial, Helvetica, sans-serif
+  }
+</style>
 
 <body>
+
   <div class="container-fluid">
     {{#if admin}}
     {{> adminMenu}}
@@ -30,6 +79,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+
 </body>
 
 </html>
