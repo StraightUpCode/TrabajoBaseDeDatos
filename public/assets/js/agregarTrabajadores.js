@@ -7,11 +7,14 @@
     for (let field of formulario.elements) {
       let val
       if (field.name) {
-        console.log(field.name)
+        console.log(field.type)
+
         if (field.nodeName == "SELECT") {
           console.log(field.options
           )
           val = field.options[field.selectedIndex].value
+        } else if (field.type == 'checkbox') {
+          val = field.checked
         } else {
           console.log(field)
           val = field.value
