@@ -50,7 +50,7 @@ const getTrabajadorByName = async (name) => {
 const getTrabajadorByPeriodoYFrecuenciaDePago = async ({ frecuenciaDePago, inicio, fin }) => {
 
   try {
-    if (inicio == fin) fin = 30
+    if (inicio == 1 && inicio == fin) fin = 30
     const leQuery = queryMaker.select("Trabajador.idTrabajador", "Trabajador.nombre", "Trabajador.apellido", "Cargo.nombre as cargo", "DiaDePago.diaPago", "FrecuenciaDePago.nombre as frecuenciaDePago", "Trabajador.salario", "Trabajador.salarioPorHora", "Vendedor.porcentajeComision")
       .from("Trabajador")
       .leftJoin("Vendedor")
