@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS Trabajador (
 CREATE TABLE IF NOT EXISTS Vendedor (
 	idVendedor int not null auto_increment,
 	idTrabajador int not null, /* FK a Trabajador */
-    porcentajeComision int not null,
+    porcentajeComision numeric(5,2) not null,
     CONSTRAINT PK_Vendedor PRIMARY KEY (idVendedor)
 )ENGINE INNODB;
 
@@ -264,7 +264,7 @@ END$$
 
 Insert into FrecuenciaDePago(nombre) values ("Mensual") , ("Quincenal");
 
-Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador");
+Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador"),("Vendedor");
 
 Insert into DiaDePago(diaPago) values(15), (30) ;
 
