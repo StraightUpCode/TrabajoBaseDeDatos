@@ -231,15 +231,33 @@ class TrabajadorNomina extends Component {
       }
       case 2: {
         pasoActual = <DeduccionNoFija crearDeduccionNoFija={this.generarDeduccionesNoFijas} />
+        break;
       }
+      default: {
+        pasoActual = (() => (
+          <div>
+            <h3>Nominas Generadas Correctamente</h3>
+          </div>
+        ))()
+        break;
+      }
+
 
     }
     return (
       <div>
-        <h2>{`${nombre} ${apellido}`}</h2>
-        <h4>{cargo}</h4>
-        {pasoActual}
-      </div>)
+        {
+          nombre ? (
+            <div>
+              <h2>{`${nombre} ${apellido}`}</h2>
+              <h4>{cargo}</h4>
+              {pasoActual}
+            </div >) : (<div>
+              <h2> No existen trabajadores para este periodo </h2>
+            </div>)
+        }
+      </div>
+    )
   }
 }
 
