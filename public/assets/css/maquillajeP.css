@@ -1,4 +1,5 @@
-body {background-color: lightpink !important;
+body {
+    background-color: lightpink !important;
     margin: auto;
     font-family:'Nunito', sans-serif !important;
 }
