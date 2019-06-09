@@ -48,27 +48,33 @@ const getTrabajadorByName = async (name) => {
   return rows
 }
 const getTrabajadorByPeriodoYFrecuenciaDePago = async ({ frecuenciaDePago, inicio, fin }) => {
-  const leQuery = queryMaker.select("Trabajador.idTrabajador", "Trabajador.nombre", "Trabajador.apellido", "Cargo.nombre as cargo", "DiaDePago.diaPago", "FrecuenciaDePago.nombre as frecuenciaDePago", "Trabajador.salario", "Trabajador.salarioPorHora", "Vendedor.porcentajeComision")
-    .from("Trabajador")
-    .leftJoin("Vendedor")
-    .onEquals("Trabajador.idTrabajador", "Vendedor.idTrabajador")
-    .innerJoin("Cargo")
-    .onEquals("Trabajador.idCargo", "Cargo.idCargo")
-    .innerJoin("DiaDePago")
-    .onEquals("Trabajador.idDiaPago", "DiaDePago.idDiaDePago")
-    .innerJoin("FrecuenciaDePago")
-    .onEquals("Trabajador.idFrecuenciaDePago", "FrecuenciaDePago.idFrecuenciaDePago")
-    .where("DiaDePago.diaPago")
-    .between(inicio, fin)
-    .andEquals("FrecuenciaDePago.nombre", `"${frecuenciaDePago}"`)
-    .andNotEquals('Trabajador.BorradoLogico', '1')
-    .make()
-  console.log(leQuery)
-  const [rows] = await db.query(
-    leQuery
-  )
-  console.log(rows)
-  return rows
+
+  try {
+    if (inicio == fin) fin = 30
+    const leQuery = queryMaker.select("Trabajador.idTrabajador", "Trabajador.nombre", "Trabajador.apellido", "Cargo.nombre as cargo", "DiaDePago.diaPago", "FrecuenciaDePago.nombre as frecuenciaDePago", "Trabajador.salario", "Trabajador.salarioPorHora", "Vendedor.porcentajeComision")
+      .from("Trabajador")
+      .leftJoin("Vendedor")
+      .onEquals("Trabajador.idTrabajador", "Vendedor.idTrabajador")
+      .innerJoin("Cargo")
+      .onEquals("Trabajador.idCargo", "Cargo.idCargo")
+      .innerJoin("DiaDePago")
+      .onEquals("Trabajador.idDiaPago", "DiaDePago.idDiaDePago")
+      .innerJoin("FrecuenciaDePago")
+      .onEquals("Trabajador.idFrecuenciaDePago", "FrecuenciaDePago.idFrecuenciaDePago")
+      .where("DiaDePago.diaPago")
+      .between(inicio, fin)
+      .andEquals("FrecuenciaDePago.nombre", `"${frecuenciaDePago}"`)
+      .andNotEquals('Trabajador.BorradoLogico', '1')
+      .make()
+    console.log(leQuery)
+    const [rows] = await db.query(
+      leQuery
+    )
+    console.log(rows)
+    return rows
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 getTrabajadorHorario = async id => {
