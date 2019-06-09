@@ -1,6 +1,16 @@
 const db = require('../dbConnection')
 const queryMaker = require('../testrandom')
 
+
+const insertVendedor = async (vendedor) => {
+  const [rows] = await db.query(
+    queryMaker.insert('Vendedor', vendedor)
+      .make()
+  )
+  return rows.insertId
+
+}
+
 const getTrabajador = async () => {
   const [rows] = await db.query(
     queryMaker.select('Trabajador.idTrabajador', 'Trabajador.nombre', 'Trabajador.apellido', 'Trabajador.idCargo', 'Trabajador.cedula', 'Trabajador.salario', 'Trabajador.salarioPorHora', 'Trabajador.fechaDeContratacion', 'Trabajador.idDiaPago', 'Trabajador.idFrecuenciaDePago', 'Vendedor.porcentajeComision')
@@ -139,5 +149,6 @@ module.exports = {
   getTrabajadorByName,
   getTrabajadorByPeriodoYFrecuenciaDePago,
   getTrabajadorHorario,
-  updateTrabajador
+  updateTrabajador,
+  insertVendedor
 }
