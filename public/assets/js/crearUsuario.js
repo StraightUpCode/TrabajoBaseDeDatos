@@ -22,7 +22,7 @@ formulario.addEventListener("submit", e => {
     }
     console.log("ay lmao")
     request.idRol = Number.parseInt(request.idRol) || 1 // idRol es un int
-
+    formulario.reset()
     fetch("api/user/create", {
         method: "POST",
         headers: {
