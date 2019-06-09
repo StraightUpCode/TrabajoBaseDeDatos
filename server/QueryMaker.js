@@ -4,7 +4,7 @@ class QueryMaker {
   }
 
   select(...atributos) {
-    this.query += `Select ${atributos} `
+    this.query += `Select Distinct ${atributos} `
     return this
   }
 
