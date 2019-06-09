@@ -58,6 +58,10 @@ class QueryMaker {
     this.query += `And not ${atributo} = ${valor} `
     return this
   }
+  or(tablaAUnir) {
+    this.query += `OR ${tablaAUnir} `
+    return this
+  }
 
   orderBy(atributo) {
     this.query += `Order by ${atributo} `
