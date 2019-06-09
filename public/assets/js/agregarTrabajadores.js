@@ -29,6 +29,8 @@
     request.salario = Number.parseFloat(request.salario)
     request.salarioPorHora = request.salarioPorHora == "true"
     request.idFrecuenciaDePago = Number.parseFloat(request.idFrecuenciaDePago)
+    !request.porcentajeComision ? delete request.porcentajeComision : request.porcentajeComision = Number.parseFloat(request.porcentajeComision)
+
     delete request.submit
 
     console.log(request)
@@ -46,6 +48,15 @@
       .then(result => formulario.reset())
       .catch(e => console.error(e))
 
+
+  })
+  const cargosSelect = document.getElementById("cargos")
+  cargosSelect.addEventListener("change", (e) => {
+    console.log("Valor Seleccionado")
+    if (e.target[e.target.selectedIndex].text.toLowerCase() == 'vendedor') {
+      const porcentajeComision = document.getElementById("comision")
+      porcentajeComision.classList.remove("d-none")
+    }
   })
 
 })() 
