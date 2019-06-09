@@ -78,7 +78,7 @@ class ComponenteNomina extends Component {
         break;
       }
       case 1: {
-        pasoActual = <GenerarPeriodo setPeriodo={this.setPeriodoPago} />
+        pasoActual = <GenerarPeriodo setPeriodo={this.setPeriodoPago} frecuenciaDePago={frecuenciaDePago} />
         break;
       }
       case 2: {
