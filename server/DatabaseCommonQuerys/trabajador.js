@@ -50,7 +50,6 @@ const getTrabajadorByName = async (name) => {
 const getTrabajadorByPeriodoYFrecuenciaDePago = async ({ frecuenciaDePago, inicio, fin }) => {
 
   try {
-    if (inicio == 1 && inicio == fin) fin = 30
     const leQuery = queryMaker.select("Trabajador.idTrabajador", "Trabajador.nombre", "Trabajador.apellido", "Cargo.nombre as cargo", "DiaDePago.diaPago", "FrecuenciaDePago.nombre as frecuenciaDePago", "Trabajador.salario", "Trabajador.salarioPorHora", "Vendedor.porcentajeComision")
       .from("Trabajador")
       .leftJoin("Vendedor")
@@ -62,13 +61,30 @@ const getTrabajadorByPeriodoYFrecuenciaDePago = async ({ frecuenciaDePago, inici
       .innerJoin("FrecuenciaDePago")
       .onEquals("Trabajador.idFrecuenciaDePago", "FrecuenciaDePago.idFrecuenciaDePago")
       .where("DiaDePago.diaPago")
-      .between(inicio, fin)
-      .andEquals("FrecuenciaDePago.nombre", `"${frecuenciaDePago}"`)
-      .andNotEquals('Trabajador.BorradoLogico', '1')
-      .make()
+    if (inicio == 1 && inicio == fin) {
+      leQuery.between(inicio, 30)
+        .andEquals("FrecuenciaDePago.nombre", `"${frecuenciaDePago}"`)
+        .andNotEquals('Trabajador.BorradoLogico', '1')
+
+    }
+    if (inicio = 15 && inicio == fin) {
+      leQuery.between(inicio, 30)
+        .or('DiaDePago.diaDePago')
+        .between(1, fin)
+        .andEquals("FrecuenciaDePago.nombre", `"${frecuenciaDePago}"`)
+        .andNotEquals('Trabajador.BorradoLogico', '1')
+
+    }
+    if (inicio < fin) {
+      leQuery.between(fin, 30)
+        .or('DiaDePago.diaDePago')
+        .between(1, inicio)
+        .andEquals("FrecuenciaDePago.nombre", `"${frecuenciaDePago}"`)
+        .andNotEquals('Trabajador.BorradoLogico', '1')
+    }
     console.log(leQuery)
     const [rows] = await db.query(
-      leQuery
+      leQuery.make()
     )
     console.log(rows)
     return rows
