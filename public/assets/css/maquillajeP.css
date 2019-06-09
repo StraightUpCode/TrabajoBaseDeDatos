@@ -8,7 +8,7 @@ body {background-color: lightpink !important;
     width: 400px;
     text-align: center;
     margin: 0 auto;
-    padding: 20pxem;
+    padding: 20px;
     border: 2px #CCC;
     border-radius: 1em;
     text-align: left center;
@@ -16,3 +16,11 @@ body {background-color: lightpink !important;
     footer{ text-align: center}
     .row , div { text-align: center}
 a{text-align: center}
+#usuario{
+    padding: 20px;
+}
+.container{
+    margin: auto !important;
+    width: 50% !important; 
+
+}

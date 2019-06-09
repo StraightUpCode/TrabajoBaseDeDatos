@@ -1,4 +1,4 @@
-const formulario = document.getElementById("u");
+const formulario = document.getElementById("usuario");
 formulario.addEventListener("submit", e => {
     e.preventDefault();
     const request = {};

@@ -54,6 +54,7 @@ router.get('/trabajadorHoras', async (req, res) => {
 router.get('/crearUsuario', async (req, res) => {
   res.render('crearUsuario', {
     admin: req.session.rol == 'admin',
+    rrhh: req.session.rol=='rrhh',
     Rol: await commonQuerys.getRoles()
   })
 })
