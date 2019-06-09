@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS Trabajador (
     apellido varchar(25) not null,
     idCargo int not null, /* FK de Cargo */ 
     cedula varchar(14) not null,
-    salario numeric(9,2) not null, /* Crear Trigger que determine si es mayor que 0 */ 
+    salario numeric(20,2) not null, /* Crear Trigger que determine si es mayor que 0 */ 
     salarioPorHora bool not null,
     fechaDeContratacion date not null,
     idDiaPago int not null, /* FK de Dia de Pago */ 
@@ -107,15 +107,15 @@ idNomina int not null auto_increment,
 idTrabajador int not null ,
 idPeriodoPago int not null,
 fechaDeEmision date not null,
-salarioPagado numeric(7,2), 
+salarioPagado numeric(20,2), 
 CONSTRAINT PK_Nomina primary key (idNomina)
 )ENGINE INNODB;
 
 CREATE TABLE IF NOT EXISTS Deduccion(
 idDeduccion int not null auto_increment,
 idNomina int not null ,
-inss numeric(12,2),
-IR numeric(12,2),
+inss numeric(20,2),
+IR numeric(20,2),
 CONSTRAINT PK_Deduccion primary key(idDeduccion)
 )ENGINE INNODB;
 
@@ -135,23 +135,23 @@ CONSTRAINT PK_dnfija_Prestamo primary key (idDeduccion , idPagoPrestamo)
 CREATE TABLE IF NOT EXISTS IngresoNoFijo(
 idIngresoNoFijo int not null auto_increment,
 idNomina int not null ,
-viatico numeric(7,2) not null,
-incentivo numeric(7,2) not null,
-pagoHorasExtras numeric(7,2) not null,
+viatico numeric(20,2) not null,
+incentivo numeric(20,2) not null,
+pagoHorasExtras numeric(20,2) not null,
 CONSTRAINT PK_IngresoNoFijo primary key (idIngresoNoFijo)
 )ENGINE INNODB;
 
 CREATE TABLE IF NOT EXISTS Aguinaldo(
 idAguinaldo int not null auto_increment,
 idIngresoNoFijo int not null ,
-decimoTercerMes numeric(7,2),
+decimoTercerMes numeric(20,2),
 CONSTRAINT PK_Aguinaldo primary key (idAguinaldo)
 )ENGINE INNODB;
 
 CREATE TABLE IF NOT EXISTS IngresoNoFijoVendedor(
 idIngresoNoFijoVendedor int not null, 
 idIngresoNoFijo int not null, 
-pagaDeComision numeric(7,2),
+pagaDeComision numeric(20,2),
 CONSTRAINT PK_ingresoNoFijoVendedor primary key (idIngresoNoFijoVendedor)
 )ENGINE INNODB;
 
@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS Rol (
 CREATE TABLE IF NOT EXISTS SalarioAcumulado_IR (
     idSalarioAcumulado int auto_increment,
     idTrabajador int not null,
-    salarioAcumulado numeric(16,2),
+    salarioAcumulado numeric(20,2),
     meses int ,
     CONSTRAINT PK_SalarioAcumulador PRIMARY KEY (idSalarioAcumulado)
 )ENGINE INNODB;
@@ -213,7 +213,7 @@ Alter Table PagoPrestamo
 ALTER TABLE Nomina
 	ADD CONSTRAINT FK_Nomina_Trabajador FOREIGN KEY (idTrabajador) REFERENCES Trabajador(idTrabajador);
 ALTER TABLE Nomina
-	ADD CONSTRAINT FK_Nomina_PeriodoPago FOREIGN KEY (idPeriodoPago) REFERENCES PeriodoPago(idPeriodoPago);
+	ADD CONSTRAINT FK_Nomina_PeriodoPago FOREIGN KEY (idPeriodoPago) REFERENCES PeriodoPago(idPeriodoP--ago);
 /* Llave Foranea Deduccion */
 ALTER TABLE Deduccion
 	ADD CONSTRAINT FK_Deduccion_Planilla FOREIGN KEY (idNomina) REFERENCES Nomina(idNomina);
@@ -244,10 +244,9 @@ CREATE TRIGGER salarioAcumulado
 AFTER INSERT ON Trabajador 
 FOR EACH ROW 
 BEGIN 
-	INSERT INTO SalarioAcumulado_IR(idTrabajador , salarioAcumulado) values(new.idTrabajador , 0, 0);
+	INSERT INTO SalarioAcumulado_IR(idTrabajador , salarioAcumulado, meses) values(new.idTrabajador , 0, 0);
 END$$ 
 
-USE SISTEMA_NOMINA;
 
 
 DELIMITER $$
