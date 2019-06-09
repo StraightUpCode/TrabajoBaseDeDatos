@@ -25,15 +25,28 @@ class ComponenteNomina extends Component {
     this.queryTrabajadores = this.queryTrabajadores.bind(this)
     this.avanzarTrabajador = this.avanzarTrabajador.bind(this)
   }
+
   avanzarPaso() {
     this.setState((prevState) => ({
       paso: ++prevState.paso
     }))
   }
   avanzarTrabajador() {
-    this.setState((prevState) => ({ indiceTrabajadorActual: ++prevState.indiceTrabajadorActual }), () => {
-      if (this.state.indiceTrabajadorActual >= this.state.listaTrabajadores.length) this.avanzarPaso()
-    }, () => console.log(this.state))
+    this.setState((prevState) => {
+      console.log(prevState)
+      console.log("Condicion Critoca", prevState.indiceTrabajadorActual >= prevState.listaTrabajadores.length)
+      console.log("Indic ", prevState.indiceTrabajadorActual)
+      console.log("Length", prevState.listaTrabajadores.length)
+      if (++prevState.indiceTrabajadorActual >= prevState.listaTrabajadores.length) {
+        return ({
+          ...prevState,
+          paso: ++prevState.paso
+        })
+      } {
+        return ({ indiceTrabajadorActual: ++prevState.indiceTrabajadorActual })
+      }
+
+    })
   }
 
   setFrecuenciaDePago(frecuenciaDePago) {
@@ -84,6 +97,14 @@ class ComponenteNomina extends Component {
       case 2: {
         console.log(this.state)
         pasoActual = <TrabajadorNomina trabajador={listaTrabajadores[indiceTrabajadorActual]} next={this.avanzarTrabajador} periodo={Periodo.idPeriodoPago} />
+        break;
+      }
+      default: {
+        pasoActual = (() => (
+          <div>
+            <h3>Nominas Generadas Correctamente</h3>
+          </div>
+        ))()
         break;
       }
     }

@@ -233,16 +233,6 @@ class TrabajadorNomina extends Component {
         pasoActual = <DeduccionNoFija crearDeduccionNoFija={this.generarDeduccionesNoFijas} />
         break;
       }
-      default: {
-        pasoActual = (() => (
-          <div>
-            <h3>Nominas Generadas Correctamente</h3>
-          </div>
-        ))()
-        break;
-      }
-
-
     }
     return (
       <div>
