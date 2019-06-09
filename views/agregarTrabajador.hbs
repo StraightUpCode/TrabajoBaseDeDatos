@@ -45,7 +45,7 @@
     <div class="form-group row">
     	<label class="col-sm-4 col-form-label">Salario base:</label>
     	<div class="col-auto">
-      	  <input type="number" step="any" class="form-control" name="salario" placeholder="Salario" maxlength="1000000">
+      	  <input type="number" step="any" class="form-control" name="salario" placeholder="Salario" max="1000000" min="0">
 	  <div class="form-check">
           <input class="form-check-input" type="checkbox" id="salarioPorHora" name="salarioPorHora" value="true">
           <label class="form-check-label" for="salarioPorHora">Salario por hora</label>
@@ -55,7 +55,7 @@
     <div class="form-group row" >
       <label class="col-sm-4 col-form-label">Fecha Pago:</label>
        <div class="col-auto">
-        <select name="idDiapago" id="fechaPagos" class="form-control">
+        <select name="idDiaPago" id="fechaPagos" class="form-control">
           {{#each diaPago}}
            <option value="{{idDiaDePago}}">{{diaPago}}</option>
         {{/each}}
@@ -65,7 +65,7 @@
     <div class="form-group row" >
       <label class="col-sm-4 col-form-label">Frecuencia de Pago:</label>
        <div class="col-auto">
-        <select name="idFrecuenciaDepago" id="frecuenciaPago" class="form-control">
+        <select name="idFrecuenciaDePago" id="frecuenciaPago" class="form-control">
           {{#each frecuenciaDePago}}
            <option value="{{idFrecuenciaDePago}}">{{nombre}}</option>
         {{/each}}
