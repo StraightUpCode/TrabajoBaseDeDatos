@@ -60,41 +60,64 @@ const getTrabajadorByName = async (name) => {
 const getTrabajadorByPeriodoYFrecuenciaDePago = async ({ frecuenciaDePago, inicio, fin }) => {
 
   try {
-    const leQuery = queryMaker.select("Trabajador.idTrabajador", "Trabajador.nombre", "Trabajador.apellido", "Cargo.nombre as cargo", "DiaDePago.diaPago", "FrecuenciaDePago.nombre as frecuenciaDePago", "Trabajador.salario", "Trabajador.salarioPorHora", "Vendedor.porcentajeComision")
-      .from("Trabajador")
-      .leftJoin("Vendedor")
-      .onEquals("Trabajador.idTrabajador", "Vendedor.idTrabajador")
-      .innerJoin("Cargo")
-      .onEquals("Trabajador.idCargo", "Cargo.idCargo")
-      .innerJoin("DiaDePago")
-      .onEquals("Trabajador.idDiaPago", "DiaDePago.idDiaDePago")
-      .innerJoin("FrecuenciaDePago")
-      .onEquals("Trabajador.idFrecuenciaDePago", "FrecuenciaDePago.idFrecuenciaDePago")
-      .where("DiaDePago.diaPago")
+    let leQuery
     if (inicio == 1 && inicio == fin) {
-      leQuery.between(inicio, 30)
+      leQuery = queryMaker.select("Trabajador.idTrabajador", "Trabajador.nombre", "Trabajador.apellido", "Cargo.nombre as cargo", "DiaDePago.diaPago", "FrecuenciaDePago.nombre as frecuenciaDePago", "Trabajador.salario", "Trabajador.salarioPorHora", "Vendedor.porcentajeComision")
+        .from("Trabajador")
+        .leftJoin("Vendedor")
+        .onEquals("Trabajador.idTrabajador", "Vendedor.idTrabajador")
+        .innerJoin("Cargo")
+        .onEquals("Trabajador.idCargo", "Cargo.idCargo")
+        .innerJoin("DiaDePago")
+        .onEquals("Trabajador.idDiaPago", "DiaDePago.idDiaDePago")
+        .innerJoin("FrecuenciaDePago")
+        .onEquals("Trabajador.idFrecuenciaDePago", "FrecuenciaDePago.idFrecuenciaDePago")
+        .where("DiaDePago.diaPago").between(inicio, 30)
         .andEquals("FrecuenciaDePago.nombre", `"${frecuenciaDePago}"`)
         .andNotEquals('Trabajador.BorradoLogico', '1')
+        .make()
 
     }
-    if (inicio = 15 && inicio == fin) {
-      leQuery.between(inicio, 30)
-        .or('DiaDePago.diaDePago')
+    if (inicio == 15 && inicio == fin) {
+      leQuery = queryMaker.select("Trabajador.idTrabajador", "Trabajador.nombre", "Trabajador.apellido", "Cargo.nombre as cargo", "DiaDePago.diaPago", "FrecuenciaDePago.nombre as frecuenciaDePago", "Trabajador.salario", "Trabajador.salarioPorHora", "Vendedor.porcentajeComision")
+        .from("Trabajador")
+        .leftJoin("Vendedor")
+        .onEquals("Trabajador.idTrabajador", "Vendedor.idTrabajador")
+        .innerJoin("Cargo")
+        .onEquals("Trabajador.idCargo", "Cargo.idCargo")
+        .innerJoin("DiaDePago")
+        .onEquals("Trabajador.idDiaPago", "DiaDePago.idDiaDePago")
+        .innerJoin("FrecuenciaDePago")
+        .onEquals("Trabajador.idFrecuenciaDePago", "FrecuenciaDePago.idFrecuenciaDePago")
+        .where("DiaDePago.diaPago").between(inicio, 30)
+        .or('DiaDePago.diaPago')
         .between(1, fin)
         .andEquals("FrecuenciaDePago.nombre", `"${frecuenciaDePago}"`)
         .andNotEquals('Trabajador.BorradoLogico', '1')
+        .make()
 
     }
-    if (inicio < fin) {
-      leQuery.between(fin, 30)
-        .or('DiaDePago.diaDePago')
+    if (inicio > fin) {
+      leQuery = queryMaker.select("Trabajador.idTrabajador", "Trabajador.nombre", "Trabajador.apellido", "Cargo.nombre as cargo", "DiaDePago.diaPago", "FrecuenciaDePago.nombre as frecuenciaDePago", "Trabajador.salario", "Trabajador.salarioPorHora", "Vendedor.porcentajeComision")
+        .from("Trabajador")
+        .leftJoin("Vendedor")
+        .onEquals("Trabajador.idTrabajador", "Vendedor.idTrabajador")
+        .innerJoin("Cargo")
+        .onEquals("Trabajador.idCargo", "Cargo.idCargo")
+        .innerJoin("DiaDePago")
+        .onEquals("Trabajador.idDiaPago", "DiaDePago.idDiaDePago")
+        .innerJoin("FrecuenciaDePago")
+        .onEquals("Trabajador.idFrecuenciaDePago", "FrecuenciaDePago.idFrecuenciaDePago")
+        .where("DiaDePago.diaPago").between(fin, 30)
+        .or('DiaDePago.diaPago')
         .between(1, inicio)
         .andEquals("FrecuenciaDePago.nombre", `"${frecuenciaDePago}"`)
         .andNotEquals('Trabajador.BorradoLogico', '1')
+        .make()
     }
     console.log(leQuery)
     const [rows] = await db.query(
-      leQuery.make()
+      leQuery
     )
     console.log(rows)
     return rows
