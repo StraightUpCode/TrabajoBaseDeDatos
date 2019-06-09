@@ -75,7 +75,7 @@ router.post("/trabajador/:id/asignarHorario", async (req, res) => {
 router.post("/trabajador/update", async (req, res) => {
   try {
     console.log("Update")
-    const {changedValues , idTrabajador} = req.body
+    const { changedValues, idTrabajador } = req.body
     const rows = await commonQuerys.updateTrabajador(changedValues, idTrabajador)
 
     res.send({ idTrabajador: rows })
@@ -129,11 +129,16 @@ router.post("/trabajador", async (req, res) => {
   console.log("Trabajador")
   try {
     console.log("Insertando")
-    content.BorradoLogico = 0
+    const { porcentajeComision, ...trabajador } = content
+    console.log("Porcentaje Comision", porcentajeComision)
+    console.log("Trabajador")
+    console.log(trabajador)
+    trabajador.BorradoLogico = 0
     const [rows] = await db.query(
-      queryMaker.insert("Trabajador", content)
+      queryMaker.insert("Trabajador", trabajador)
         .make())
     console.log(rows.insertId)
+    if (porcentajeComision) await commonQuerys.insertVendedor({ idTrabajador: rows.insertId, porcentajeComision })
     res.send({ result: "Todo Ok Todo Correcto" })
   }
   catch (e) {
