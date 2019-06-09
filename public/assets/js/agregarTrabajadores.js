@@ -6,15 +6,18 @@
     const request = {}
     for (let field of formulario.elements) {
       let val
-      if (field.nodeName == "SELECT") {
-        console.log(field.options
-        )
-        val = field.options[field.selectedIndex].value
-      } else {
-        console.log(field)
-        val = field.value
+      if (field.name) {
+        console.log(field.name)
+        if (field.nodeName == "SELECT") {
+          console.log(field.options
+          )
+          val = field.options[field.selectedIndex].value
+        } else {
+          console.log(field)
+          val = field.value
+        }
+        request[field.name] = val
       }
-      request[field.name] = val
     }
     request.idCargo = Number.parseInt(request.idCargo)
     console.log(request.idDiaPago)
