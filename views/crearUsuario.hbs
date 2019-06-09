@@ -1,30 +1,37 @@
 <header>
-  <h1>Empresa X </h1>
+  <div class="page-header">
   <H2>AGREGAR UN NUEVO USUARIO</H2>
+  </div>
 </header>
-<section>
-  <form id="u" method="POST">
-
-    <div>
-      <label for="username">Nombre de Usuario:</label>
-      <input name="username" type="text" placeholder="Nombre de usuario">
+<section class="section">
+<form id="u" method="post">
+  <div class="form-group row">
+    <label for="username" class="col-sm-2 col-form-label">Nombre de usuario:</label>
+    <div class="col-auto">
+      <input type="text" class="form-control" name="username" placeholder="Nombre de usuario">
     </div>
-
-    <div>
-      <label for="password">Cree una contrase&ntilde;a:</label>
-      <input name="password" type="password" placeholder="contrase&ntilde;a">
+  </div>
+  <div class="form-group row">
+    <label for="password" class="col-sm-2 col-form-label">Contrase&ntilde;a</label>
+    <div class="col-auto">
+      <input type="password" class="form-control" name="password" placeholder="Contrase&ntilde;a">
     </div>
-    <div>
-      <label for="TYPEOF">Tipo de usuario</label>
-      <select name="idRol" id="idRol">
-        {{#each Rol}}
-        <option value="{{idRol}}">{{nombre}}</option>
+  </div>
+    <div class="form-group row" >
+      <label for="TYPEOF" class="col-sm-2 col-form-label">Tipo de usuario</label>
+       <div class="col-auto">
+        <select name="idRol" id="idRol" class="form-control">
+          {{#each Rol}}
+           <option value="{{idRol}}">{{nombre}}</option>
         {{/each}}
-      </select>
+      	</select>  
+        </div>  
+    </div> 
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <button type="submit" class="btn btn-primary">Enviar</button>
     </div>
-    <div>
-      <input type="submit">
-    </div>
-  </form>
+  </div>
+</form>
 </section>
 <script src="./assets/js/crearUsuario.js"></script>
