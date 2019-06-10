@@ -4,6 +4,6 @@ module.exports = session({
   secret: 'TamalPisque',
   store: sessionStore,
   resave: false,
-  cookie: { maxAge: 99999999999999999 },
+  cookie: { maxAge: 3600000 },
   saveUninitialized: false
 })

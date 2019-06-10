@@ -1,0 +1,39 @@
+<header>
+  <div class="page-header">
+  <h4 class="display-4">Agregar un nuevo usuario</h4>
+  </div>
+</header>
+<section>
+<form id="usuario" method="post" class="mx-auto col-sm-6" >
+  <div class="container">
+  <div class="form-group row">
+    <label for="username" class="col-sm-4 col-form-label">Nombre de usuario:</label>
+    <div class="col-auto">
+      <input type="text" class="form-control" name="username" placeholder="Nombre de usuario" minlength="4" maxlength="50">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="password" class="col-sm-4 col-form-label" >Contrase&ntilde;a:</label>
+    <div class="col-auto">
+      <input type="password" class="form-control" name="password" placeholder="Contrase&ntilde;a" minlength="6" maxlength="50">
+    </div>
+  </div>
+    <div class="form-group row" >
+      <label for="TYPEOF" class="col-sm-4 col-form-label">Tipo de usuario:</label>
+       <div class="col-auto">
+        <select name="idRol" id="idRol" class="form-control">
+          {{#each Rol}}
+           <option value="{{idRol}}">{{nombre}}</option>
+        {{/each}}
+      	</select>  
+        </div>  
+    </div> 
+  <div class="mx-auto col-sm-4">
+    <div>
+      <button type="submit" class="btn btn-block btn-primary">Enviar</button>
+    </div>
+  </div>
+  </div>
+</form>
+</section>
+<script src="./assets/js/crearUsuario.js"></script>

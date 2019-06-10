@@ -1,79 +1,97 @@
 <header>
-  <h1 id="nombreEmpresa">Empresa X</h1>
-  <h2>Nuevo Ingreso</h2>
+  <div class="page-header">
+    <h2 class="display-4">Nuevo Ingreso</h2>
+  </div>
 </header>
 <section>
+  <br>
   <!--Inicio de formulario usando FORM-->
-  <form id="formularioTrabajador">
-    <div>
-      <label>Nombres:</label>
-      <input type="text" name="nombre" placeholder='Ingrese los nombres' maxlength="24">
-      </tr>
+  <form id="formularioTrabajador" method="post" class="mx-auto col-sm-6">
+    <div class="container">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Nombre:</label>
+        <div class="col-auto">
+          <input type="text" class="form-control" name="nombre" placeholder="Ingrese los nombres" maxlength="24"
+            required>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Apellidos:</label>
+        <div class="col-auto">
+          <input type="text" class="form-control" name="apellido" placeholder="Ingrese los apellidos" maxlength="24"
+            required>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Cedula:</label>
+        <div class="col-auto">
+          <input type="text" class="form-control" name="cedula" placeholder="Cedula de identidad" maxlength="14"
+            required>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Fecha de Ingreso:</label>
+        <div class="col-auto">
+          <input type="date" class="form-control" name="fechaDeContratacion" required>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Cargo:</label>
+        <div class="col-auto">
+          <select name="idCargo" id="cargos" class="form-control">
+            {{#each cargo}}
+            <option value="{{idCargo}}">{{nombre}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+      <div id="comision"class="form-group row d-none">
+        <label class="col-sm-4 col-form-label">Comision:</label>
+        <div class="col-auto">
+          <input type="number" step="any" class="form-control" name="porcentajeComision" placeholder="Porcentaje Comision" max="100"
+            min="0">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Salario base:</label>
+        <div class="col-auto">
+          <input type="number" step="any" class="form-control" name="salario" placeholder="Salario" max="1000000"
+            min="0" required>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="salarioPorHora" name="salarioPorHora" value="true">
+            <label class="form-check-label" for="salarioPorHora">Salario por hora</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Fecha Pago:</label>
+        <div class="col-auto">
+          <select name="idDiaPago" id="fechaPagos" class="form-control">
+            {{#each diaPago}}
+            <option value="{{idDiaDePago}}">{{diaPago}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Frecuencia de Pago:</label>
+        <div class="col-auto">
+          <select name="idFrecuenciaDePago" id="frecuenciaPago" class="form-control">
+            {{#each frecuenciaDePago}}
+            <option value="{{idFrecuenciaDePago}}">{{nombre}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+      <div class="mx-auto col-sm-4">
+        <div>
+          <button type="submit" class="btn btn-block btn-primary">Enviar</button>
+        </div>
+      </div>
     </div>
-    <div>
-      <label>Apellidos:</label>
-      <input type="text" name="apellido" placeholder='Ingrese los apellidos' maxlength="24">
-    </div>
-    <div>
-      <label>Cedula:</label>
-      <input type="text" name="cedula" placeholder="Ingrese el numero de cedula" maxlength="14">
-    </div>
-    <!--   <div>
-                    <label id="sexo">Sexo: </label>
-                    <div id="femas">
-                        <input type="radio" name="Sexo" id="f">F
-                        <input type="radio" name="Sexo" id="m">M
-                    </div>
-    
-                </div>-->
-    <!--
-                <div>
-                    <label>Telefono:</label>
-                    <input type="tel" name="telefono" placeholder="Numero de telefono " maxlength="8">
-                </div>-->
-    <div>
-      <label>Fecha de ingreso:</label>
-      <input type="date" name="fechaDeContratacion">
-    </div>
-    <div>
-      <label>Cargo:</label>
-      <select id="cargos" name="idCargo">
-        {{#each cargo}}
-        <option value="{{idCargo}}">{{nombre}}</option>
-        {{/each }}
-      </select>
-    </div>
-    <div>
-      <label>Pago:</label>
-      <select name="salarioPorHora">
-        <option value="false">Mensual</option>
-        <option value="true">Hora</option>
-      </select>
-    </div>
-    <div>
-      <label>Salario Base:</label>
-      <input type="number" name="salario" placeholder="Salario" max="1000000">
-    </div>
-    <div>
-      <label>Fecha Pago:</label>
-      <select id="fechaPagos" name="idDiaPago">
-        {{#each diaPago}}
-        <option value="{{idDia_de_Pago}}">{{diaPago}}</option>
-        {{/each }}
-      </select>
-    </div>
-    <br>
-    <!--  <div>
-                    <textarea name="observaciones" id="obsTrabajador" cols="10" rows="5"
-                        placeholder='informacion adicional'></textarea>
-                </div>-->
+  </form>
 
-    <input type="submit" name='submit' value='Ingresar'>
-</section>
+  <footer>
 
-</form>
-
-<footer>
-
-</footer>
-<script src="./assets/js/agregarTrabajadores.js"> </script>
+  </footer>
+  <script src="./assets/js/agregarTrabajadores.js"> </script>

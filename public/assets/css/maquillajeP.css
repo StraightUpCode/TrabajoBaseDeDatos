@@ -1,4 +1,8 @@
-body {background-color: lightgray}
+body {
+    background-color: lightpink !important;
+    margin: auto;
+    font-family:'Nunito', sans-serif !important;
+}
 #nombreEmpresa {text-align: center;
     background-color: lightpink; padding: 0.5cm}
 #caja{
@@ -6,10 +10,19 @@ body {background-color: lightgray}
     width: 400px;
     text-align: center;
     margin: 0 auto;
-    padding: 1em;
+    padding: 20px;
     border: 2px #CCC;
     border-radius: 1em;
-    text-align: left;
+    text-align: left center;
     }
     footer{ text-align: center}
-    
+    .row , div { text-align: center}
+a{text-align: center}
+#usuario{
+    padding: 20px;
+}
+.container{
+    margin: auto !important;
+    width: 50% !important; 
+
+}

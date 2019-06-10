@@ -6,16 +6,18 @@ router.use(bodyparser.json())
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body
-    console.log(req.body)
-    const user = await getUser(username, password)
+    const user = username ? await getUser(username, password) : null
+    if (!user) throw new Error("usuario vacio")
     console.log("DB: " + user)
     console.log({ username, password })
     if (username === user.username && password === user.password) {
-
+      console.log(user.rol)
       req.session.rol = user.rol
       console.log(req.session)
       req.session.save()
-      res.redirect("/")
+      res.send({ ok: true })
+    } else {
+      res.send({ message: "Usuario o Contraseña Equivocado" })
     }
 
   } catch (e) {
@@ -25,14 +27,14 @@ router.post("/login", async (req, res) => {
 })
 
 router.get("/login", async (req, res) => {
-  res.sendFile(path.join(__dirname + '/../../public/login.html'))
+  res.render('login', { layout: 'loginLayout' })
 })
 
 router.get("/logout", async (req, res) => {
   if (req.session) {
     req.session.destroy()
   }
-  res.send("Session Cerrada")
+  res.redirect("/")
 })
 
 module.exports = router

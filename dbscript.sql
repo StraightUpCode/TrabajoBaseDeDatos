@@ -1,5 +1,6 @@
-CREATE DATABASE IF NOT EXISTS SISTEMA_NOMINA ; 
+ CREATE DATABASE IF NOT EXISTS SISTEMA_NOMINA ; 
 USE SISTEMA_NOMINA; 
+
 CREATE TABLE IF NOT EXISTS Empresa (
 	ruc varchar(50) not null,
     nombreEmpresa varchar(50) not null,
@@ -7,23 +8,30 @@ CREATE TABLE IF NOT EXISTS Empresa (
     telefono varchar(14) not null
 ) ENGINE INNODB;
 
+CREATE TABLE IF NOT EXISTS FrecuenciaDePago (
+	idFrecuenciaDePago int auto_increment not null,
+    nombre varchar(25) not null,
+    CONSTRAINT PK_FrecuenciaDePago Primary Key (idFrecuenciaDePago)
+)ENGINE INNODB; 
+
 CREATE TABLE IF NOT EXISTS Trabajador (
 	idTrabajador int auto_increment not null,
     nombre varchar(25) not null,
     apellido varchar(25) not null,
     idCargo int not null, /* FK de Cargo */ 
     cedula varchar(14) not null,
-    salario numeric(9,2) not null, /* Crear Trigger que determine si es mayor que 0 */ 
+    salario numeric(20,2) not null, /* Crear Trigger que determine si es mayor que 0 */ 
     salarioPorHora bool not null,
     fechaDeContratacion date not null,
     idDiaPago int not null, /* FK de Dia de Pago */ 
+    idFrecuenciaDePago int not null, /* FK Frecuencia de Pago */
     CONSTRAINT PK_Trabajador PRIMARY KEY (idTrabajador)
 ) ENGINE INNODB ;
 
 CREATE TABLE IF NOT EXISTS Vendedor (
 	idVendedor int not null auto_increment,
 	idTrabajador int not null, /* FK a Trabajador */
-    porcentajeComision int not null,
+    porcentajeComision numeric(5,2) not null,
     CONSTRAINT PK_Vendedor PRIMARY KEY (idVendedor)
 )ENGINE INNODB;
 
@@ -33,6 +41,7 @@ CREATE TABLE IF NOT EXISTS Horas_Trabajador (
     mes int not null, 
     horasTrabajadas numeric(4,1) not null,
     horasExtras numeric(4,1) not null,
+    
     CONSTRAINT PK_Hora_Trabajador PRIMARY KEY (idHoraTrabajador)
 )ENGINE INNODB; 
 CREATE TABLE IF NOT EXISTS MarcadoHorario (
@@ -65,9 +74,9 @@ nombre varchar(25) not null,
 constraint PK_Cargo primary key (idCargo)
 )ENGINE INNODB;
 CREATE TABLE IF NOT EXISTS DiaDePago (
-idDia_de_Pago int not null auto_increment,
+idDiaDePago int not null auto_increment,
 diaPago int not null,
-constraint PK_Dia_de_pago primary key ( idDia_de_Pago)
+constraint PK_Dia_de_pago primary key ( idDiaDePago)
 )ENGINE INNODB;
 CREATE TABLE IF NOT EXISTS Prestamo (
 idPrestamo int not null auto_increment,
@@ -75,6 +84,7 @@ idTrabajador int not null,
 fechaInicial date not null,
 cuota int not null,
 monto int not null,
+cancelado boolean,
 constraint PK_Prestamo primary key(idPrestamo)
 )ENGINE INNODB;
 CREATE TABLE IF NOT EXISTS PagoPrestamo (
@@ -97,15 +107,15 @@ idNomina int not null auto_increment,
 idTrabajador int not null ,
 idPeriodoPago int not null,
 fechaDeEmision date not null,
-salarioPagado numeric(5,2), 
+salarioPagado numeric(20,2), 
 CONSTRAINT PK_Nomina primary key (idNomina)
 )ENGINE INNODB;
 
 CREATE TABLE IF NOT EXISTS Deduccion(
 idDeduccion int not null auto_increment,
 idNomina int not null ,
-inss numeric(12,2),
-IR numeric(12,2),
+inss numeric(20,2),
+IR numeric(20,2),
 CONSTRAINT PK_Deduccion primary key(idDeduccion)
 )ENGINE INNODB;
 
@@ -125,23 +135,23 @@ CONSTRAINT PK_dnfija_Prestamo primary key (idDeduccion , idPagoPrestamo)
 CREATE TABLE IF NOT EXISTS IngresoNoFijo(
 idIngresoNoFijo int not null auto_increment,
 idNomina int not null ,
-viatico numeric(7,2) not null,
-incetivo numeric(7,2) not null,
-pagoHorasExtras numeric(7,2) not null,
+viatico numeric(20,2) not null,
+incentivo numeric(20,2) not null,
+pagoHorasExtras numeric(20,2) not null,
 CONSTRAINT PK_IngresoNoFijo primary key (idIngresoNoFijo)
 )ENGINE INNODB;
 
 CREATE TABLE IF NOT EXISTS Aguinaldo(
 idAguinaldo int not null auto_increment,
 idIngresoNoFijo int not null ,
-decimoTercerMes numeric(7,2),
+decimoTercerMes numeric(20,2),
 CONSTRAINT PK_Aguinaldo primary key (idAguinaldo)
 )ENGINE INNODB;
 
 CREATE TABLE IF NOT EXISTS IngresoNoFijoVendedor(
 idIngresoNoFijoVendedor int not null, 
 idIngresoNoFijo int not null, 
-pagaDeComision numeric(7,2),
+pagaDeComision numeric(20,2),
 CONSTRAINT PK_ingresoNoFijoVendedor primary key (idIngresoNoFijoVendedor)
 )ENGINE INNODB;
 
@@ -149,9 +159,28 @@ CREATE TABLE IF NOT EXISTS User (
     idUser int auto_increment,
     username varchar(50) not null,
     password varchar(50) not null,
-    rol varchar(50) not null,
+    idRol  int not null,
     CONSTRAINT PK_User PRIMARY Key (idUser)
 )ENGINE INNODB; 
+
+CREATE TABLE IF NOT EXISTS Rol (
+    idRol int auto_increment,
+    nombre varchar(50) not null,
+    CONSTRAINT PK_Rol PRIMARY KEY (idRol)
+)ENGINE INNODB;
+
+CREATE TABLE IF NOT EXISTS SalarioAcumulado_IR (
+    idSalarioAcumulado int auto_increment,
+    idTrabajador int not null,
+    salarioAcumulado numeric(20,2),
+    meses int ,
+    CONSTRAINT PK_SalarioAcumulador PRIMARY KEY (idSalarioAcumulado)
+)ENGINE INNODB;
+Alter Table SalarioAcumulado_IR
+    ADD Constraint FK_SalarioAcumulador_Trabajador FOREIGN KEY (idTrabajador) REFERENCES Trabajador(idTrabajador);
+/* Llabe Foranea Usuario */
+Alter Table User 
+    ADD CONSTRAINT FK_User_Rol FOREIGN KEY (idRol) REFERENCES Rol(idRol);
 
 /* Llave Foranea en la tabla Vendedor*/
 Alter Table Vendedor
@@ -161,10 +190,9 @@ ALTER TABLE Horas_Trabajador
 	ADD CONSTRAINT FK_HT_Trabajadro FOREIGN KEY (idTrabajador) REFERENCES Trabajador(idTrabajador);
 /* Llaves Foraneas en la Tabla Trabajador */
 Alter Table Trabajador
-	ADD CONSTRAINT FK_Trabajador_Cargo FOREIGN Key (idCargo) REFERENCES Cargo(idCargo);
-
-Alter Table Trabajador
-	ADD CONSTRAINT FK_Trabajador_DiaDePago FOREIGN Key (idDiaPago) REFERENCES DiaDePago(idDia_De_Pago);
+	ADD CONSTRAINT FK_Trabajador_Cargo FOREIGN Key (idCargo) REFERENCES Cargo(idCargo),
+    ADD CONSTRAINT FK_Trabajador_FrecuenciaDePago FOREIGN KEY (idFrecuenciaDePago) REFERENCES FrecuenciaDePago(idFrecuenciaDePago),
+    	ADD CONSTRAINT FK_Trabajador_DiaDePago FOREIGN Key (idDiaPago) REFERENCES DiaDePago(idDiaDePago);
 
 /* Llaves Foreaneas MarcadoHorario*/ 
 Alter Table MarcadoHorario
@@ -185,7 +213,7 @@ Alter Table PagoPrestamo
 ALTER TABLE Nomina
 	ADD CONSTRAINT FK_Nomina_Trabajador FOREIGN KEY (idTrabajador) REFERENCES Trabajador(idTrabajador);
 ALTER TABLE Nomina
-	ADD CONSTRAINT FK_Nomina_PeriodoPago FOREIGN KEY (idPeriodoPago) REFERENCES PeriodoPago(idPeriodoPago);
+	ADD CONSTRAINT FK_Nomina_PeriodoPago FOREIGN KEY (idPeriodoPago) REFERENCES PeriodoPago(idPeriodoP--ago);
 /* Llave Foranea Deduccion */
 ALTER TABLE Deduccion
 	ADD CONSTRAINT FK_Deduccion_Planilla FOREIGN KEY (idNomina) REFERENCES Nomina(idNomina);
@@ -208,6 +236,41 @@ ALTER TABLE Aguinaldo
 ALTER TABLE IngresoNoFijoVendedor
 	ADD CONSTRAINT FK_INF_Vendedor FOREIGN KEY (idIngresoNoFijo) REFERENCES IngresoNoFijo(idIngresoNoFijo);
 
-Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador");
+Insert into Rol (nombre) values("admin");
+Insert into User(username, password , idRol) values ("root", "admin" , 1);
+/* Triggers  */
+DELIMITER $$
+CREATE TRIGGER salarioAcumulado 
+AFTER INSERT ON Trabajador 
+FOR EACH ROW 
+BEGIN 
+	INSERT INTO SalarioAcumulado_IR(idTrabajador , salarioAcumulado, meses) values(new.idTrabajador , 0, 0);
+END$$ 
+
+
+
+DELIMITER $$
+CREATE TRIGGER sumarSalarioAcumulado 
+BEFORE UPDATE ON SalarioAcumulado_IR  
+FOR EACH ROW 
+BEGIN 
+	IF new.salarioAcumulado > 0 THEN SET new.salarioAcumulado = old.salarioAcumulado + new.salarioAcumulado;
+    SET new.meses = old.meses + 1 ;
+    END IF;
+END$$ 
+
+
+/* Mock Data */ 
+
+Insert into FrecuenciaDePago(nombre) values ("Mensual") , ("Quincenal");
+
+Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador"),("Vendedor");
+
 Insert into DiaDePago(diaPago) values(15), (30) ;
-Insert into User(username, password , rol) values ("root", "admin" , "admin");
+
+Insert into Horario(horaEntrada, horaSalida) values('7:00','12:00'), ('1:00','5:00');
+
+Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) values("Rodney","Sanchez",1,"35987lmao",2500.25,FALSE,"2019-05-02",1,1);
+
+insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2);
+/*  End Mock Data  */
