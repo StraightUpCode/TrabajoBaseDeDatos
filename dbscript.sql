@@ -1,4 +1,4 @@
- CREATE DATABASE IF NOT EXISTS SISTEMA_NOMINA ; 
+CREATE DATABASE IF NOT EXISTS SISTEMA_NOMINA ; 
 USE SISTEMA_NOMINA; 
 
 CREATE TABLE IF NOT EXISTS Empresa (
@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS Trabajador (
     fechaDeContratacion date not null,
     idDiaPago int not null, /* FK de Dia de Pago */ 
     idFrecuenciaDePago int not null, /* FK Frecuencia de Pago */
+    BorradoLogico boolean default false not null,
     CONSTRAINT PK_Trabajador PRIMARY KEY (idTrabajador)
 ) ENGINE INNODB ;
 
@@ -71,7 +72,10 @@ constraint PK_Trabajador_Horario primary key (idT_H)
 CREATE TABLE IF NOT EXISTS Cargo (
 idCargo int not null auto_increment,
 nombre varchar(25) not null,
+BorradoLogico boolean default false not null,
+
 constraint PK_Cargo primary key (idCargo)
+
 )ENGINE INNODB;
 CREATE TABLE IF NOT EXISTS DiaDePago (
 idDiaDePago int not null auto_increment,
@@ -160,6 +164,7 @@ CREATE TABLE IF NOT EXISTS User (
     username varchar(50) not null,
     password varchar(50) not null,
     idRol  int not null,
+	BorradoLogico boolean default false,
     CONSTRAINT PK_User PRIMARY Key (idUser)
 )ENGINE INNODB; 
 
@@ -172,8 +177,8 @@ CREATE TABLE IF NOT EXISTS Rol (
 CREATE TABLE IF NOT EXISTS SalarioAcumulado_IR (
     idSalarioAcumulado int auto_increment,
     idTrabajador int not null,
-    salarioAcumulado numeric(20,2),
-    meses int ,
+    salarioAcumulado numeric(20,2) default 0,
+    meses int default 0 ,
     CONSTRAINT PK_SalarioAcumulador PRIMARY KEY (idSalarioAcumulado)
 )ENGINE INNODB;
 Alter Table SalarioAcumulado_IR
@@ -213,7 +218,7 @@ Alter Table PagoPrestamo
 ALTER TABLE Nomina
 	ADD CONSTRAINT FK_Nomina_Trabajador FOREIGN KEY (idTrabajador) REFERENCES Trabajador(idTrabajador);
 ALTER TABLE Nomina
-	ADD CONSTRAINT FK_Nomina_PeriodoPago FOREIGN KEY (idPeriodoPago) REFERENCES PeriodoPago(idPeriodoP--ago);
+	ADD CONSTRAINT FK_Nomina_PeriodoPago FOREIGN KEY (idPeriodoPago) REFERENCES PeriodoPago(idPeriodoPago);
 /* Llave Foranea Deduccion */
 ALTER TABLE Deduccion
 	ADD CONSTRAINT FK_Deduccion_Planilla FOREIGN KEY (idNomina) REFERENCES Nomina(idNomina);
@@ -236,8 +241,7 @@ ALTER TABLE Aguinaldo
 ALTER TABLE IngresoNoFijoVendedor
 	ADD CONSTRAINT FK_INF_Vendedor FOREIGN KEY (idIngresoNoFijo) REFERENCES IngresoNoFijo(idIngresoNoFijo);
 
-Insert into Rol (nombre) values("admin");
-Insert into User(username, password , idRol) values ("root", "admin" , 1);
+
 /* Triggers  */
 DELIMITER $$
 CREATE TRIGGER salarioAcumulado 
@@ -260,7 +264,10 @@ BEGIN
 END$$ 
 
 
-/* Mock Data */ 
+Insert into Rol (nombre) values("admin");*/
+Insert into User(username, password , idRol) values ("root", "admin" , 1);
+
+/* Mock Data  */
 
 Insert into FrecuenciaDePago(nombre) values ("Mensual") , ("Quincenal");
 
@@ -269,8 +276,9 @@ Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador"),("Vendedor");
 Insert into DiaDePago(diaPago) values(15), (30) ;
 
 Insert into Horario(horaEntrada, horaSalida) values('7:00','12:00'), ('1:00','5:00');
-
-Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) values("Rodney","Sanchez",1,"35987lmao",2500.25,FALSE,"2019-05-02",1,1);
-
-insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2);
+Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) values("Roberto","Sanchez",1,"35987lmao",10000.25,FALSE,"2019-05-02",1,1)
+("Luz","Perez",1,"35987lmao",1000.25,FALSE,"2019-05-02",1,1),
+("Maria","Luisa",1,"35987lmao",20.25,TRUE,"2019-05-02",1,1);
+/*
+insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2),(2,1),(3,1);
 /*  End Mock Data  */

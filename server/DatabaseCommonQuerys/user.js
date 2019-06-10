@@ -3,9 +3,9 @@ const queryMaker = require('../testrandom')
 const db = require('../dbConnection')
 
 const insertUser = async (user) => {
-  console.log(user)
   try {
     if (!(await searchUserBy({ username: user.username })).length > 0) {
+      console.log(user)
       const [rows] = await db.query(
         queryMaker.insert("User", user)
           .make()
@@ -34,12 +34,16 @@ const searchUserBy = async ({ username, idRol }) => {
     query = queryMaker.select('User.username', 'User.password', 'Rol.nombre')
       .from("User")
       .innerJoin("Rol")
-      .onEquals('User.idRol', 'Rol.idRol').equals("Rol.idRol", `"${idRol}"`)
+      .onEquals('User.idRol', 'Rol.idRol')
+      .equals("Rol.idRol", `"${idRol}"`)
       .make()
   }
   if (username) query = queryMaker.select('User.username', 'User.password', 'Rol.nombre')
     .from("User")
-    .innerJoin("Rol").equals("User.username", `"${username}"`)
+    .innerJoin("Rol")
+    .onEquals("User.idRol", "Rol.idRol")
+    .equals("User.username", `"${username}"`)
+    .make()
 
   const [rows] = await db.query(query)
   return rows
