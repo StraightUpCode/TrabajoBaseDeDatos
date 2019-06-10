@@ -231,6 +231,25 @@ router.post("/user/create", async (req, res) => {
     res.send(e)
   }
 })
+
+router.get("/user/reset/:id", async (req, res) => {
+  try {
+    const rows = await commonQuerys.resetPassword(req.params.id)
+    console.log(rows)
+    res.send(rows)
+  } catch (e) {
+    res.send(e)
+  }
+})
+
+router.get("/user/:id", async (req, res) => {
+  try {
+    res.send(await commonQuerys.getUser(req.params.id))
+  } catch (e) {
+    res.send(e)
+  }
+})
+
 // Periodo de Pago
 router.post("/periodoPago/create", async (req, res) => {
   const periodo = req.body
@@ -315,6 +334,14 @@ router.get("/horarios", async (req, res) => {
   const result = await commonQuerys.getHorarios()
   console.log(result)
   res.send(result)
+})
+
+router.get("/rol", async (req, res) => {
+  try {
+    res.send(await commonQuerys.getRoles())
+  } catch (e) {
+    res.send(e)
+  }
 })
 
 

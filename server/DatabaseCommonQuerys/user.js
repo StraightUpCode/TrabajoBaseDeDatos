@@ -21,28 +21,62 @@ const insertUser = async (user) => {
 }
 
 const getUsers = resultFactory(
-  queryMaker.select('User.username', 'User.password', 'Rol.nombre')
+  queryMaker.select('User.idUser', 'User.username', 'User.password', 'Rol.idRol', 'Rol.nombre')
     .from("User")
     .innerJoin("Rol")
     .onEquals('User.idRol', 'Rol.idRol')
     .make()
 )
 const searchUserBy = async ({ username, idRol }) => {
-  const query = queryMaker.select('User.username', 'User.password', 'Rol.nombre')
-    .from("User")
-    .innerJoin("Rol")
-    .onEquals('User.idRol', 'Rol.idRol')
+  let query
 
-  if (idRol) query.equals("Rol.idRol", `"${idRol}"`)
-  if (username) query.equals("User.username", `"${username}"`)
-  const [rows] = await db.query(query.make())
+  if (idRol) {
+    query = queryMaker.select('User.username', 'User.password', 'Rol.nombre')
+      .from("User")
+      .innerJoin("Rol")
+      .onEquals('User.idRol', 'Rol.idRol').equals("Rol.idRol", `"${idRol}"`)
+      .make()
+  }
+  if (username) query = queryMaker.select('User.username', 'User.password', 'Rol.nombre')
+    .from("User")
+    .innerJoin("Rol").equals("User.username", `"${username}"`)
+
+  const [rows] = await db.query(query)
   return rows
 
+}
+
+const resetPassword = async (id) => {
+  try {
+    const [rows] = await db.query(
+      queryMaker.update('User', { password: 12345678 }, 'idUser', id)
+        .make()
+    )
+    return rows
+  } catch (e) {
+    throw e
+  } 
+
+}
+const getUser = async (id) => {
+  try {
+    const [rows] = await db.query(
+      queryMaker.select('*')
+        .from('User')
+        .equals('User.idUser', id)
+        .make()
+    )
+    return rows[0]
+  } catch (e) {
+    throw e
+  }
 }
 
 module.exports = {
   insertUser,
   getUsers,
-  searchUserBy
+  searchUserBy,
+  resetPassword,
+  getUser,
 
 }

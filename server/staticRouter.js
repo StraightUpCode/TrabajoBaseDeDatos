@@ -54,15 +54,15 @@ router.get('/trabajadorHoras', async (req, res) => {
 router.get('/crearUsuario', async (req, res) => {
   res.render('crearUsuario', {
     admin: req.session.rol == 'admin',
-    rrhh: req.session.rol=='rrhh',
+    rrhh: req.session.rol == 'rrhh',
     Rol: await commonQuerys.getRoles()
   })
 })
 router.get('/cargos', async (req, res) => {
   res.render('cargos', {
     admin: req.session.rol == 'admin',
-    rrhh: req.session.rol=='rrhh',
-    Rol: await commonQuerys.getRoles()
+    rrhh: req.session.rol == 'rrhh',
+    cargo: await commonQuerys.getCargos()
   })
 })
 router.get('/crearPrestamo', async (req, res) => {
@@ -91,6 +91,12 @@ router.get('/crearNomina', async (req, res) => {
   })
 })
 
+router.get('/administrarUsuarios', async (req, res) => {
+  res.render('administrarUsuarios', {
+    admin: req.session.rol == 'admin',
+    usuario: await commonQuerys.getUsers()
+  })
+})
 /*
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'))
