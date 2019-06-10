@@ -1,4 +1,4 @@
-const getCargos = require('./cargos')
+const cargo = require('./cargos')
 const getDiasPago = require('./diasDePago')
 const querysTrabajador = require('./trabajador')
 const getFrecuenciaDePago = require('./frecuenciaDePago')
@@ -9,7 +9,7 @@ const nomina = require('./nomina')
 const prestamo = require('./prestamo')
 const horario = require('./horario')
 module.exports = {
-  getCargos,
+  ...cargo,
   getDiasPago,
   ...querysTrabajador,
   getFrecuenciaDePago,

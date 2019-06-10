@@ -16,5 +16,19 @@ const getCargos = async () => {
   }
 }
 
+const insertCargo = async (cargo) => {
+  try {
+    const [rows] = await db.query(
+      queryMaker.insert('Cargo', cargo)
+        .make()
+    )
+    return rows.insertId
+  } catch (e) {
+    throw e
+  }
+}
 
-module.exports = getCargos
+module.exports = {
+  getCargos,
+  insertCargo
+}

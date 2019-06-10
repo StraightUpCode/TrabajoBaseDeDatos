@@ -16,8 +16,8 @@
   <script type="text/javascript" src="../JS/cargo.js"></script>
   <script type="text/javascript" src="../JS/estadoPrestamo.js"></script>
   <script type="text/javascript" src="../JS/prestamo.js"></script>
-  
-   <!----<script type="text/javascript" src="../JS/prestamo.js"></script>-->
+
+  <!----<script type="text/javascript" src="../JS/prestamo.js"></script>-->
 
   <title>UAM</title>
 </head>
@@ -54,116 +54,54 @@
 
 
 
-<div class="container">
-  
-  <div style="display: none"; id="divCargo">
+  <div class="container">
+
+    <div style="display: none" ; id="divCargo">
       <div class="row">
-          <div class="col-md-6">
-               <h4>Catalogo de Cargos</h4>
-          </div>
-      </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="exampleInputEmail1">Cargo</label>
-          <input id='txtCargo' type="email" class="form-control" aria-describedby="emailHelp"
-            placeholder="Digite el cargo">
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group">
-          <button id='btnCargo' style="margin-top: 32px" type="button" class="btn btn-primary">
-            <span class="glyphicon glyphicon-search"></span> Agregar
-          </button>
-        </div>
-      </div>
-      <div class="col-md-3">      
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <table id="tblCargo" class="display" cellspacing="0" width="100%">
-          <thead>
-            <tr>
-              <th style='display: none'>Identificador</th>
-              <th>Codigo Cargo</th>
-              <th>Cargo</th>
-              <th>Opciones</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-    </div>
-
-  </div>
-
-  <div style="display: none"; id="divPrestamo">
-
-    <div class="row">
         <div class="col-md-6">
-             <h4>Prestamos</h4>
+          <h4>Catalogo de Cargos</h4>
         </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Cargo</label>
+            <input id='txtCargo' type="email" class="form-control" aria-describedby="emailHelp"
+              placeholder="Digite el cargo">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <button id='btnCargo' style="margin-top: 32px" type="button" class="btn btn-primary">
+              <span class="glyphicon glyphicon-search"></span> Agregar
+            </button>
+          </div>
+        </div>
+        <div class="col-md-3">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <table id="tblCargo" class="display" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th style='display: none'>Identificador</th>
+                <th>Codigo Cargo</th>
+                <th>Cargo</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+
     </div>
 
-    <div class="row">        
-    
-        <div class="col-md-4">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Codigo Trabajador</label>
-              <input id='txtcodigo' type="email" class="form-control" aria-describedby="emailHelp"
-                placeholder="">
-            </div>
-          </div>
-    
-          <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Tasa</label>
-                <input id='txttasa' type="email" class="form-control" aria-describedby="emailHelp"
-                  placeholder="">
-              </div>
-          </div>
 
-          <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Fecha</label>
-                <input id='txtfecha' type="email" class="form-control" aria-describedby="emailHelp"
-                  placeholder="">
-              </div>
-          </div>  
 
-        </div>
-
-  <div class="row">        
-    <div class="col-md-4">
-        <div class="form-group">
-          <label for="exampleInputEmail1">Cuota</label>
-          <input id='txtCuotaPrestamo' type="email" class="form-control" aria-describedby="emailHelp"
-            placeholder="">
-        </div>
-      </div>
-
-      <div class="col-md-4">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Prestamo</label>
-            <input id='txtMontoPrestamo' type="email" class="form-control" aria-describedby="emailHelp"
-              placeholder="">
-          </div>
-      </div>
-
-    <div class="col-md-4">
-      <div class="form-group">
-        <button id='btnAgregarPrestamo' style="margin-top: 32px" type="button" class="btn btn-primary">
-          <span class="glyphicon glyphicon-search"></span> Agregar
-        </button>
-      </div>
-    </div>   
-  </div>
-
-</br>
-
-  <!-----<div class="row">
+    <!-----<div class="row">
     <div class="col-md-12">
       <table id="tblEstadoPrestamo" class="display" cellspacing="0" width="100%">
         <thead>
@@ -184,77 +122,77 @@
 
   </div>
 
-  <div style="display: none"; id="divEstadoPrestamo">  
+  <div style="display: none" ; id="divEstadoPrestamo">
     <h4>Estado Prestamo</h4>
 
-    <div class="row">              
-        <div class="col-md-12">
-          <table id="tblPrestamo" class="display" cellspacing="0" width="100%">
-            <thead>
-              <tr>
-                <th style='display: none'>Identificador</th>
-                <th>Nombre Completo</th>
-                <th>Opciones</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="false">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Detalle del prestamo</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Fecha inicial:</label>
-            <input id='txtfechaInicial' type="text" class="form-control" readonly/>
-          </div>
-          <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Fecha de Pago:</label>
-              <input id="txtfechaPago" type="text" class="form-control"  readonly/>
-            </div>
-
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Cuota:</label>
-            <input id='txtCuota' type="text" class="form-control"  readonly/>
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Deuda Total:</label>
-            <input id='txtMonto' type="text" class="form-control"  readonly/>
-          </div>        
-
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Incio del periodo:</label>
-            <input id="txtInicio" type="text" class="form-control"  readonly/>
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Fin del periodo:</label>
-            <input id="txtFin" type="text" class="form-control"  readonly/>
-          </div>
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+    <div class="row">
+      <div class="col-md-12">
+        <table id="tblPrestamo" class="display" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th style='display: none'>Identificador</th>
+              <th>Nombre Completo</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+        </table>
       </div>
     </div>
-  </div>
-</div>
-      
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="false">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Detalle del prestamo</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Fecha inicial:</label>
+                <input id='txtfechaInicial' type="text" class="form-control" readonly />
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Fecha de Pago:</label>
+                <input id="txtfechaPago" type="text" class="form-control" readonly />
+              </div>
+
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Cuota:</label>
+                <input id='txtCuota' type="text" class="form-control" readonly />
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Deuda Total:</label>
+                <input id='txtMonto' type="text" class="form-control" readonly />
+              </div>
+
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Incio del periodo:</label>
+                <input id="txtInicio" type="text" class="form-control" readonly />
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Fin del periodo:</label>
+                <input id="txtFin" type="text" class="form-control" readonly />
+              </div>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </div>
 
-</div>
+  </div>
 
 </body>
-</html>
 
+</html>

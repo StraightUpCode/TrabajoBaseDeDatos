@@ -194,6 +194,13 @@ router.get("/cargo", async (req, res) => {
   }
 
 })
+router.post("/cargo/add", async (req, res) => {
+  try {
+    res.send({ idCargo: await commonQuerys.insertCargo(req.body) })
+  } catch (e) {
+    res.send(e)
+  }
+})
 
 // Dia de Pago
 router.get("/diasDePago", async (req, res) => {

@@ -97,6 +97,13 @@ router.get('/administrarUsuarios', async (req, res) => {
     usuario: await commonQuerys.getUsers()
   })
 })
+
+router.get('/agregarPrestamo', async (req, res) => {
+  res.render('prestamos', {
+    admin: req.session.rol == 'admin',
+
+  })
+})
 /*
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'))

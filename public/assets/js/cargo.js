@@ -1,4 +1,4 @@
-var arregloCargo = [], objetoCargo = { codigoCargo: '1', nombre: 'Desarrollador de Sistemas' };
+var arregloCargo = [{ id: numeroUnico(), idCargo: '1', nombre: 'Desarrollador de Sistemas' }];
 
 var modoEdicion = false, idEdicion = "";
 $(document).ready(function () {
@@ -11,29 +11,6 @@ $(document).ready(function () {
         return false;
     });
 
-    $('#aEstadoPrestamo').click(function () {
-        console.log('estoy en Estado de prestamo');
-        $('#divEstadoPrestamo').css('display', 'block');
-        $('#divPrestamo').css('display', 'none');
-        $('#divCargo').css('display', 'none');
-        return false;
-    });
-
-    $('#aCargo').click(function () {
-        console.log('Bienvenido a Cargo');
-        $('#divCargo').css('display', 'block');
-        $('#divPrestamo').css('display', 'none');
-        $('#divEstadoPrestamo').css('display', 'none');
-        return false;
-    });
-
-    $('#aPrestamo').click(function () {
-        console.log('Prestamo ');
-        $('#divPrestamo').css('display', 'block');
-        $('#divCargo').css('display', 'none');
-        $('#divEstadoPrestamo').css('display', 'none');
-        return false;
-    });
 
 
     // Edita una fila seleccionada
@@ -42,6 +19,7 @@ $(document).ready(function () {
         var RowIndex = $(this).closest('tr');
         var dt = $('#tblCargo').DataTable();
         var data = dt.row(RowIndex).data();
+        console.log(data)
         modoEdicion = true;
         cargarEdicionCargo(data);
 
@@ -64,7 +42,18 @@ $(document).ready(function () {
 //inicia la tabla
 function IniciarComponentes() {
     console.log('Iniciando componentes.');
-    cargarTablaCargo([]);
+    console.log(arregloCargo)
+    fetch('http://localhost:3000/api/cargo')
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            arregloCargo = data.map(el => {
+                el.id = numeroUnico()
+                return el
+            })
+            cargarTablaCargo(arregloCargo)
+        })
+        ;
 }
 
 // Estructura de la tabla
@@ -75,7 +64,7 @@ function cargarTablaCargo(arregloCargo) {
         destroy: true,
         columns: [
             { title: "Identificador", data: 'id', visible: false, width: '1%' },
-            { title: "Codigo", data: 'codigoCargo', visible: false, width: '1%' },
+            { title: "Codigo", data: 'idCargo', visible: false, width: '1%' },
             { title: "Cargo", data: 'nombre', width: '78%' },
             {
                 data: null,
@@ -89,22 +78,36 @@ function cargarTablaCargo(arregloCargo) {
 }
 //pone los valores en el imput 
 function cargarEdicionCargo(data) {
-    $('#txtCodigoCargo').val(data.codigoCargo);
+    $('#txtCodigoCargo').val(data.idCargo);
     $('#txtCargo').val(data.nombre);
     $('#btnCargo').text('Guardar');
     idEdicion = data.id;
 }
 
 function crearCargo() {
-    debugger;
     var identificador = numeroUnico();
     if (modoEdicion) {
         identificador = idEdicion;
         arregloCargo = arregloCargo.filter(function (el) { return el.id != identificador });
     }
-    var objeto = { id: identificador, codigoCargo: '', nombre: $('#txtCargo').val() }
-    arregloCargo.push(objeto);
-    cargarTablaCargo(arregloCargo);
+    var objeto = { id: identificador, idCargo: '', nombre: $('#txtCargo').val() }
+    const { nombre } = objeto;
+    fetch('http://localhost:3000/api/cargo/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            nombre
+        })
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            objeto.idCargo = data.idCargo
+            arregloCargo.push(objeto);
+            cargarTablaCargo(arregloCargo);
+        })
     modoEdicion = false;
     idEdicion = '';
     inicializarInputCargo();
