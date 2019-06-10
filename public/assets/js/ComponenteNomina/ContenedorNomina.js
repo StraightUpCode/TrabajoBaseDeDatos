@@ -34,10 +34,11 @@ class ComponenteNomina extends Component {
   avanzarTrabajador() {
     this.setState((prevState) => {
       console.log(prevState)
-      console.log("Condicion Critoca", prevState.indiceTrabajadorActual >= prevState.listaTrabajadores.length)
-      console.log("Indic ", prevState.indiceTrabajadorActual)
+      console.log("Indice ", prevState.indiceTrabajadorActual)
       console.log("Length", prevState.listaTrabajadores.length)
-      if (++prevState.indiceTrabajadorActual >= prevState.listaTrabajadores.length) {
+      console.log("Indice Al que Vamos ", prevState.indiceTrabajadorActual + 1)
+
+      if (prevState.indiceTrabajadorActual + 1 >= prevState.listaTrabajadores.length) {
         return ({
           ...prevState,
           paso: ++prevState.paso
@@ -110,6 +111,8 @@ class ComponenteNomina extends Component {
     }
 
     console.log(listaTrabajadores)
+    console.log("Indice Trabajador Actual", indiceTrabajadorActual)
+    console.log("Trabajador Actual")
     console.log(listaTrabajadores[indiceTrabajadorActual])
     return (
       <section >

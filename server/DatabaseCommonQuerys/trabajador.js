@@ -58,7 +58,7 @@ const getTrabajadorByName = async (name) => {
   return rows
 }
 const getTrabajadorByPeriodoYFrecuenciaDePago = async ({ frecuenciaDePago, inicio, fin }) => {
-
+  console.log("Get Trabajadores Nomina")
   try {
     let leQuery
     if (inicio == 1 && inicio == fin) {
@@ -78,7 +78,7 @@ const getTrabajadorByPeriodoYFrecuenciaDePago = async ({ frecuenciaDePago, inici
         .make()
 
     }
-    if (inicio == 15 && inicio == fin) {
+    if (inicio == fin && inicio > 1) {
       leQuery = queryMaker.select("Trabajador.idTrabajador", "Trabajador.nombre", "Trabajador.apellido", "Cargo.nombre as cargo", "DiaDePago.diaPago", "FrecuenciaDePago.nombre as frecuenciaDePago", "Trabajador.salario", "Trabajador.salarioPorHora", "Vendedor.porcentajeComision")
         .from("Trabajador")
         .leftJoin("Vendedor")
@@ -122,7 +122,9 @@ const getTrabajadorByPeriodoYFrecuenciaDePago = async ({ frecuenciaDePago, inici
     console.log(rows)
     return rows
   } catch (e) {
+    console.log("WTF")
     console.log(e)
+    throw e
   }
 }
 

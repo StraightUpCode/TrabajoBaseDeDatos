@@ -10,25 +10,33 @@ class IngresosNoFijos extends Component {
       incentivo: 0
     }
     this.handleClick = this.handleClick.bind(this)
+    this.mandarAPadre = this.mandarAPadre.bind(this)
   }
 
   handleClick() {
     const { viatico, incentivo } = this.state
-    console.log("Viatico" + viatico)
-    console.log("Incentivo " + incentivo)
+    console.log("Reset Ingreso No Fijo")
+    this.setState({ viatico: 0, incentivo: 0 }, () => {
+      this.mandarAPadre({ viatico, incentivo })
+    })
+
+
+  }
+  mandarAPadre({ viatico, incentivo }) {
     this.props.crearIngresosNoFijos({
       viatico: Number.parseFloat(viatico),
       incentivo: Number.parseFloat(incentivo)
     })
   }
 
-  render({ porcentajeComision }) {
+  render({ porcentajeComision }, { incentivo, viatico
+     }) {
     return (
       <div>
         <label for="viatico">Viatico</label>
-        <input name="viatico" type="number" step="any" placeholder="Viatico" onChange={linkState(this, 'viatico')} />
-        <label for="incentivo">Incentivo</label>
-        <input name="incentivo" type="number" step="any" placeholder="Incentivo" onChange={linkState(this, 'incentivo')} />
+        <input name="viatico" value={viatico}type="number" step="any" placeholder="Viatico" onChange={linkState(this, 'viatico')} />
+        <label for="incentivo">Bono</label>
+        <input name="incentivo" value={incentivo }type="number" step="any" placeholder="Incentivo" onChange={linkState(this, 'incentivo')} />
         <button onClick={this.handleClick} > Siguiente</button>
       </div>
     )

@@ -11,6 +11,7 @@ class DeduccionNoFija extends Component {
   }
   handleSubmit() {
     this.props.crearDeduccionNoFija({ deduccionHorasRetraso: Number.parseFloat(this.state.deduccionHorasRetraso) })
+    this.setState({ deduccionHorasRetraso: 0 })
   }
   render() {
     return (
@@ -19,7 +20,7 @@ class DeduccionNoFija extends Component {
         <input type="number" step="any" name="deduccionHorasRetraso" placeholder="Deduccion Horas Retraso" onChange={
           linkState(this, 'deduccionHorasRetraso')
         }></input>
-        <button onClick={this.handleSubmit}></button>
+        <button onClick={this.handleSubmit}>Guardar</button>
       </div>
     )
   }
