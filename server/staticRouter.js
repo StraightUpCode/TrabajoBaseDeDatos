@@ -23,6 +23,7 @@ router.get("/diaPago", async (req, res) => {
 })
 router.get('/vistaNomina', async (req, res) => {
   res.render('vistaNomina', {
+    admin: req.session.rol == 'admin',
     dato: await commonQuerys.getDatosTrabajador(),
     helpers: {
       sum: (salario, ingresos, deducciones, ...opciones) => {
@@ -102,6 +103,12 @@ router.get('/agregarPrestamo', async (req, res) => {
   res.render('prestamos', {
     admin: req.session.rol == 'admin',
 
+  })
+})
+
+router.get("/estadoPrestamos", async (req, res) => {
+  res.render('estadoPrestamo', {
+    admin: req.session.rol == 'admin',
   })
 })
 /*

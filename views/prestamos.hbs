@@ -7,27 +7,30 @@
   </div>
 
   <div class="row">
-
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="exampleInputEmail1">Codigo Trabajador</label>
-        <input id='txtcodigo' type="text" class="form-control" aria-describedby="emailHelp" placeholder="">
+    <form method="POST" id="form" class="mx-auto col-sm-6">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Codigo Trabajador</label>
+          <input id='idTrabajador' type="text" class="form-control" aria-describedby="emailHelp" placeholder=""
+            name="idTrabajador" required>
+        </div>
       </div>
-    </div>
 
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="exampleInputEmail1">Tasa</label>
-        <input id='txttasa' type="number" step="0.01" class="form-control" aria-describedby="emailHelp" placeholder="">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Tasa</label>
+          <input id='txttasa' type="number" step="0.01" class="form-control" aria-describedby="emailHelp"
+            placeholder="">
+        </div>
       </div>
-    </div>
 
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="exampleInputEmail1">Fecha</label>
-        <input id='txtfecha' type="date" class="form-control" aria-describedby="emailHelp" placeholder="">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Fecha</label>
+          <input id='fechaInicial' type="date" class="form-control" aria-describedby="emailHelp" placeholder=""
+            name="fechaInicial" required>
+        </div>
       </div>
-    </div>
 
   </div>
 
@@ -35,25 +38,27 @@
     <div class="col-md-4">
       <div class="form-group">
         <label for="exampleInputEmail1">Cuota</label>
-        <input id='txtCuotaPrestamo' type="number" step="0.01" class="form-control" aria-describedby="emailHelp"
-          placeholder="">
+        <input id='cuota' type="number" step="0.01" class="form-control" aria-describedby="emailHelp" placeholder=""
+          name="cuota" required>
       </div>
     </div>
 
     <div class="col-md-4">
       <div class="form-group">
         <label for="exampleInputEmail1">Prestamo</label>
-        <input id='txtMontoPrestamo' type="text" class="form-control" aria-describedby="emailHelp" placeholder="">
+        <input id='monto' type="text" class="form-control" aria-describedby="emailHelp" placeholder="" name="monto"
+          required>
       </div>
     </div>
 
     <div class="col-md-4">
       <div class="form-group">
-        <button id='btnAgregarPrestamo' style="margin-top: 32px" type="button" class="btn btn-primary">
+        <button id='btnAgregarPrestamo' style="margin-top: 32px" type="submit" class="btn btn-primary">
           <span class="glyphicon glyphicon-search"></span> Agregar
         </button>
       </div>
     </div>
+    </form>
   </div>
 
   </br>

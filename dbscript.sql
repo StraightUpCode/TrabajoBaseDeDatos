@@ -264,7 +264,7 @@ BEGIN
 END$$ 
 
 
-Insert into Rol (nombre) values("admin");*/
+Insert into Rol (nombre) values("admin");
 Insert into User(username, password , idRol) values ("root", "admin" , 1);
 
 /* Mock Data  */
@@ -276,9 +276,8 @@ Insert into Cargo(nombre) values ("Ingeniero"), ("Administrador"),("Vendedor");
 Insert into DiaDePago(diaPago) values(15), (30) ;
 
 Insert into Horario(horaEntrada, horaSalida) values('7:00','12:00'), ('1:00','5:00');
-Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) values("Roberto","Sanchez",1,"35987lmao",10000.25,FALSE,"2019-05-02",1,1)
+Insert into Trabajador(nombre, apellido, idCargo, cedula, salario, salarioPorHora, fechaDeContratacion, idDiaPago, idFrecuenciaDePago) values("Roberto","Sanchez",1,"35987lmao",10000.25,FALSE,"2019-05-02",1,1),
 ("Luz","Perez",1,"35987lmao",1000.25,FALSE,"2019-05-02",1,1),
 ("Maria","Luisa",1,"35987lmao",20.25,TRUE,"2019-05-02",1,1);
-/*
 insert into Trabajador_Horario(idTrabajador, idHorario) values (1,2),(2,1),(3,1);
 /*  End Mock Data  */
