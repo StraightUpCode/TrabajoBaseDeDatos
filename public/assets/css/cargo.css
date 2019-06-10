@@ -1,0 +1,10 @@
+.container{
+    margin-top:2%;
+}
+
+
+#sidebar{
+    width: 200px;
+    height: 200px;
+    background: red;
+}

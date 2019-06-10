@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="text/javascript" src="../JS/jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script type="text/javascript" src="../JS/cargo.js"></script>
+  <script type="text/javascript" src="../JS/estadoPrestamo.js"></script>
+  <script type="text/javascript" src="../JS/prestamo.js"></script>
+  
+   <!----<script type="text/javascript" src="../JS/prestamo.js"></script>-->
+
+  <title>UAM</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+      <!-- Brand -->
+      <a class="navbar-brand" href="#">Nomina UAM</a>
+
+      <!-- Toggler/collapsibe Button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar links -->
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a id='aPrestamo' class="nav-link" href="#">Prestamo</a>
+          </li>
+          <li class="nav-item">
+            <a id='aEstadoPrestamo' class="nav-link" href="#">Estado Prestamo</a>
+          </li>
+          <li class="nav-item">
+            <a id='aCargo' class="nav-link" href="#">Cargo</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+
+
+
+<div class="container">
+  
+  <div style="display: none"; id="divCargo">
+      <div class="row">
+          <div class="col-md-6">
+               <h4>Catalogo de Cargos</h4>
+          </div>
+      </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Cargo</label>
+          <input id='txtCargo' type="email" class="form-control" aria-describedby="emailHelp"
+            placeholder="Digite el cargo">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <button id='btnCargo' style="margin-top: 32px" type="button" class="btn btn-primary">
+            <span class="glyphicon glyphicon-search"></span> Agregar
+          </button>
+        </div>
+      </div>
+      <div class="col-md-3">      
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <table id="tblCargo" class="display" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th style='display: none'>Identificador</th>
+              <th>Codigo Cargo</th>
+              <th>Cargo</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="display: none"; id="divPrestamo">
+
+    <div class="row">
+        <div class="col-md-6">
+             <h4>Prestamos</h4>
+        </div>
+    </div>
+
+    <div class="row">        
+    
+        <div class="col-md-4">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Codigo Trabajador</label>
+              <input id='txtcodigo' type="email" class="form-control" aria-describedby="emailHelp"
+                placeholder="">
+            </div>
+          </div>
+    
+          <div class="col-md-4">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Tasa</label>
+                <input id='txttasa' type="email" class="form-control" aria-describedby="emailHelp"
+                  placeholder="">
+              </div>
+          </div>
+
+          <div class="col-md-4">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Fecha</label>
+                <input id='txtfecha' type="email" class="form-control" aria-describedby="emailHelp"
+                  placeholder="">
+              </div>
+          </div>  
+
+        </div>
+
+  <div class="row">        
+    <div class="col-md-4">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Cuota</label>
+          <input id='txtCuotaPrestamo' type="email" class="form-control" aria-describedby="emailHelp"
+            placeholder="">
+        </div>
+      </div>
+
+      <div class="col-md-4">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Prestamo</label>
+            <input id='txtMontoPrestamo' type="email" class="form-control" aria-describedby="emailHelp"
+              placeholder="">
+          </div>
+      </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <button id='btnAgregarPrestamo' style="margin-top: 32px" type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-search"></span> Agregar
+        </button>
+      </div>
+    </div>   
+  </div>
+
+</br>
+
+  <!-----<div class="row">
+    <div class="col-md-12">
+      <table id="tblEstadoPrestamo" class="display" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th style='display: none'>Identificador</th>
+            <th>Codigo Trabajador</th>
+            <th>Cargo</th>
+            <th>Tasa</th>
+            <th>Fecha</th>
+            <th>Cuota</th>
+            <th>Monto</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>---->
+
+
+  </div>
+
+  <div style="display: none"; id="divEstadoPrestamo">  
+    <h4>Estado Prestamo</h4>
+
+    <div class="row">              
+        <div class="col-md-12">
+          <table id="tblPrestamo" class="display" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th style='display: none'>Identificador</th>
+                <th>Nombre Completo</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detalle del prestamo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Fecha inicial:</label>
+            <input id='txtfechaInicial' type="text" class="form-control" readonly/>
+          </div>
+          <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Fecha de Pago:</label>
+              <input id="txtfechaPago" type="text" class="form-control"  readonly/>
+            </div>
+
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Cuota:</label>
+            <input id='txtCuota' type="text" class="form-control"  readonly/>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Deuda Total:</label>
+            <input id='txtMonto' type="text" class="form-control"  readonly/>
+          </div>        
+
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Incio del periodo:</label>
+            <input id="txtInicio" type="text" class="form-control"  readonly/>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Fin del periodo:</label>
+            <input id="txtFin" type="text" class="form-control"  readonly/>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+  </div>
+
+</div>
+
+</body>
+</html>
+
