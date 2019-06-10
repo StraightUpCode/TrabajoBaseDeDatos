@@ -3,8 +3,7 @@ var modoEdicion = false, idEdicion = "";
 $(document).ready(function () {
     IniciarComponentesPrestamo();
 
-    $('#tblPrestamo').on('click', '#btnCargarModal', function (e) {        
-        debugger;
+    $('#tblPrestamo').on('click', '#btnCargarModal', function (e) {       
         var RowIndex = $(this).closest('tr');
         var dt = $('#tblPrestamo').DataTable();
         var data = dt.row(RowIndex).data();
