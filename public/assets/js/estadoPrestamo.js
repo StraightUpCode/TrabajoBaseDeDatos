@@ -17,23 +17,42 @@ $(document).ready(function () {
 });
 
 function cargarModal(data) {
+    console.log(data)
+    const fechaDePago = new Date(data.fechaDePago)
+    const fechaInicial = new Date(data.fechaInicial)
+    console.log(fechaInicial)
+    console.log(fechaDePago)
+    let stringFechaPago = 'No ha pagado'
+    let stringFechaIncial = ''
+    if (data.fechaDePago && !isNaN(fechaDePago.getTime())) {
+        stringFechaPago = fechaDePago.toISOString().split('T')[0].split('-').reverse().join('/')
+    }
+    if (!isNaN(fechaInicial.getTime())) {
+        stringFechaIncial = fechaInicial.toISOString().split('T')[0].split('-').reverse().join('/')
+    }
+
     $('#exampleModal').modal();
-    $('#txtfechaInicial').val(data.fechaInicial);
-    $('#txtfechaPago').val(data.fechaDePago);
+    $('#txtfechaInicial').val(stringFechaIncial);
+    $('#txtfechaPago').val(stringFechaPago);
     $('#txtCuota').val(data.cuota);
     $('#txtMonto').val(data.monto);
-    $('#txtDeudaSaldada').val(data.deudaSaldada
-    )
+    $('#txtDeudaSaldada').val(data.deudaSaldada)
 }
 
 //inicia la tabla
 function IniciarComponentesPrestamo() {
     debugger;
     console.log('Iniciando componentes prestamo.');
-    objetoPrestamo = { id: 1, nombre: 'Maria Luisa Medrano', fechaDePago: '07/07/2018', fechaInicial: '07/07/2019', cuota: 500, monto: 1200, deudaSaldada: 500 };
-    arregloPrestamo.push(objetoPrestamo);
+    objetoPrestamo = { idPrestamo: 2, nombre: 'Maria Luisa Medrano', fechaDePago: '07/07/2018', fechaIgnicial: '07/07/2019', cuota: 500, monto: 1200, deudaSaldada: 500 };
+    fetch('http://localhost:3000/api/prestamo/getDetalles')
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            arregloPrestamo = data
+            arregloPrestamo.push(objetoPrestamo);
 
-    cargarTablaPrestamo(arregloPrestamo);
+            cargarTablaPrestamo(arregloPrestamo);
+        })
 }
 
 // Estructura de la tabla
@@ -43,7 +62,7 @@ function cargarTablaPrestamo(arregloPrestamo) {
         data: arregloPrestamo,
         destroy: true,
         columns: [
-            { title: "Identificador", data: 'id', visible: false, width: '1%' },
+            { title: "Identificador", data: 'idPrestamo', visible: false, width: '1%' },
             { title: "Nombre Completo", data: 'nombre', width: '78%' },
             {
                 data: null,

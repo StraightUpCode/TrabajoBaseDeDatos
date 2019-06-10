@@ -370,5 +370,13 @@ router.post("/prestamo/crear", async (req, res) => {
     res.send(e)
   }
 })
+router.get('/prestamo/getDetalles', async (req, res) => {
+  try {
+    res.send(await commonQuerys.getDetallesPrestamo())
+  } catch (e) {
+    console.log(e)
+    res.send(e)
+  }
+})
 
 module.exports = router

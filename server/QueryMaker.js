@@ -110,6 +110,11 @@ class QueryMaker {
     this.query += ` where ${atributoClave} = ${id} `
     return this
   }
+
+  groupBy(atributo) {
+    this.query += `GROUP BY ${atributo}`
+    return this
+  }
 }
 
 module.exports = QueryMaker
