@@ -1,7 +1,25 @@
 <div>
+  <div id="editUser">
+
+  </div>
   <table>
     <thead>
-
+      <th>Usuario</th>
+      <th>Rol</th>
+      <th colspan="3">Opciones</th>
     </thead>
+    <tbody>
+      {{#each usuario}}
+      <tr data-user-id="{{idUser}}">
+        <td>{{username}}</td>
+        <td>{{nombre}}</td>
+        <td class="editar">Editar</td>
+        <td class="reset_pass">Resetear Contraseña</td>
+        <td class="delete">Eliminar</td>
+      </tr>
+      {{/each}}
+    </tbody>
   </table>
 </div>
+
+<script src="/assets/js/administrarUsuario.js"></script>
