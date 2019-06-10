@@ -1,6 +1,6 @@
 const db = require('../dbConnection')
 const queryMaker = require('../testrandom')
-
+const prestamo = require('./prestamo')
 const createNomina = async (Nomina) => {
   console.log("Insertando Nomina")
   console.log(Nomina)
@@ -106,11 +106,28 @@ const crearDeduccion = async (
       queryMaker.update('SalarioAcumulado_IR', { salarioAcumulado: salario - inss }, 'idTrabajador', idTrabajador)
         .make()
     )
+
     const [rows] = await db.query(
       queryMaker.insert('Deduccion', { idNomina, inss, IR })
         .make()
     )
-    console.log(rows)
+  prestamo.checkTrabajadorTienePrestamo(idTrabajador)
+  .then(result => {
+    if (!result.length > 0) {
+      console.log("No tiene Prestamo")
+    } else {
+      console.log(result[0])
+      const results = result[0]
+      const fecha = new Date()
+      prestamo.insertPagoPrestamo(
+        {
+          idPrestamo: results.idPrestamo,
+          montoPagado: results.cuota,
+          fechaDePago: fecha.toISOString().split('T')[0]
+        }
+      ).then(res => deduccionPrestamo(res) )
+    }
+  })
 
     return rows.insertId
 
@@ -119,8 +136,20 @@ const crearDeduccion = async (
   }
 
 }
+
+const deduccionPrestamo = async (idPagoPrestamo) => {
+  try {
+    const [rows] =  db.query(
+      queryMaker.insert('DNFija_Prestamo', {idPagoPrestamo})
+    )
+    return rows.insertId
+  }catch(e){
+    throw e
+  }
+}
 const crearDeduccionNoFija = async (deduccionNoFija) => {
   try {
+
     const [rows] = await db.query(
       queryMaker.insert('DeduccionNoFija', deduccionNoFija)
         .make()
@@ -161,6 +190,27 @@ const getDatosTrabajador = async () => {
     throw e
   }
 }
+
+console.log("Revisando si id tiene Prestamo")
+prestamo.checkTrabajadorTienePrestamo(1)
+  .then(result => {
+    if (!result.length > 0) {
+      console.log("No tiene Prestamo")
+    } else {
+      console.log(result[0])
+      const results = result[0]
+      const fecha = new Date()
+      prestamo.insertPagoPrestamo(
+        {
+          idPrestamo: results.idPrestamo,
+          montoPagado: results.cuota,
+          fechaDePago: fecha.toISOString().split('T')[0]
+        }
+      ).then(res => console.log(res))
+    }
+  })
+
+
 module.exports = {
   createNomina,
   crearIngresoNoFijo,
