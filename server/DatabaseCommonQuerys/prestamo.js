@@ -6,11 +6,11 @@ const insertPrestamo = async (prestamo) => {
   try {
     const leQuery = queryMaker.insert('PagoPrestamo', prestamo)
       .make()
-   console.log(leQuery)
+    console.log(leQuery)
     const [rows] = db.query(
       leQuery
     )
- 
+
     return rows.insertId
   } catch (e) {
     throw e
@@ -56,7 +56,7 @@ const checkTrabajadorTienePrestamo = async (id) => {
 */
 
 const getDetallesPrestamo = resultFactory(
-  queryMaker.select('Prestamo.idPrestamo', 'CONCAT(Trabajador.nombre," ", Trabajador.apellido ) as nombre', 'Prestamo.fechaInicial', 'SUM(PagoPrestamo.montoPagado) as deudaSaldada', 'Prestamo.cuota', 'PagoPrestamo.fechaDePago')
+  queryMaker.select('Prestamo.idPrestamo', 'CONCAT(Trabajador.nombre," ", Trabajador.apellido ) as nombre', 'Prestamo.fechaInicial', 'SUM(PagoPrestamo.montoPagado) as deudaSaldada', 'Prestamo.cuota', 'PagoPrestamo.fechaDePago', 'Prestamo.monto')
     .from('Prestamo')
     .leftJoin('PagoPrestamo')
     .onEquals('Prestamo.idPrestamo', 'PagoPrestamo.idPrestamo')

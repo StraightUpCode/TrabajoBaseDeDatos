@@ -4,7 +4,7 @@ $(document).ready(function () {
     IniciarComponentesPrestamo();
 
     $('#tblPrestamo').on('click', '#btnCargarModal', function (e) {
-        debugger;
+
         var RowIndex = $(this).closest('tr');
         var dt = $('#tblPrestamo').DataTable();
         var data = dt.row(RowIndex).data();
@@ -41,7 +41,7 @@ function cargarModal(data) {
 
 //inicia la tabla
 function IniciarComponentesPrestamo() {
-    debugger;
+
     console.log('Iniciando componentes prestamo.');
     objetoPrestamo = { idPrestamo: 2, nombre: 'Maria Luisa Medrano', fechaDePago: '07/07/2018', fechaIgnicial: '07/07/2019', cuota: 500, monto: 1200, deudaSaldada: 500 };
     fetch('http://localhost:3000/api/prestamo/getDetalles')
