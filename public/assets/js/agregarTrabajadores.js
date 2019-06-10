@@ -14,6 +14,7 @@
           )
           val = field.options[field.selectedIndex].value
         } else if (field.type == 'checkbox') {
+          console.log(field.checked)
           val = field.checked
         } else {
           console.log(field)
@@ -27,7 +28,6 @@
     console.log(request)
     request.idDiaPago = Number.parseInt(request.idDiaPago)
     request.salario = Number.parseFloat(request.salario)
-    request.salarioPorHora = request.salarioPorHora == "true"
     request.idFrecuenciaDePago = Number.parseFloat(request.idFrecuenciaDePago)
     !request.porcentajeComision ? delete request.porcentajeComision : request.porcentajeComision = Number.parseFloat(request.porcentajeComision)
 
