@@ -1,103 +1,58 @@
-var arregloEstadoPrestamo = [];
-var modoEdicionPrestamoPrestamo = false, idEdicionPrestamo = "";
-
+var arregloPrestamo = [], objetoPrestamo = {};
+var modoEdicion = false, idEdicion = "";
 $(document).ready(function () {
-    IniciarComponentesEstadoPrestamo();
+    IniciarComponentesPrestamo();
 
-    $('#btnAgregarPrestamo').click(function () {                
-        crearObjeto();
-        
-        return false;
-    });         
-
-    // Edita una fila seleccionada
-    $('#tblEstadoPrestamo').on('click', 'a.editor_edit_prestamo', function (e) {        
+    $('#tblPrestamo').on('click', '#btnCargarModal', function (e) {
         debugger;
         var RowIndex = $(this).closest('tr');
-        var dt = $('#tblEstadoPrestamo').DataTable();
+        var dt = $('#tblPrestamo').DataTable();
         var data = dt.row(RowIndex).data();
-        modoEdicionPrestamo = true;
-        cargarEdicionPrestamo(data);
 
+        cargarModal(data);
         e.stopImmediatePropagation();
-    });
-
-    // Borra una fila seleccionada
-    $('#tblEstadoPrestamo').on('click', 'a.editor_remove_prestamo', function (e) {
-        debugger;
-        var RowIndex = $(this).closest('tr');
-        var dt = $('#tblEstadoPrestamo').DataTable();
-        var data = dt.row(RowIndex).data();
-        arregloEstadoPrestamo = arregloEstadoPrestamo.filter(function (el) { return el.id != data.id });
-        CargarTabla(arregloEstadoPrestamo);
-
-        e.stopImmediatePropagation();        
+        e.stopPropagation();
     });
 
 });
+
+function cargarModal(data) {
+    $('#exampleModal').modal();
+    $('#txtfechaInicial').val(data.fechaInicial);
+    $('#txtfechaPago').val(data.fechaDePago);
+    $('#txtCuota').val(data.cuota);
+    $('#txtMonto').val(data.monto);
+    $('#txtDeudaSaldada').val(data.deudaSaldada
+    )
+}
+
 //inicia la tabla
-function IniciarComponentesEstadoPrestamo() {
-    console.log('Iniciando componentes estado Prestamo.');
-    CargarTabla([]);
+function IniciarComponentesPrestamo() {
+    debugger;
+    console.log('Iniciando componentes prestamo.');
+    objetoPrestamo = { id: 1, nombre: 'Maria Luisa Medrano', fechaDePago: '07/07/2018', fechaInicial: '07/07/2019', cuota: 500, monto: 1200, deudaSaldada: 500 };
+    arregloPrestamo.push(objetoPrestamo);
+
+    cargarTablaPrestamo(arregloPrestamo);
 }
 
 // Estructura de la tabla
-function CargarTabla(arregloEstadoPrestamo) {   
+function cargarTablaPrestamo(arregloPrestamo) {
 
-    $('#tblEstadoPrestamo').DataTable({
-        data: arregloEstadoPrestamo,
+    $('#tblPrestamo').DataTable({
+        data: arregloPrestamo,
         destroy: true,
         columns: [
-            { title: "Identificador", data: 'id', visible: false ,width:'1%'},
-            { title: "Codigo Trabajador", data: 'codigo' ,visible:false,width:'1%' },            
-            { title: "Tasa", data: 'tasa' ,width:'78%' },
-            { title: "Fecha", data: 'fecha' ,width:'78%' },
-            { title: "Cuota", data: 'cuota' ,width:'78%' },
-            { title: "Monto Prestamo", data: 'monto' ,width:'78%' },
+            { title: "Identificador", data: 'id', visible: false, width: '1%' },
+            { title: "Nombre Completo", data: 'nombre', width: '78%' },
             {
                 data: null,
-                width:'20%',
+                width: '20%',
                 className: "center",
-                defaultContent: '<a href="#" class="editor_edit_prestamo">Editar</a> <a href="#" class="a.editor_remove_prestamo">Eliminar</a>'
+                defaultContent: '<button type="button"  id="btnCargarModal"  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Ver detalle</button>'
             }
         ]
     });
-}
 
-//pone los valores en el imput 
-function cargarEdicionPrestamo(data) {
-    $('#txtCodigoCargo').val(data.codigoCargo);
-    $('#txtCargo').val(data.nombre);
-    $('#btnCargo').text('Guardar');
-    idEdicionPrestamo = data.id;
 }
-
-function crearObjeto(){
-        debugger;
-        var identificador =numeroUnico();
-        if (modoEdicionPrestamo) {
-            identificador = idEdicionPrestamo;
-            arregloEstadoPrestamo = arregloEstadoPrestamo.filter(function (el) { return el.id != identificador });
-        }
-        var objeto = { id: identificador, codigo: 'M00021', tasa:0.25,fecha :'2018/01/01',cuota : 0.5,monto : 7000 }
-        arregloEstadoPrestamo.push(objeto);
-        CargarTabla(arregloEstadoPrestamo);                
-        modoEdicionPrestamo = false;
-        idEdicionPrestamo ='';
-        inicializarInputPrestamo();        
-}
-
-function inicializarInputPrestamo(){
-    $('#txttasa').val('');
-    $('#btnAgregarPrestamo').text('Agregar');
-}
-
-//guid(numero unico)
-function numeroUnico() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-}
-
 
