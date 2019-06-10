@@ -361,5 +361,14 @@ router.get("/rol", async (req, res) => {
   }
 })
 
+router.post("/prestamo/crear", async (req, res) => {
+  try {
+    const prestamo = req.body
+    prestamo.cancelado = false
+    res.send({ idPrestamo: await commonQuerys.insertPrestamo(prestamo) })
+  } catch (e) {
+    res.send(e)
+  }
+})
 
 module.exports = router

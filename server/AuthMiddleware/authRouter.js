@@ -6,8 +6,8 @@ router.use(bodyparser.json())
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body
+    console.log(req.body)
     const user = username ? await getUser(username, password) : null
-    if (!user) throw new Error("usuario vacio")
     console.log("DB: " + user)
     console.log({ username, password })
     if (username === user.username && password === user.password) {

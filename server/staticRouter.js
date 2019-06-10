@@ -104,6 +104,12 @@ router.get('/agregarPrestamo', async (req, res) => {
 
   })
 })
+
+router.get("/estadoPrestamos", async (req, res) => {
+  res.render('estadoPrestamo', {
+    admin: req.session.rol == 'admin',
+  })
+})
 /*
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'))

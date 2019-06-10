@@ -1,6 +1,19 @@
 const db = require('../dbConnection')
 const queryMaker = require('../testrandom')
 
+
+const insertPrestamo = async (prestamo) => {
+  try {
+    const [rows] = db.query(
+      queryMaker.insert('Prestamo', prestamo)
+        .make()
+    )
+    return rows.insertId
+  } catch (e) {
+    throw e
+  }
+}
+
 const checkTrabajadorTienePrestamo = async (id) => {
   try {
     const [rows] = await db.query(
@@ -18,5 +31,6 @@ const checkTrabajadorTienePrestamo = async (id) => {
 }
 
 module.exports = {
-  checkTrabajadorTienePrestamo
+  checkTrabajadorTienePrestamo,
+  insertPrestamo
 }
