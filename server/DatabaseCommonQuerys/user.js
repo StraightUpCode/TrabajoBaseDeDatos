@@ -55,7 +55,7 @@ const resetPassword = async (id) => {
     return rows
   } catch (e) {
     throw e
-  } 
+  }
 
 }
 const getUser = async (id) => {
@@ -71,6 +71,24 @@ const getUser = async (id) => {
     throw e
   }
 }
+const updateUser = async (user, id) => {
+  try {
+    console.log("Update User")
+    console.log(user)
+    const leQuery = queryMaker.update('User', user, 'idUser', id)
+      .make()
+    console.log(leQuery)
+    const [rows] = await db.query(
+      leQuery
+    )
+    console.log(rows)
+    return rows
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
+
+}
 
 module.exports = {
   insertUser,
@@ -78,5 +96,6 @@ module.exports = {
   searchUserBy,
   resetPassword,
   getUser,
+  updateUser
 
 }

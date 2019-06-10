@@ -241,6 +241,16 @@ router.get("/user/reset/:id", async (req, res) => {
     res.send(e)
   }
 })
+router.post("/user/update/:id", async (req, res) => {
+  try {
+    console.log(req.params)
+    console.log("Actualizando usuario")
+    const rows = await commonQuerys.updateUser(req.body, req.params.id)
+    res.send(rows)
+  } catch (e) {
+    res.send(e)
+  }
+})
 
 router.get("/user/:id", async (req, res) => {
   try {

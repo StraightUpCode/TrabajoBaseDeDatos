@@ -101,9 +101,11 @@ class QueryMaker {
 
   update(tabla, objeto, atributoClave, id) {
     this.query += `Update ${tabla} SET`
+    const arr = []
     for (const key in objeto) {
-      this.query += typeof objeto[key] == 'string' ? ` ${key}="${objeto[key]}" ` : ` ${key}=${objeto[key]} `
+      typeof objeto[key] == 'string' ? arr.push(` ${key}="${objeto[key]}" `) : arr.push(` ${key}=${objeto[key]} `)
     }
+    this.query += arr.join(',')
     this.query += ` where ${atributoClave} = ${id} `
     return this
   }

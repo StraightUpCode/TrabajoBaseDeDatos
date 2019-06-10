@@ -24,6 +24,7 @@ for (const editButton of editButtons) {
             console.log(data)
             const container = document.getElementById("editUser")
             const form = document.createElement("form")
+            form.setAttribute('method', 'POST')
             const inputUsername = document.createElement('input')
             inputUsername.setAttribute('type', 'text')
             inputUsername.setAttribute('name', 'username')
@@ -40,12 +41,15 @@ for (const editButton of editButtons) {
             }
             const submitButton = document.createElement('button')
             submitButton.setAttribute('type', 'submit')
+            submitButton.append(document.createTextNode("Guardar"))
             form.append(inputUsername)
             form.append(rolSelect)
             form.append(submitButton)
+            container.append(form)
             form.addEventListener('submit', (e) => {
+              e.preventDefault()
               const request = {}
-              for (let campo of formulario.elements) {
+              for (let campo of form.elements) {
 
                 if (campo.name) {
                   let val;
@@ -59,8 +63,7 @@ for (const editButton of editButtons) {
                 }
               }
               request.idRol = Number.parseInt(request.idRol) || 1 // idRol es un int
-              console.log(req)
-              formulario.reset()
+              console.log(request)
               fetch(`http://localhost:3000/api/user/update/${data.idUser}`, {
                 method: "POST",
                 headers: {
@@ -68,7 +71,9 @@ for (const editButton of editButtons) {
                 },
                 body: JSON.stringify(request)
               })
-                .then(res => console.log(res))
+                .then(res => res.json())
+                .then(data => form.reset()
+                )
                 .catch()
             })
 
