@@ -2,93 +2,104 @@
     <title>Nomina</title>
 </head>
 <style>
-    .box-2{
-    border: 3px dotted #000;
-    padding: 20px;
-    margin: 20px 0;
-}
+    .container {
+        border: 3px dotted #000;
+        padding: 20px;
+        margin: 20px;
+    }
+
+    #period {
+        text-align: center !important;
+    }
+
+    .container>.row {
+        border-bottom: 1px dotted coral;
+    }
 </style>
 
 {{#each dato }}
-<div class="box-1">
-<header class="display-4" id="name">
-    <h1>Empresa x</h1>
-    <h2>Nomina</h2>
-</header>
-<div class="container" id="period">
-    <h4>Impreso al dia {{date fechaDeEmision}}</h4>
-    <h4>Periodo del {{date inicioPeriodo}} al {{date finPeriodo}}</h4>
-</div>
-<br>
-<div class="box-2">
-    <div id="general" class="container">
-        <div>
-            <h3>Datos generales del trabajador</h3>
+<div class="container mx-auto">
+    <div class="card mx-auto" style="width: 50%">
+        <header id="name">
+            <h2 class="display-4" style="font-size: 40px">Empresa X</h2>
+            <h2 class="display-4" style="font-size: 35px">Nomina</h2>
+        </header>
+        <div class="card-text" id="period">
+            <h6 class="card-subtitle mb-2 text-muted">Impreso al dia {{date fechaDeEmision}}</h6>
+            <h6 class="card-subtitle mb-2 text-muted"> Periodo del {{date inicioPeriodo}} al {{date finPeriodo}}</h6>
         </div>
-        <div>
-            <h4>Nombres: {{nombre}} </h4>
+    </div>
+    <div class="row mx-auto" style="width: 50%">
+        <div class="col">
+            <div class="col" style="text-align:center !important">
+                <h6>Datos generales del trabajador</h6>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <b>Nombres:</b> {{nombre}}
+                </div>
+                <div class="col-sm-6">
+                    <b>Apellidos: </b>{{apellido}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <b>Cedula:</b> {{cedula}}
+                </div>
+                <div class="col-sm-6">
+                    <b>Cargo: </b>{{cargo}}
+                </div>
+            </div>
         </div>
-        <div>
-            <h4>Apellidos:{{apellido}}</h4>
-        </div>
-        <div>
-            <h4>Cedula:{{cedula}}</h4>
-        </div>
-        <div>
-            <h4>Cargo:{{cargo}}</h4>
+    </div>
+    <div class="row">
+        <div class="col" style="text-align: center !important">
+            <b>Salario base: </b>{{salario}}
         </div>
     </div>
     <br>
-    <div class="container" id="monetario">
-        <br>
-        <div>
-            <h4>Salario base: {{salario}}</h4>
+    <div class="col" style="text-align:center !important">
+        <h6>Ingresos No Fijos</h6>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <b>Horas Extras:</b> {{pagoHorasExtras}}
         </div>
-        <br>
-        <div>
-            <h3>Ingresos no fijos</h3>
+        <div class="col-sm-3">
+            <b>Viatico: </b>{{viatico}}
         </div>
-        {{!-- <div> <h4>Comision: {{nameT}}</h4> </div> --}}
-        <div class="container">
+        <div class="col-sm-3">
+            <b>Bono: </b>{{incentivo}}
+        </div>
+        <div class="col-sm-3">
+            <b>Total: </b>{{totalIngresos}}
+        </div>
+    </div>
+    <br>
+    <div class="col" style="text-align:center !important">
+        <h6>Deducciones</h6>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <b>IR: </b>{{IR}}
+        </div>
+        <div class="col-sm-3">
+            <b>INSS: </b>{{inss}}
+        </div>
+        <div class="col-sm-3">
 
-            <div>
-                <h4>Horas extras: {{pagoHorasExtras}}</h3>
-            </div>
-            <div>
-                <h4>Viatico:{{viatico}}</h4>
-            </div>
-            <div>
-                <h4>Incentivo:{{incentivo}}</h4>
-            </div>
-            <br>
-            <div id="devengado">
-                <h4>Saldo total devengado: {{totalIngresos}}</h4>
-            </div>
         </div>
-        <br>
-        <div>
-            <h3>Deducciones</h3>
-        </div>
-        <div class="container">
-            <div>
-                <h4>IR:{{IR}}</h4>
-            </div>
-            <div>
-                <h4>INSS:{{inss}}</h4>
-            </div>
-            <br>
-            <div id="deducido">
-                <h4>Saldo total deducido: {{totalDeducciones}}</h4>
-            </div>
-        </div>
-        <br>
-    </div>
-    <div id="total">
-        <div>
-            <h4>Saldo total pagado:{{ sum salarioPagado totalIngresos totalDeducciones}}</h4>
+        <div class="col-sm-3">
+            <b>Total: </b>{{totalDeducciones}}
         </div>
     </div>
     <br>
+    <div class="col-sm-11" style="text-align:right  !important">
+        <b>Total Pagado:</b> {{ sum salarioPagado totalIngresos totalDeducciones}}
+    </div>
+
+
 </div>
-</div>
+
+
 {{/each}}

@@ -108,7 +108,7 @@ class Container extends Component {
           <option value={el.idTrabajador} onClick={this.getTrabajadorId.bind(this)}> {`${el.nombre} ${el.apellido}`}</option>)}
         <div onClick={this.clearBusqueda}>X</div>
         <div>
-          <h2> Trabajadores </h2>
+          <h2 class="display-4" > Trabajadores </h2>
           {trabajadores.map(el => <ElementoTrabajador trabajador={el} reload={this.loadTrabajadores} />)
           }
         </div>

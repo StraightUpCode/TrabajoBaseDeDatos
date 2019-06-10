@@ -52,7 +52,7 @@ class GenerarPeriodo extends Component {
   render(props, { errorMsg }) {
     return (
       <div>
-        <h1>Seleccion el Inicio  del Periodo de Pago de las nominas</h1>
+        <h1 class="display-4">Seleccione el Inicio  del Periodo de Pago de las nominas</h1>
         <input required type="date" name="inicioPeriodo" onChange={linkState(this, 'inicioPeriodo')}></input>
         {
           errorMsg && <h4>{errorMsg}</h4>
